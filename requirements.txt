@@ -1,0 +1,11 @@
+fastapi 
+uvicorn 
+google-genai
+langchain 
+crewai 
+playwright 
+selenium 
+requests 
+psycopg2-binary
+google-search-results
+python-dotenv
