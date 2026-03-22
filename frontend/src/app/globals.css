@@ -1,0 +1,18 @@
+@import "tailwindcss";
+
+@theme {
+  --color-brand-black: #1a1a1a;
+  --color-brand-white: #fafafa;
+  --color-brand-grey: #e5e5e5;
+  --color-brand-darkgrey: #666666;
+  --color-brand-brown: #795548;
+  --color-brand-lightbrown: #d7ccc8;
+}
+
+@layer base {
+  body {
+    background-color: var(--color-brand-white);
+    color: var(--color-brand-black);
+    font-family: system-ui, -apple-system, sans-serif;
+  }
+}
