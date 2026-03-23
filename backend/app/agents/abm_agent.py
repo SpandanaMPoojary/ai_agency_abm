@@ -29,23 +29,26 @@ class ABMAgent:
         Core Content: {value_prop}
 
         Instructions:
-        1. Generate a 3-Step Sequence: Create a coordinated outreach flow using three distinct channels: LinkedIn DM, Email, and a Follow-up.
-        2. Personalization: Ensure each message is personalized to the account's specific industry and pain points.
-        3. Lead Scoring Logic: Define the trigger for the next step (e.g., "If they click the link, increase lead score and notify CRM").
-        4. Call to Action (CTA): Include a clear CTA in each message, such as booking a discovery call.
-        5. Output Format: You MUST output the result as a raw JSON array of objects with the following keys: channel, message, cta, status. 
-           In 'status', include the lead scoring/trigger logic for that step.
+        1. Generate a 3-Step Sequence:
+           - step_1_linkedin: A short, punchy connection note (STRICTLY < 300 characters).
+           - step_2_email: A professional cold email with a clear subject line and body.
+           - step_3_followup: A gentle LinkedIn follow-up message to be sent 3 days later.
+        2. Personalization: Use the target account's industry and pain points to make each message feel 1-to-1.
+        3. Tracking Link: You MUST include the placeholder "[[TRACKING_LINK]]" in EVERY message.
+           Example: "Check this out: [[TRACKING_LINK]]"
+        4. Output Format: You MUST output the result as a raw JSON object (NOT an array) with exactly these keys:
+           "step_1_linkedin", "step_2_email", "step_3_followup".
 
-        Ensure the response is ONLY the raw JSON array.
+        Ensure the response is ONLY the raw JSON object.
         """
-
+        
         response_obj = self.llm_client.generate(prompt)
         response_raw = response_obj.text
         
         try:
             # Attempt to parse the JSON response
-            start = response_raw.find('[')
-            end = response_raw.rfind(']') + 1
+            start = response_raw.find('{')
+            end = response_raw.rfind('}') + 1
             sequence = json.loads(response_raw[start:end])
             return sequence
         except Exception as e:

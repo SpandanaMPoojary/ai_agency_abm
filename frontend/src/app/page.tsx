@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 type Lead = {
   id: string;
@@ -9,6 +10,9 @@ type Lead = {
   company: string;
   profile_url: string;
   message: string;
+  step_1?: string;
+  step_2?: string;
+  step_3?: string;
   agent_id: string;
   status?: string;
   lead_score?: number;
@@ -38,7 +42,7 @@ export default function Dashboard() {
 
   const fetchLeads = async () => {
     try {
-      const res = await fetch("http://localhost:8000/api/leads");
+      const res = await fetch("http://127.0.0.1:8000/api/leads");
       if (res.ok) {
         const data = await res.json();
         setLeads(data.leads || []);
@@ -67,7 +71,7 @@ export default function Dashboard() {
     setOrdering(true);
     setStatus({});
     try {
-      const res = await fetch("http://localhost:8000/api/research", {
+      const res = await fetch("http://127.0.0.1:8000/api/research", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ icp_description: icp, limit, platform })
@@ -87,7 +91,7 @@ export default function Dashboard() {
   const handleApprove = async (lead: Lead) => {
     setLoading(lead.id);
     try {
-      const res = await fetch(`http://localhost:8000/api/approve-campaign/${lead.id}`, {
+      const res = await fetch(`http://127.0.0.1:8000/api/approve-campaign/${lead.id}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" }
       });
@@ -109,7 +113,7 @@ export default function Dashboard() {
   const handleClearLeads = async () => {
     if (!confirm("Are you sure you want to clear all leads? This will delete everything from the database.")) return;
     try {
-      const res = await fetch("http://localhost:8000/api/clear-leads", { method: "DELETE" });
+      const res = await fetch("http://127.0.0.1:8000/api/clear-leads", { method: "DELETE" });
       if (res.ok) {
         setLeads([]);
         setStatus({});
@@ -121,7 +125,7 @@ export default function Dashboard() {
 
   const handleSimulateClick = async (leadId: string) => {
     try {
-      const res = await fetch("http://localhost:8000/api/webhooks/activity", {
+      const res = await fetch("http://127.0.0.1:8000/api/webhooks/activity", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ lead_id: Number(leadId), activity: "LINK_CLICKED" })
@@ -144,6 +148,12 @@ export default function Dashboard() {
           <p className="text-brand-darkgrey mt-2 text-lg">Order specialized agents and approve generated campaigns.</p>
         </div>
         <div className="flex items-center space-x-6">
+          <Link 
+            href="/lead-scores"
+            className="text-sm font-semibold uppercase text-brand-brown hover:text-brand-black transition-colors border-b-2 border-brand-brown"
+          >
+            📊 Lead Scores
+          </Link>
           <button 
             onClick={() => setSortByScore(!sortByScore)}
             className={`text-sm font-semibold uppercase transition-colors ${sortByScore ? 'text-brand-brown' : 'text-brand-darkgrey'}`}
@@ -242,9 +252,29 @@ export default function Dashboard() {
             </div>
             
             <div className="p-6">
-              <h3 className="text-sm font-semibold text-brand-darkgrey uppercase tracking-wider mb-3">Drafted Message</h3>
-              <div className="bg-brand-white p-5 border border-brand-grey text-brand-black mb-6 italic">
-                "{lead.message}"
+              <div className="flex items-center justify-between mb-4 border-b border-brand-grey pb-2">
+                <h3 className="text-sm font-semibold text-brand-darkgrey uppercase tracking-wider">Outreach Sequence</h3>
+                <div className="flex bg-brand-white border border-brand-grey p-1 space-x-1">
+                  {['Step 1 (LI)', 'Step 2 (Email)', 'Step 3 (LI)'].map((tab, i) => (
+                    <button
+                      key={i}
+                      onClick={() => setStatus(prev => ({ ...prev, [`tab_${lead.id}`]: i.toString() }))}
+                      className={`px-3 py-1 text-[10px] font-bold uppercase transition-colors ${
+                        (status[`tab_${lead.id}`] || "0") === i.toString() 
+                        ? 'bg-brand-black text-white' 
+                        : 'text-brand-darkgrey hover:bg-brand-grey'
+                      }`}
+                    >
+                      {tab}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div className="bg-brand-white p-5 border border-brand-grey text-brand-black mb-6 italic min-h-[120px] whitespace-pre-wrap">
+                {(status[`tab_${lead.id}`] || "0") === "0" && (lead.step_1 || lead.message)}
+                {(status[`tab_${lead.id}`] || "0") === "1" && (lead.step_2 || "No email generated.")}
+                {(status[`tab_${lead.id}`] || "0") === "2" && (lead.step_3 || "No follow-up generated.")}
               </div>
               
               <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">

@@ -1,29 +1,36 @@
 import os
 import sys
+import logging
+from typing import List, Optional
+from fastapi import FastAPI, Request, HTTPException, Depends
+from fastapi.responses import RedirectResponse
+from fastapi.middleware.cors import CORSMiddleware
+from sqlmodel import SQLModel, Session, create_engine, select, desc
+import uvicorn
+from dotenv import load_dotenv
 
-# Ensure the root directory is in the Python path regardless of how the script is executed
+# Ensure the root directory is in the Python path
 root_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 if root_dir not in sys.path:
     sys.path.insert(0, root_dir)
 
-from fastapi import FastAPI, Request, HTTPException
-from fastapi.middleware.cors import CORSMiddleware
-import psycopg2
-from urllib.parse import urlparse
+from backend.app.db.models import Account, OutreachSequence
 from backend.app.services.automation import AutomationService
-from backend.app.services.lead_scoring import update_lead_score
 from backend.app.agents.research_agent import ResearchAgent
 from backend.app.agents.abm_agent import ABMAgent
 from pydantic import BaseModel
-import uvicorn
-# Try to load dotenv here locally for FastAPI entry
-try:
-    from dotenv import load_dotenv
-    load_dotenv()
-except ImportError:
-    pass
 
-app = FastAPI(title="AI Agency ABM Webhooks")
+load_dotenv()
+
+# Database Setup
+DATABASE_URL = os.getenv("DATABASE_URL")
+engine = create_engine(DATABASE_URL)
+
+def get_session():
+    with Session(engine) as session:
+        yield session
+
+app = FastAPI(title="AI Agency ABM Live Engine")
 
 app.add_middleware(
     CORSMiddleware,
@@ -33,205 +40,94 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-def get_db_connection():
-    try:
-        database_url = os.getenv('DATABASE_URL')
-        if database_url:
-            parsed = urlparse(database_url)
-            conn = psycopg2.connect(
-                host=parsed.hostname,
-                port=parsed.port,
-                database=parsed.path.lstrip('/'),
-                user=parsed.username,
-                password=parsed.password
-            )
-        else:
-            conn = psycopg2.connect(
-                host=os.getenv('DB_HOST', 'localhost'),
-                port=os.getenv('DB_PORT', '5432'),
-                database=os.getenv('DB_NAME', 'postgres'),
-                user=os.getenv('DB_USER', 'postgres'),
-                password=os.getenv('DB_PASSWORD', 'postgres')
-            )
-        return conn
-    except Exception as e:
-        print(f"Database error: {e}")
-        return None
-
-@app.post("/webhooks/hunter")
-async def hunter_webhook(request: Request):
-    """Webhook for Hunter.io email opens/clicks."""
-    payload = await request.json()
-    # Typical Hunter webhook logic here:
-    email = payload.get("email")
-    event = payload.get("event") # e.g. 'open' or 'click'
-    
-    if event in ["open", "click"] and email:
-        conn = get_db_connection()
-        if conn:
-            try:
-                with conn.cursor() as cursor:
-                    # simplistic proxy mapping: increase lead_score for accounts matching some parameter
-                    cursor.execute("UPDATE accounts SET lead_score = lead_score + 10 WHERE website LIKE %s", (f"%{email.split('@')[-1]}%",))
-                conn.commit()
-            except Exception as e:
-                print(e)
-            finally:
-                conn.close()
-    return {"status": "received"}
-
-@app.post("/webhooks/phantombuster")
-async def pb_webhook(request: Request):
-    """Webhook for Phantombuster success/replies."""
-    payload = await request.json()
-    # Logic to map the phantom output back to the account and increment score
-    profile_url = payload.get("profileUrl")
-    
-    if profile_url:
-        conn = get_db_connection()
-        if conn:
-            try:
-                with conn.cursor() as cursor:
-                    # if the account table had a linkedinUrl we'd filter on that. 
-                    # Assuming we add it or map via another table:
-                    cursor.execute("UPDATE accounts SET lead_score = lead_score + 25")
-                conn.commit()
-            finally:
-                conn.close()
-    return {"status": "received"}
-
-@app.post("/api/fire_automation")
-async def fire_automation(payload: dict):
-    """Triggered by the Next.js 'Approve' button."""
-    agent_id = payload.get("agent_id")
-    profile_url = payload.get("profile_url")
-    message = payload.get("message")
-    
-    if not all([agent_id, profile_url, message]):
-        raise HTTPException(status_code=400, detail="Missing required parameters")
-    
-    automation_service = AutomationService()
-    try:
-        result = automation_service.trigger_linkedin_outreach(agent_id, profile_url, message)
-        return {"status": "success", "result": result}
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
-
-@app.post("/api/approve-campaign/{id}")
-async def approve_campaign(id: int):
-    """Triggered by the Next.js 'Approve & Fire' button."""
-    conn = get_db_connection()
-    if not conn:
-        raise HTTPException(status_code=500, detail="Database connection failed")
-    
-    try:
-        with conn.cursor() as cursor:
-            # Fetch lead details
-            cursor.execute("""
-                SELECT a.email, a.company_name, os.message, os.channel, a.id
-                FROM accounts a
-                JOIN outreach_sequences os ON a.id = os.account_id
-                WHERE os.id = %s
-            """, (id,))
-            row = cursor.fetchone()
-            if not row:
-                raise HTTPException(status_code=404, detail="Campaign not found")
-            
-            email, company_name, message, channel, account_id = row
-            
-            # For LinkedIn outreach, we normally need a profile URL. 
-            # If not in outreach_sequences, we might need to store it there or fetch from accounts if added.
-            # Assuming profile_url might be stored elsewhere or we use a placeholder for this test.
-            profile_url = "https://www.linkedin.com/in/test-profile" 
-            
-            automation_service = AutomationService()
-            result = automation_service.trigger_linkedin_outreach(
-                agent_id="abm_agent_01", 
-                profile_url=profile_url, 
-                message=message,
-                email=email
-            )
-            
-            # Update database status
-            cursor.execute(
-                "UPDATE outreach_sequences SET approval_status = 'SENT' WHERE id = %s",
-                (id,)
-            )
-            # Use the new scoring service for status update
-            update_lead_score(account_id, 'MESSAGE_SENT')
-            
-            conn.commit()
-            
-            return {"status": "success", "result": result}
-    except Exception as e:
-        if conn:
-            conn.rollback()
-        raise HTTPException(status_code=500, detail=str(e))
-    finally:
-        if conn:
-            conn.close()
+# --- API Endpoints ---
 
 @app.get("/api/leads")
-async def get_leads():
-    """Fetch all pending campaigns/leads from the database."""
-    conn = get_db_connection()
-    if not conn:
-        raise HTTPException(status_code=500, detail="Database connection failed")
+async def get_leads(session: Session = Depends(get_session)):
+    """Fetch all leads and their sequences."""
+    statement = select(OutreachSequence, Account).join(Account).order_by(desc(OutreachSequence.id))
+    results = session.exec(statement).all()
     
-    try:
-        with conn.cursor() as cursor:
-            cursor.execute("""
-                SELECT 
-                    os.id, 
-                    a.company_name as name, 
-                    a.industry as company, 
-                    COALESCE(a.website, 'https://www.linkedin.com') as profile_url, 
-                    os.message,
-                    'abm_agent_01' as agent_id,
-                    os.approval_status,
-                    a.lead_score
-                FROM accounts a
-                JOIN outreach_sequences os ON a.id = os.account_id
-                ORDER BY os.id DESC
-            """)
-            rows = cursor.fetchall()
-            leads = []
-            for row in rows:
-                leads.append({
-                    "id": str(row[0]),
-                    "name": row[1],
-                    "company": row[2] if row[2] else "Target Company",
-                    "profile_url": row[3],
-                    "message": row[4],
-                    "agent_id": row[5],
-                    "status": row[6],
-                    "lead_score": row[7]
-                })
-            return {"leads": leads}
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
-    finally:
-        conn.close()
+    leads = []
+    for os_obj, acc_obj in results:
+        leads.append({
+            "id": str(os_obj.id),
+            "name": acc_obj.company_name, # Using company_name as name for simplicity in current UI
+            "company": acc_obj.industry or "Target Company",
+            "profile_url": acc_obj.website or "https://www.linkedin.com",
+            "message": os_obj.message,
+            "step_1": os_obj.step_1_linkedin,
+            "step_2": os_obj.step_2_email,
+            "step_3": os_obj.step_3_followup,
+            "agent_id": "abm_agent_01",
+            "status": os_obj.approval_status,
+            "lead_score": acc_obj.lead_score
+        })
+    return {"leads": leads}
 
-@app.delete("/api/clear-leads")
-async def clear_leads():
-    """Delete all leads and accounts from the database."""
-    conn = get_db_connection()
-    if not conn:
-        raise HTTPException(status_code=500, detail="Database connection failed")
+@app.get("/api/leads/scores")
+async def get_lead_scores(session: Session = Depends(get_session)):
+    """Fetch leads sorted by lead_score descending."""
+    statement = select(Account).order_by(desc(Account.lead_score))
+    accounts = session.exec(statement).all()
+    return {"accounts": accounts}
+
+@app.post("/api/approve-campaign/{id}")
+async def approve_campaign(id: int, session: Session = Depends(get_session)):
+    """Approves a campaign and triggers outreach."""
+    os_obj = session.get(OutreachSequence, id)
+    if not os_obj:
+        raise HTTPException(status_code=404, detail="Campaign not found")
     
-    try:
-        with conn.cursor() as cursor:
-            cursor.execute("TRUNCATE TABLE outreach_sequences RESTART IDENTITY CASCADE;")
-            cursor.execute("TRUNCATE TABLE accounts RESTART IDENTITY CASCADE;")
-        conn.commit()
-        return {"status": "success", "message": "All leads cleared"}
-    except Exception as e:
-        if conn:
-            conn.rollback()
-        raise HTTPException(status_code=500, detail=str(e))
-    finally:
-        conn.close()
+    acc_obj = session.get(Account, os_obj.account_id)
+    
+    # 1. Prepare tracking link
+    backend_url = os.getenv("BACKEND_URL", "http://localhost:8000")
+    tracking_link = f"{backend_url}/api/track-click/{acc_obj.id}"
+    
+    # 2. Replace placeholder in message
+    msg_to_send = os_obj.step_1_linkedin or os_obj.message
+    final_message = msg_to_send.replace("[[TRACKING_LINK]]", tracking_link)
+    
+    # Wait, we should replace it in ALL steps for consistency in DB if we want, 
+    # but for firing we just need the one being sent.
+    
+    # 3. Trigger Automation
+    automation_service = AutomationService()
+    profile_url = acc_obj.website or "https://www.linkedin.com/in/test" # Fallback
+    
+    result = automation_service.trigger_linkedin_outreach(
+        profile_url=profile_url,
+        message=final_message,
+        email=acc_obj.email
+    )
+    
+    if result["status"] == "success":
+        os_obj.approval_status = "SENT"
+        acc_obj.status = "Active"
+        session.add(os_obj)
+        session.add(acc_obj)
+        session.commit()
+        return {"status": "success", "result": result}
+    else:
+        raise HTTPException(status_code=500, detail=result.get("message", "Outreach failed"))
+
+@app.get("/api/track-click/{lead_id}")
+async def track_click(lead_id: int, session: Session = Depends(get_session)):
+    """Tracks a link click, updates score/status, and redirects."""
+    acc_obj = session.get(Account, lead_id)
+    if not acc_obj:
+        raise HTTPException(status_code=404, detail="Lead not found")
+    
+    # Update score and status
+    acc_obj.lead_score += 20
+    acc_obj.status = "ENGAGED"
+    session.add(acc_obj)
+    session.commit()
+    
+    # Redirect to agency landing page
+    landing_page = os.getenv("AGENCY_LANDING_PAGE", "https://your-agency.com")
+    return RedirectResponse(url=landing_page)
 
 class ResearchRequest(BaseModel):
     icp_description: str
@@ -239,11 +135,10 @@ class ResearchRequest(BaseModel):
     platform: str = "linkedin"
 
 @app.post("/api/research")
-async def run_research(request: ResearchRequest):
+async def run_research(request: ResearchRequest, session: Session = Depends(get_session)):
     research_agent = ResearchAgent()
     abm_agent = ABMAgent()
     
-    # Run research loop
     leads = research_agent.execute_full_research(
         request.icp_description, 
         limit=request.limit, 
@@ -251,7 +146,7 @@ async def run_research(request: ResearchRequest):
     )
     
     results = []
-    for i, lead in enumerate(leads):
+    for lead in leads:
         try:
             account_data = f"{lead['account']} - {lead['decision_maker']}"
             value_prop = "Our AI Agency specializes in B2B growth and automations."
@@ -260,62 +155,73 @@ async def run_research(request: ResearchRequest):
                 account_data, request.icp_description, value_prop
             )
             
-            message = sequence[0]["message"] if isinstance(sequence, list) and len(sequence) > 0 else "Failed to generate message."
+            # Save using SQLModel
+            new_acc = Account(
+                company_name=lead['account'],
+                website=lead['dm_linkedin'] or lead['website'],
+                industry=request.icp_description[:50],
+                status="pending"
+            )
+            session.add(new_acc)
+            session.flush() # Get ID
             
-            # Save to DB
-            conn = get_db_connection()
-            if conn:
-                try:
-                    with conn.cursor() as cursor:
-                        cursor.execute(
-                            "INSERT INTO accounts (company_name, website, status) VALUES (%s, %s, %s) RETURNING id",
-                            (lead['account'], lead['website'], "pending")
-                        )
-                        account_id = cursor.fetchone()[0]
-                        cursor.execute(
-                            "INSERT INTO outreach_sequences (account_id, channel, message, cta, approval_status) VALUES (%s, %s, %s, %s, %s) RETURNING id",
-                            (account_id, request.platform, message, "Review", "draft")
-                        )
-                        outreach_id = cursor.fetchone()[0]
-                    conn.commit()
-                except Exception as e:
-                    print(f"DB Error: {e}")
-                    outreach_id = f"error_{i}"
-                finally:
-                    conn.close()
-            else:
-                outreach_id = f"no_db_{i}"
+            new_os = OutreachSequence(
+                account_id=new_acc.id,
+                channel=request.platform,
+                step_1_linkedin=sequence.get("step_1_linkedin"),
+                step_2_email=sequence.get("step_2_email"),
+                step_3_followup=sequence.get("step_3_followup"),
+                message=sequence.get("step_1_linkedin"), # Fallback for legacy
+                cta="Click Link",
+                approval_status="draft"
+            )
+            session.add(new_os)
+            session.commit()
             
             results.append({
-                "id": str(outreach_id),
+                "id": str(new_os.id),
                 "name": lead['decision_maker'],
                 "company": lead['account'],
                 "profile_url": lead['dm_linkedin'],
-                "message": message,
-                "agent_id": "abm_agent_01"
+                "step_1": sequence.get("step_1_linkedin"),
+                "step_2": sequence.get("step_2_email"),
+                "step_3": sequence.get("step_3_followup"),
+                "agent_id": "abm_agent_01",
+                "status": "draft",
+                "lead_score": 0
             })
         except Exception as e:
-            print(f"Error processing lead {lead['account']}: {e}")
+            print(f"Error processing {lead['account']}: {e}")
+            session.rollback()
             
     return {"leads": results}
 
 @app.post("/api/webhooks/activity")
-async def activity_webhook(payload: dict):
-    """
-    Webhook simulation for activity tracking.
-    Payload: {"lead_id": 123, "activity": "LINK_CLICKED"}
-    """
+async def activity_webhook(payload: dict, session: Session = Depends(get_session)):
+    """Manual activity simulation (Compatibility with old UI)"""
     lead_id = payload.get("lead_id")
     activity = payload.get("activity")
     
-    if not lead_id or not activity:
-        raise HTTPException(status_code=400, detail="Missing lead_id or activity")
+    acc_obj = session.get(Account, lead_id)
+    if not acc_obj:
+        raise HTTPException(status_code=404, detail="Lead not found")
     
-    success = update_lead_score(lead_id, activity)
-    if success:
-        return {"status": "success", "message": f"Activity {activity} processed for lead {lead_id}"}
-    else:
-        raise HTTPException(status_code=500, detail="Failed to update lead score")
+    if activity == "LINK_CLICKED":
+        acc_obj.lead_score += 20
+        acc_obj.status = "ENGAGED"
+    elif activity == "MESSAGE_SENT":
+        acc_obj.status = "Active"
+        
+    session.add(acc_obj)
+    session.commit()
+    return {"status": "success"}
+
+@app.delete("/api/clear-leads")
+async def clear_leads(session: Session = Depends(get_session)):
+    session.query(OutreachSequence).delete()
+    session.query(Account).delete()
+    session.commit()
+    return {"status": "success"}
 
 if __name__ == "__main__":
     uvicorn.run("backend.main:app", host="0.0.0.0", port=8000, reload=True)

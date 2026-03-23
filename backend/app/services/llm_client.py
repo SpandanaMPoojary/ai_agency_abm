@@ -7,7 +7,7 @@ except ImportError:
     pass  # Use os.environ directly
 
 class LLMClient:
-    """Client for interacting with Google Gemini (gemini-3-flash-preview)"""
+    """Client for interacting with Google Gemini (gemini-1.5-flash)"""
 
     def __init__(self):
         """Initialize the Gemini client with API key"""
@@ -18,7 +18,7 @@ class LLMClient:
         try:
             from google import genai
             self.client = genai.Client(api_key=api_key)
-            self.model_name = 'gemini-3-flash-preview'
+            self.model_name = 'gemini-1.5-flash'
             self.api_available = True
         except ImportError:
             print("Warning: google-genai not installed. Using mock responses.")
