@@ -11,6 +11,7 @@ from fastapi.middleware.cors import CORSMiddleware
 import psycopg2
 from urllib.parse import urlparse
 from backend.app.services.automation import AutomationService
+from backend.app.services.lead_scoring import update_lead_score
 from backend.app.agents.research_agent import ResearchAgent
 from backend.app.agents.abm_agent import ABMAgent
 from pydantic import BaseModel
@@ -116,6 +117,122 @@ async def fire_automation(payload: dict):
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
+@app.post("/api/approve-campaign/{id}")
+async def approve_campaign(id: int):
+    """Triggered by the Next.js 'Approve & Fire' button."""
+    conn = get_db_connection()
+    if not conn:
+        raise HTTPException(status_code=500, detail="Database connection failed")
+    
+    try:
+        with conn.cursor() as cursor:
+            # Fetch lead details
+            cursor.execute("""
+                SELECT a.email, a.company_name, os.message, os.channel, a.id
+                FROM accounts a
+                JOIN outreach_sequences os ON a.id = os.account_id
+                WHERE os.id = %s
+            """, (id,))
+            row = cursor.fetchone()
+            if not row:
+                raise HTTPException(status_code=404, detail="Campaign not found")
+            
+            email, company_name, message, channel, account_id = row
+            
+            # For LinkedIn outreach, we normally need a profile URL. 
+            # If not in outreach_sequences, we might need to store it there or fetch from accounts if added.
+            # Assuming profile_url might be stored elsewhere or we use a placeholder for this test.
+            profile_url = "https://www.linkedin.com/in/test-profile" 
+            
+            automation_service = AutomationService()
+            result = automation_service.trigger_linkedin_outreach(
+                agent_id="abm_agent_01", 
+                profile_url=profile_url, 
+                message=message,
+                email=email
+            )
+            
+            # Update database status
+            cursor.execute(
+                "UPDATE outreach_sequences SET approval_status = 'SENT' WHERE id = %s",
+                (id,)
+            )
+            # Use the new scoring service for status update
+            update_lead_score(account_id, 'MESSAGE_SENT')
+            
+            conn.commit()
+            
+            return {"status": "success", "result": result}
+    except Exception as e:
+        if conn:
+            conn.rollback()
+        raise HTTPException(status_code=500, detail=str(e))
+    finally:
+        if conn:
+            conn.close()
+
+@app.get("/api/leads")
+async def get_leads():
+    """Fetch all pending campaigns/leads from the database."""
+    conn = get_db_connection()
+    if not conn:
+        raise HTTPException(status_code=500, detail="Database connection failed")
+    
+    try:
+        with conn.cursor() as cursor:
+            cursor.execute("""
+                SELECT 
+                    os.id, 
+                    a.company_name as name, 
+                    a.industry as company, 
+                    COALESCE(a.website, 'https://www.linkedin.com') as profile_url, 
+                    os.message,
+                    'abm_agent_01' as agent_id,
+                    os.approval_status,
+                    a.lead_score
+                FROM accounts a
+                JOIN outreach_sequences os ON a.id = os.account_id
+                ORDER BY os.id DESC
+            """)
+            rows = cursor.fetchall()
+            leads = []
+            for row in rows:
+                leads.append({
+                    "id": str(row[0]),
+                    "name": row[1],
+                    "company": row[2] if row[2] else "Target Company",
+                    "profile_url": row[3],
+                    "message": row[4],
+                    "agent_id": row[5],
+                    "status": row[6],
+                    "lead_score": row[7]
+                })
+            return {"leads": leads}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+    finally:
+        conn.close()
+
+@app.delete("/api/clear-leads")
+async def clear_leads():
+    """Delete all leads and accounts from the database."""
+    conn = get_db_connection()
+    if not conn:
+        raise HTTPException(status_code=500, detail="Database connection failed")
+    
+    try:
+        with conn.cursor() as cursor:
+            cursor.execute("TRUNCATE TABLE outreach_sequences RESTART IDENTITY CASCADE;")
+            cursor.execute("TRUNCATE TABLE accounts RESTART IDENTITY CASCADE;")
+        conn.commit()
+        return {"status": "success", "message": "All leads cleared"}
+    except Exception as e:
+        if conn:
+            conn.rollback()
+        raise HTTPException(status_code=500, detail=str(e))
+    finally:
+        conn.close()
+
 class ResearchRequest(BaseModel):
     icp_description: str
     limit: int = 5
@@ -156,17 +273,21 @@ async def run_research(request: ResearchRequest):
                         )
                         account_id = cursor.fetchone()[0]
                         cursor.execute(
-                            "INSERT INTO outreach_sequences (account_id, channel, message, cta, approval_status) VALUES (%s, %s, %s, %s, %s)",
+                            "INSERT INTO outreach_sequences (account_id, channel, message, cta, approval_status) VALUES (%s, %s, %s, %s, %s) RETURNING id",
                             (account_id, request.platform, message, "Review", "draft")
                         )
+                        outreach_id = cursor.fetchone()[0]
                     conn.commit()
                 except Exception as e:
                     print(f"DB Error: {e}")
+                    outreach_id = f"error_{i}"
                 finally:
                     conn.close()
+            else:
+                outreach_id = f"no_db_{i}"
             
             results.append({
-                "id": f"lead_{i}",
+                "id": str(outreach_id),
                 "name": lead['decision_maker'],
                 "company": lead['account'],
                 "profile_url": lead['dm_linkedin'],
@@ -177,6 +298,24 @@ async def run_research(request: ResearchRequest):
             print(f"Error processing lead {lead['account']}: {e}")
             
     return {"leads": results}
+
+@app.post("/api/webhooks/activity")
+async def activity_webhook(payload: dict):
+    """
+    Webhook simulation for activity tracking.
+    Payload: {"lead_id": 123, "activity": "LINK_CLICKED"}
+    """
+    lead_id = payload.get("lead_id")
+    activity = payload.get("activity")
+    
+    if not lead_id or not activity:
+        raise HTTPException(status_code=400, detail="Missing lead_id or activity")
+    
+    success = update_lead_score(lead_id, activity)
+    if success:
+        return {"status": "success", "message": f"Activity {activity} processed for lead {lead_id}"}
+    else:
+        raise HTTPException(status_code=500, detail="Failed to update lead score")
 
 if __name__ == "__main__":
     uvicorn.run("backend.main:app", host="0.0.0.0", port=8000, reload=True)

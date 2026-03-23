@@ -53,6 +53,7 @@ def create_tables():
                     company_name TEXT NOT NULL,
                     industry TEXT,
                     website TEXT,
+                    email TEXT,
                     icp_score INTEGER,
                     lead_score INTEGER DEFAULT 0,
                     status TEXT DEFAULT 'pending'

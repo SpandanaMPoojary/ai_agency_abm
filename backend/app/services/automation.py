@@ -7,8 +7,15 @@ class AutomationService:
     def __init__(self):
         self.pb_key = os.getenv('PHANTOMBUSTER_API_KEY')
         
-    def trigger_linkedin_outreach(self, agent_id: str, profile_url: str, message: str) -> dict:
+    def trigger_linkedin_outreach(self, agent_id: str, profile_url: str, message: str, email: str = None) -> dict:
         """Trigger a Phantombuster LinkedIn Outreach Phantom."""
+        # Sandbox Logic
+        test_email = os.getenv('TEST_EMAIL', '').strip().lower()
+        processed_email = email.strip().lower() if email else None
+        if processed_email and test_email and processed_email == test_email:
+            print(f"FIRE COMMAND RECEIVED for {email} (SANDBOX)")
+            return {"status": "success", "mode": "sandbox", "message": "FIRE COMMAND RECEIVED"}
+
         if not self.pb_key:
             raise ValueError("PHANTOMBUSTER_API_KEY not set in environment.")
             
@@ -28,4 +35,5 @@ class AutomationService:
         }
         
         response = requests.post(url, headers=headers, json=payload)
+        response.raise_for_status()
         return response.json()

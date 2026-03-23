@@ -9,7 +9,7 @@ class ResearchAgent:
         self.llm_client = LLMClient()
         self.research_service = ResearchService()
 
-    def identify_target_accounts(self, icp_description, limit=5, platform="linkedin"):
+    def identify_target_accounts(self, icp_description: str, limit: int = 5, platform: str = "linkedin"):
         """
         Identify target accounts based on ICP
         """
@@ -32,7 +32,8 @@ class ResearchAgent:
             queries = [f"{icp_description} {platform} companies"]
 
         # 2. Search for companies
-        all_accounts = []
+        from typing import List, Dict, Any
+        all_accounts: List[Dict[str, Any]] = []
         for query in queries:
             results = self.research_service.search_companies(query)
             for res in results:
@@ -42,9 +43,11 @@ class ResearchAgent:
                     "snippet": res.get("snippet")
                 })
                 if len(all_accounts) >= limit:
-                    return all_accounts[:limit]
+                    from itertools import islice
+                    return list(islice(all_accounts, limit))
         
-        return all_accounts[:limit]
+        from itertools import islice
+        return list(islice(all_accounts, limit))
 
     def research_account_details(self, account_name, domain):
         """

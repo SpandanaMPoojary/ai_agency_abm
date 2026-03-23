@@ -126,7 +126,8 @@ class ProfileAgent:
         Returns:
             dict: Parsed suggestions organized by category
         """
-        parsed = {
+        from typing import Dict, List
+        parsed: Dict[str, List[str]] = {
             "headline": [],
             "summary": [],
             "experience": [],
@@ -136,7 +137,7 @@ class ProfileAgent:
 
         # Simple parsing - in production this would be more sophisticated
         lines = response.split('\n')
-        current_section = None
+        current_section = ""
 
         for line in lines:
             line = line.strip()
@@ -169,7 +170,8 @@ class ProfileAgent:
         Returns:
             dict: Parsed positioning elements
         """
-        parsed = {
+        from typing import Dict, Any
+        parsed: Dict[str, Any] = {
             "positioning_statement": "",
             "tagline": "",
             "brand_voice": [],
