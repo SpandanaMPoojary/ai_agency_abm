@@ -12,6 +12,7 @@ class Account(SQLModel, table=True):
     icp_score: Optional[int] = None
     lead_score: int = Field(default=0)
     status: str = Field(default="pending")
+    human_notes: Optional[str] = None
     
     outreach_sequences: list["OutreachSequence"] = Relationship(back_populates="account")
 

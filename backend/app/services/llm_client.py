@@ -1,71 +1,57 @@
 import os
-# Try to load dotenv if available
-try:
-    from dotenv import load_dotenv
-    load_dotenv()
-except ImportError:
-    pass  # Use os.environ directly
+import replicate
+from dotenv import load_dotenv
+
+load_dotenv()
 
 class LLMClient:
-    """Client for interacting with Google Gemini (gemini-1.5-flash)"""
+    """Client for interacting with Replicate (Llama 3.3 70B)"""
 
     def __init__(self):
-        """Initialize the Gemini client with API key"""
-        api_key = os.getenv('GEMINI_API_KEY')
-        if not api_key:
-            raise ValueError("GEMINI_API_KEY environment variable is not set")
-
-        try:
-            from google import genai
-            self.client = genai.Client(api_key=api_key)
-            self.model_name = 'gemini-1.5-flash'
-            self.api_available = True
-        except ImportError:
-            print("Warning: google-genai not installed. Using mock responses.")
-            self.api_available = False
+        """Initialize the Replicate client"""
+        self.api_token = os.getenv('REPLICATE_API_KEY') or os.getenv('REPLICATE_API_TOKEN')
+        if not self.api_token:
+            raise ValueError("REPLICATE_API_KEY or REPLICATE_API_TOKEN is not set")
+        
+        # Set for the library
+        os.environ["REPLICATE_API_TOKEN"] = self.api_token
+        self.model_name = "meta/meta-llama-3-70b-instruct"
 
     def generate(self, prompt):
         """
-        Generate a response from the Gemini model
-
-        Args:
-            prompt (str): The prompt to send to the model
-
-        Returns:
-            object: The response object from the model
+        Generate a response from the Llama model via Replicate
         """
-        if self.api_available:
-            try:
-                response = self.client.models.generate_content(
-                    model=self.model_name,
-                    contents=prompt
-                )
-                return response
-            except Exception as e:
-                raise Exception(f"Error generating response from Gemini: {str(e)}")
-        else:
-            # Mock response object for testing when package is not available
-            class MockResponse:
+        try:
+            # Using the prompt-based generation for Llama
+            output = replicate.run(
+                self.model_name,
+                input={
+                    "prompt": prompt,
+                    "max_new_tokens": 1024,
+                    "temperature": 0.7,
+                    "top_p": 0.9,
+                }
+            )
+            
+            # Replicate output for Llama is typically a generator of strings
+            full_text = "".join(output)
+            
+            class LLMResponse:
                 def __init__(self, text):
                     self.text = text
-            return MockResponse(f"[MOCK RESPONSE] This is a simulated response to: '{prompt[:50]}...'")
+            
+            return LLMResponse(full_text)
+            
+        except Exception as e:
+            raise Exception(f"Error generating response from Replicate: {str(e)}")
 
 class MockLLMClient:
-    """Mock version of LLMClient for testing without API dependencies"""
-
+    """Mock version of LLMClient for testing"""
     def __init__(self):
-        """Initialize mock client"""
-        self.responses = [
-            "Thank you for your inquiry. I'd be happy to help you with that.",
-            "Based on the information provided, here are some recommendations...",
-            "I understand your requirements. Let me provide a detailed response.",
-            "This is an excellent question. Here's what I can tell you...",
-            "I'd recommend considering the following approach for your project."
-        ]
+        self.responses = ["Mock Llama response 1", "Mock Llama response 2"]
         self.index = 0
 
     def generate(self, prompt):
-        """Generate a mock response"""
         response_text = self.responses[self.index % len(self.responses)]
         self.index += 1
         class MockResponse:

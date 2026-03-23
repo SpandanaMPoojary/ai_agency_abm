@@ -9,3 +9,7 @@ requests
 psycopg2-binary
 google-search-results
 python-dotenv
+replicate
+sqlmodel
+gspread
+google-auth

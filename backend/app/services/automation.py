@@ -48,13 +48,12 @@ class AutomationService:
             return {"status": "error", "message": "Missing Phantombuster configuration"}
 
         try:
-            url = "https://api.phantombuster.com/api/v1/agent/launch"
+            url = f"https://api.phantombuster.com/api/v1/agent/{self.phantom_id}/launch"
             headers = {
-                "X-Phantombuster-Key": self.api_key,
+                "X-Phantombuster-Key-1": self.api_key,
                 "Content-Type": "application/json"
             }
             payload = {
-                "id": self.phantom_id,
                 "argument": {
                     "profileUrl": profile_url,
                     "message": message

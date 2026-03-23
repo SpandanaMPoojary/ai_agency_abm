@@ -4,5 +4,6 @@
     "python.envFile": "${workspaceFolder}/.env",
     "python.analysis.extraPaths": [
         "."
-    ]
+    ],
+    "css.lint.unknownAtRules": "ignore"
 }

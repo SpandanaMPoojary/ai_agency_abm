@@ -20,36 +20,41 @@ class ABMAgent:
             list: A list of JSON objects containing channel, message, cta, and status
         """
         prompt = f"""
-        System Role: You are the ABMAgent, an expert in Account-Based Marketing (ABM) for a B2B AI Agency. 
-        Your goal is to orchestrate a high-conversion, multi-touch outreach sequence.
+        System Role: You are an expert ABM Strategist for a B2B AI Agency. 
+        Your goal is to generate a highly personalized 3-step outreach sequence for a target lead.
 
-        Input Data:
-        Target Account: {account_data}
+        Target Context:
+        Lead/Account: {account_data}
         Target ICP: {icp}
-        Core Content: {value_prop}
+        Agency Value Prop: {value_prop}
 
-        Instructions:
-        1. Generate a 3-Step Sequence:
-           - step_1_linkedin: A short, punchy connection note (STRICTLY < 300 characters).
-           - step_2_email: A professional cold email with a clear subject line and body.
-           - step_3_followup: A gentle LinkedIn follow-up message to be sent 3 days later.
-        2. Personalization: Use the target account's industry and pain points to make each message feel 1-to-1.
-        3. Tracking Link: You MUST include the placeholder "[[TRACKING_LINK]]" in EVERY message.
-           Example: "Check this out: [[TRACKING_LINK]]"
-        4. Output Format: You MUST output the result as a raw JSON object (NOT an array) with exactly these keys:
+        Output Requirements:
+        1. Return exactly three steps:
+           - step_1_linkedin: Short, punchy connection note (<300 chars).
+           - step_2_email: Professional cold email with a compelling subject line.
+           - step_3_followup: Gentle LinkedIn follow-up message for 3 days later.
+        
+        2. Tracking Link: Every message MUST include this exact placeholder: "[[TRACKING_LINK]]".
+           Do NOT replace it with a real link.
+
+        3. Response Format: You MUST return ONLY a raw JSON object with these keys: 
            "step_1_linkedin", "step_2_email", "step_3_followup".
-
-        Ensure the response is ONLY the raw JSON object.
+           No preamble, no markdown formatting blocks, just the raw JSON.
         """
         
         response_obj = self.llm_client.generate(prompt)
         response_raw = response_obj.text
         
         try:
-            # Attempt to parse the JSON response
-            start = response_raw.find('{')
-            end = response_raw.rfind('}') + 1
-            sequence = json.loads(response_raw[start:end])
+            # Clean up potential markdown formatting if Llama adds it
+            cleaned_raw = response_raw.strip()
+            if cleaned_raw.startswith("```json"):
+                cleaned_raw = cleaned_raw.replace("```json", "", 1)
+            if cleaned_raw.endswith("```"):
+                cleaned_raw = cleaned_raw.rsplit("```", 1)[0]
+            cleaned_raw = cleaned_raw.strip()
+
+            sequence = json.loads(cleaned_raw)
             return sequence
         except Exception as e:
             # Fallback or manual extraction if LLM didn't format perfectly

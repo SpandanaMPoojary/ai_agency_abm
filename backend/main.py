@@ -18,6 +18,7 @@ from backend.app.db.models import Account, OutreachSequence
 from backend.app.services.automation import AutomationService
 from backend.app.agents.research_agent import ResearchAgent
 from backend.app.agents.abm_agent import ABMAgent
+from backend.app.services.google_sheets import GoogleSheetsService
 from pydantic import BaseModel
 
 load_dotenv()
@@ -40,6 +41,16 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# --- Helpers ---
+
+def stringify_step(step_data):
+    """Ensure any step (which might be a dict from LLM) is a string."""
+    if isinstance(step_data, dict):
+        if "subject" in step_data and "body" in step_data:
+            return f"Subject: {step_data['subject']}\n\n{step_data['body']}"
+        return str(step_data)
+    return str(step_data) if step_data is not None else None
+
 # --- API Endpoints ---
 
 @app.get("/api/leads")
@@ -52,6 +63,7 @@ async def get_leads(session: Session = Depends(get_session)):
     for os_obj, acc_obj in results:
         leads.append({
             "id": str(os_obj.id),
+            "account_id": str(acc_obj.id),
             "name": acc_obj.company_name, # Using company_name as name for simplicity in current UI
             "company": acc_obj.industry or "Target Company",
             "profile_url": acc_obj.website or "https://www.linkedin.com",
@@ -61,7 +73,8 @@ async def get_leads(session: Session = Depends(get_session)):
             "step_3": os_obj.step_3_followup,
             "agent_id": "abm_agent_01",
             "status": os_obj.approval_status,
-            "lead_score": acc_obj.lead_score
+            "lead_score": acc_obj.lead_score,
+            "human_notes": acc_obj.human_notes
         })
     return {"leads": leads}
 
@@ -102,6 +115,15 @@ async def approve_campaign(id: int, session: Session = Depends(get_session)):
         email=acc_obj.email
     )
     
+    # 4. Sync to Google Sheets Firing List
+    try:
+        sheets_service = GoogleSheetsService()
+        sheets_service.append_lead(profile_url, final_message)
+    except Exception as e:
+        logging.error(f"Failed to sync to Google Sheets: {e}")
+        # We don't fail the whole request just because Sheets sync failed, 
+        # but the Phantom trigger was already attempted.
+
     if result["status"] == "success":
         os_obj.approval_status = "SENT"
         acc_obj.status = "Active"
@@ -129,10 +151,122 @@ async def track_click(lead_id: int, session: Session = Depends(get_session)):
     landing_page = os.getenv("AGENCY_LANDING_PAGE", "https://your-agency.com")
     return RedirectResponse(url=landing_page)
 
+class UpdateSequenceRequest(BaseModel):
+    step_1: Optional[str] = None
+    step_2: Optional[str] = None
+    step_3: Optional[str] = None
+
+@app.patch("/api/sequences/{id}")
+async def update_sequence(id: int, request: UpdateSequenceRequest, session: Session = Depends(get_session)):
+    os_obj = session.get(OutreachSequence, id)
+    if not os_obj:
+        raise HTTPException(status_code=404, detail="Sequence not found")
+    
+    if request.step_1 is not None:
+        os_obj.step_1_linkedin = request.step_1
+        os_obj.message = request.step_1 # Sync legacy message
+    if request.step_2 is not None:
+        os_obj.step_2_email = request.step_2
+    if request.step_3 is not None:
+        os_obj.step_3_followup = request.step_3
+        
+    session.add(os_obj)
+    session.commit()
+    return {"status": "success"}
+
+class UpdateNotesRequest(BaseModel):
+    notes: str
+
+@app.patch("/api/leads/{id}/notes")
+async def update_notes(id: int, request: UpdateNotesRequest, session: Session = Depends(get_session)):
+    acc_obj = session.get(Account, id)
+    if not acc_obj:
+        raise HTTPException(status_code=404, detail="Lead not found")
+    
+    acc_obj.human_notes = request.notes
+    session.add(acc_obj)
+    session.commit()
+    return {"status": "success"}
+
+class UpdateUrlRequest(BaseModel):
+    url: str
+
+@app.patch("/api/leads/{id}/url")
+async def update_url(id: int, request: UpdateUrlRequest, session: Session = Depends(get_session)):
+    acc_obj = session.get(Account, id)
+    if not acc_obj:
+        raise HTTPException(status_code=404, detail="Lead not found")
+    
+    acc_obj.website = request.url
+    session.add(acc_obj)
+    session.commit()
+    return {"status": "success"}
+
 class ResearchRequest(BaseModel):
     icp_description: str
     limit: int = 5
     platform: str = "linkedin"
+
+class TargetSpecificRequest(BaseModel):
+    url: str
+    icp_context: str = "B2B AI Automation"
+
+@app.post("/api/target-specific")
+async def target_specific(request: TargetSpecificRequest, session: Session = Depends(get_session)):
+    research_agent = ResearchAgent()
+    abm_agent = ABMAgent()
+    
+    lead = research_agent.research_single_url(request.url, request.icp_context)
+    
+    try:
+        account_data = f"{lead['account']} - {lead['decision_maker']}"
+        value_prop = "Our AI Agency specializes in B2B growth and automations."
+        
+        sequence = abm_agent.generate_outreach_sequence(
+            account_data, request.icp_context, value_prop
+        )
+        
+        new_acc = Account(
+            company_name=lead['account'],
+            website=lead['website'],
+            industry=request.icp_context[:50],
+            status="pending"
+        )
+        session.add(new_acc)
+        session.flush()
+        
+        new_os = OutreachSequence(
+            account_id=new_acc.id,
+            channel="manual",
+            step_1_linkedin=stringify_step(sequence.get("step_1_linkedin")),
+            step_2_email=stringify_step(sequence.get("step_2_email")),
+            step_3_followup=stringify_step(sequence.get("step_3_followup")),
+            message=stringify_step(sequence.get("step_1_linkedin")),
+            cta="Click Link",
+            approval_status="draft"
+        )
+        session.add(new_os)
+        session.commit()
+        
+        return {
+            "status": "success",
+            "lead": {
+                "id": str(new_os.id),
+                "account_id": str(new_acc.id),
+                "name": lead['decision_maker'],
+                "company": lead['account'],
+                "profile_url": lead['website'],
+                "step_1": sequence.get("step_1_linkedin"),
+                "step_2": sequence.get("step_2_email"),
+                "step_3": sequence.get("step_3_followup"),
+                "agent_id": "abm_agent_01",
+                "status": "draft",
+                "lead_score": 0
+            }
+        }
+    except Exception as e:
+        session.rollback()
+        raise HTTPException(status_code=500, detail=str(e))
 
 @app.post("/api/research")
 async def run_research(request: ResearchRequest, session: Session = Depends(get_session)):
@@ -168,10 +302,10 @@ async def run_research(request: ResearchRequest, session: Session = Depends(get_
             new_os = OutreachSequence(
                 account_id=new_acc.id,
                 channel=request.platform,
-                step_1_linkedin=sequence.get("step_1_linkedin"),
-                step_2_email=sequence.get("step_2_email"),
-                step_3_followup=sequence.get("step_3_followup"),
-                message=sequence.get("step_1_linkedin"), # Fallback for legacy
+                step_1_linkedin=stringify_step(sequence.get("step_1_linkedin")),
+                step_2_email=stringify_step(sequence.get("step_2_email")),
+                step_3_followup=stringify_step(sequence.get("step_3_followup")),
+                message=stringify_step(sequence.get("step_1_linkedin")), # Fallback for legacy
                 cta="Click Link",
                 approval_status="draft"
             )

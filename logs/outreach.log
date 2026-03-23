@@ -44,3 +44,126 @@
 2026-03-23 15:02:53,644 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent "HTTP/1.1 429 Too Many Requests"
 2026-03-23 15:09:07,864 - INFO - AFC is enabled with max remote calls: 10.
 2026-03-23 15:09:08,587 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent "HTTP/1.1 429 Too Many Requests"
+2026-03-23 16:18:21,700 - INFO - 5 changes detected
+2026-03-23 16:18:21,995 - INFO - 5 changes detected
+2026-03-23 16:18:29,559 - INFO - 1 change detected
+2026-03-23 16:18:29,565 - INFO - 1 change detected
+2026-03-23 16:18:30,876 - INFO - 3 changes detected
+2026-03-23 16:19:12,479 - INFO - 1 change detected
+2026-03-23 16:19:13,695 - INFO - 3 changes detected
+2026-03-23 16:19:22,633 - INFO - 5 changes detected
+2026-03-23 16:19:32,188 - INFO - 3 changes detected
+2026-03-23 16:19:36,047 - INFO - 3 changes detected
+2026-03-23 16:19:37,474 - INFO - 3 changes detected
+2026-03-23 16:19:41,319 - INFO - 3 changes detected
+2026-03-23 16:31:53,690 - INFO - 1 change detected
+2026-03-23 16:31:55,020 - INFO - 3 changes detected
+2026-03-23 16:32:27,406 - INFO - 102 changes detected
+2026-03-23 16:32:28,660 - INFO - 1 change detected
+2026-03-23 16:32:29,270 - INFO - 3 changes detected
+2026-03-23 16:32:29,831 - INFO - 1 change detected
+2026-03-23 16:32:34,520 - INFO - 4 changes detected
+2026-03-23 16:32:35,260 - INFO - 1 change detected
+2026-03-23 16:32:36,070 - INFO - 5 changes detected
+2026-03-23 16:32:37,686 - INFO - 1 change detected
+2026-03-23 16:32:39,606 - INFO - 3 changes detected
+2026-03-23 16:32:56,111 - INFO - 5 changes detected
+2026-03-23 16:33:02,729 - INFO - 1 change detected
+2026-03-23 16:33:03,587 - INFO - 1 change detected
+2026-03-23 16:33:04,297 - INFO - 3 changes detected
+2026-03-23 16:33:04,962 - INFO - 6 changes detected
+2026-03-23 16:33:09,465 - INFO - 3 changes detected
+2026-03-23 16:33:38,035 - INFO - 5 changes detected
+2026-03-23 16:33:42,775 - INFO - 5 changes detected
+2026-03-23 16:33:44,744 - INFO - 5 changes detected
+2026-03-23 16:33:48,031 - INFO - 5 changes detected
+2026-03-23 16:33:59,536 - INFO - 1 change detected
+2026-03-23 16:34:00,807 - INFO - 3 changes detected
+2026-03-23 16:38:03,013 - INFO - 1 change detected
+2026-03-23 16:38:04,326 - INFO - 3 changes detected
+2026-03-23 16:38:05,045 - INFO - 9 changes detected
+2026-03-23 16:38:09,495 - INFO - 3 changes detected
+2026-03-23 16:39:47,009 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/llama-3.3-70b-instruct/predictions "HTTP/1.1 404 Not Found"
+2026-03-23 16:44:39,767 - INFO - 1 change detected
+2026-03-23 16:44:40,984 - INFO - 3 changes detected
+2026-03-23 16:46:25,720 - INFO - AFC is enabled with max remote calls: 10.
+2026-03-23 16:46:29,694 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent "HTTP/1.1 404 Not Found"
+2026-03-23 16:47:32,827 - INFO - AFC is enabled with max remote calls: 10.
+2026-03-23 16:47:33,218 - INFO - HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent "HTTP/1.1 404 Not Found"
+2026-03-23 16:47:53,526 - INFO - 4 changes detected
+2026-03-23 17:05:16,812 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/llama-3.3-70b-instruct/predictions "HTTP/1.1 404 Not Found"
+2026-03-23 17:07:37,439 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/llama-3.3-70b-instruct/predictions "HTTP/1.1 404 Not Found"
+2026-03-23 17:09:54,227 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/llama-3.3-70b-instruct/predictions "HTTP/1.1 404 Not Found"
+2026-03-23 17:11:24,168 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/meta-llama-3.3-70b-instruct/predictions "HTTP/1.1 404 Not Found"
+2026-03-23 17:38:09,957 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/meta-llama-3-70b-instruct/predictions "HTTP/1.1 201 Created"
+2026-03-23 17:38:25,772 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/meta-llama-3-70b-instruct/predictions "HTTP/1.1 201 Created"
+2026-03-23 17:38:45,737 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/meta-llama-3-70b-instruct/predictions "HTTP/1.1 201 Created"
+2026-03-23 17:38:50,966 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/meta-llama-3-70b-instruct/predictions "HTTP/1.1 201 Created"
+2026-03-23 17:38:56,567 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/meta-llama-3-70b-instruct/predictions "HTTP/1.1 201 Created"
+2026-03-23 17:39:08,013 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/meta-llama-3-70b-instruct/predictions "HTTP/1.1 201 Created"
+2026-03-23 17:39:18,633 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/meta-llama-3-70b-instruct/predictions "HTTP/1.1 201 Created"
+2026-03-23 17:39:25,389 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/meta-llama-3-70b-instruct/predictions "HTTP/1.1 201 Created"
+2026-03-23 17:39:30,328 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/meta-llama-3-70b-instruct/predictions "HTTP/1.1 201 Created"
+2026-03-23 17:39:35,889 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/meta-llama-3-70b-instruct/predictions "HTTP/1.1 201 Created"
+2026-03-23 17:40:10,162 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/meta-llama-3-70b-instruct/predictions "HTTP/1.1 201 Created"
+2026-03-23 17:40:27,127 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/meta-llama-3-70b-instruct/predictions "HTTP/1.1 201 Created"
+2026-03-23 17:40:39,403 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/meta-llama-3-70b-instruct/predictions "HTTP/1.1 201 Created"
+2026-03-23 17:40:44,049 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/meta-llama-3-70b-instruct/predictions "HTTP/1.1 201 Created"
+2026-03-23 17:40:49,318 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/meta-llama-3-70b-instruct/predictions "HTTP/1.1 201 Created"
+2026-03-23 17:42:01,822 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/meta-llama-3-70b-instruct/predictions "HTTP/1.1 201 Created"
+2026-03-23 17:42:14,523 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/meta-llama-3-70b-instruct/predictions "HTTP/1.1 201 Created"
+2026-03-23 17:42:20,884 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/meta-llama-3-70b-instruct/predictions "HTTP/1.1 201 Created"
+2026-03-23 17:42:26,769 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/meta-llama-3-70b-instruct/predictions "HTTP/1.1 201 Created"
+2026-03-23 17:42:32,257 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/meta-llama-3-70b-instruct/predictions "HTTP/1.1 201 Created"
+2026-03-23 17:44:03,480 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/meta-llama-3-70b-instruct/predictions "HTTP/1.1 201 Created"
+2026-03-23 17:44:20,412 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/meta-llama-3-70b-instruct/predictions "HTTP/1.1 201 Created"
+2026-03-23 17:44:37,457 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/meta-llama-3-70b-instruct/predictions "HTTP/1.1 201 Created"
+2026-03-23 17:44:42,555 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/meta-llama-3-70b-instruct/predictions "HTTP/1.1 201 Created"
+2026-03-23 17:44:48,350 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/meta-llama-3-70b-instruct/predictions "HTTP/1.1 201 Created"
+2026-03-23 17:46:12,818 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/meta-llama-3-70b-instruct/predictions "HTTP/1.1 201 Created"
+2026-03-23 17:46:24,852 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/meta-llama-3-70b-instruct/predictions "HTTP/1.1 201 Created"
+2026-03-23 17:46:40,298 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/meta-llama-3-70b-instruct/predictions "HTTP/1.1 201 Created"
+2026-03-23 17:46:45,573 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/meta-llama-3-70b-instruct/predictions "HTTP/1.1 201 Created"
+2026-03-23 17:46:50,971 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/meta-llama-3-70b-instruct/predictions "HTTP/1.1 201 Created"
+2026-03-23 18:02:14,424 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/meta-llama-3-70b-instruct/predictions "HTTP/1.1 201 Created"
+2026-03-23 18:02:21,188 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/meta-llama-3-70b-instruct/predictions "HTTP/1.1 201 Created"
+2026-03-23 18:02:26,835 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/meta-llama-3-70b-instruct/predictions "HTTP/1.1 201 Created"
+2026-03-23 18:02:45,011 - INFO - [LIVE] Attempting to fire Phantom 2735348618161173 for https://www.linkedin.com/in/spandana-m-poojary-7b69542ab/
+2026-03-23 18:02:45,833 - ERROR - [LIVE] Failed to trigger Phantom for https://www.linkedin.com/in/spandana-m-poojary-7b69542ab/: 404 Client Error: Not Found for url: https://api.phantombuster.com/api/v1/agent/launch
+2026-03-23 18:04:51,400 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/meta-llama-3-70b-instruct/predictions "HTTP/1.1 201 Created"
+2026-03-23 18:04:59,313 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/meta-llama-3-70b-instruct/predictions "HTTP/1.1 201 Created"
+2026-03-23 18:05:04,920 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/meta-llama-3-70b-instruct/predictions "HTTP/1.1 201 Created"
+2026-03-23 18:05:10,911 - INFO - [LIVE] Attempting to fire Phantom 2735348618161173 for https://www.linkedin.com/in/spandana-m-poojary-7b69542ab/
+2026-03-23 18:05:12,315 - INFO - [LIVE] Successfully launched Phantom for https://www.linkedin.com/in/spandana-m-poojary-7b69542ab/. Response: {"status":"success","data":{"containerId":"7260839565468997"}}
+2026-03-23 20:27:52,843 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/meta-llama-3-70b-instruct/predictions "HTTP/1.1 201 Created"
+2026-03-23 20:27:58,648 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/meta-llama-3-70b-instruct/predictions "HTTP/1.1 201 Created"
+2026-03-23 20:28:03,674 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/meta-llama-3-70b-instruct/predictions "HTTP/1.1 201 Created"
+2026-03-23 20:28:19,989 - INFO - [LIVE] Attempting to fire Phantom 2735348618161173 for https://www.linkedin.com/in/rachana-billava-034a43244/
+2026-03-23 20:28:21,909 - INFO - [LIVE] Successfully launched Phantom for https://www.linkedin.com/in/rachana-billava-034a43244/. Response: {"status":"success","data":{"containerId":"2909682823812727"}}
+2026-03-23 23:00:42,040 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/meta-llama-3-70b-instruct/predictions "HTTP/1.1 201 Created"
+2026-03-23 23:00:47,330 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/meta-llama-3-70b-instruct/predictions "HTTP/1.1 201 Created"
+2026-03-23 23:00:52,384 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/meta-llama-3-70b-instruct/predictions "HTTP/1.1 201 Created"
+2026-03-23 23:01:39,945 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/meta-llama-3-70b-instruct/predictions "HTTP/1.1 201 Created"
+2026-03-23 23:01:48,803 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/meta-llama-3-70b-instruct/predictions "HTTP/1.1 201 Created"
+2026-03-23 23:01:54,374 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/meta-llama-3-70b-instruct/predictions "HTTP/1.1 201 Created"
+2026-03-23 23:02:25,953 - INFO - [LIVE] Attempting to fire Phantom 2735348618161173 for https://www.linkedin.com/in/spandana-m-poojary-7b69542ab/
+2026-03-23 23:02:27,553 - INFO - [LIVE] Successfully launched Phantom for https://www.linkedin.com/in/spandana-m-poojary-7b69542ab/. Response: {"status":"success","data":{"containerId":"738226880269171"}}
+2026-03-23 23:02:31,387 - INFO - Successfully appended lead https://www.linkedin.com/in/spandana-m-poojary-7b69542ab/ to Google Sheets.
+2026-03-23 23:03:47,132 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/meta-llama-3-70b-instruct/predictions "HTTP/1.1 201 Created"
+2026-03-23 23:03:54,450 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/meta-llama-3-70b-instruct/predictions "HTTP/1.1 201 Created"
+2026-03-23 23:03:59,398 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/meta-llama-3-70b-instruct/predictions "HTTP/1.1 201 Created"
+2026-03-23 23:04:16,222 - INFO - [LIVE] Attempting to fire Phantom 2735348618161173 for https://www.linkedin.com/in/yamini-sridhar-7258b72a5/
+2026-03-23 23:04:18,619 - INFO - [LIVE] Successfully launched Phantom for https://www.linkedin.com/in/yamini-sridhar-7258b72a5/. Response: {"status":"success","data":{"containerId":"3021659324921266"}}
+2026-03-23 23:04:22,104 - INFO - Successfully appended lead https://www.linkedin.com/in/yamini-sridhar-7258b72a5/ to Google Sheets.
+2026-03-23 23:50:04,897 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/meta-llama-3-70b-instruct/predictions "HTTP/1.1 201 Created"
+2026-03-23 23:50:11,549 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/meta-llama-3-70b-instruct/predictions "HTTP/1.1 201 Created"
+2026-03-23 23:50:16,423 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/meta-llama-3-70b-instruct/predictions "HTTP/1.1 201 Created"
+2026-03-23 23:50:21,695 - INFO - [LIVE] Attempting to fire Phantom 2735348618161173 for https://www.linkedin.com/in/rachana-billava-034a43244/
+2026-03-23 23:50:22,961 - INFO - [LIVE] Successfully launched Phantom for https://www.linkedin.com/in/rachana-billava-034a43244/. Response: {"status":"success","data":{"containerId":"7134365609519819"}}
+2026-03-23 23:50:25,698 - INFO - Successfully appended lead https://www.linkedin.com/in/rachana-billava-034a43244/ to Google Sheets.
+2026-03-23 23:50:43,421 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/meta-llama-3-70b-instruct/predictions "HTTP/1.1 201 Created"
+2026-03-23 23:50:48,939 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/meta-llama-3-70b-instruct/predictions "HTTP/1.1 201 Created"
+2026-03-23 23:50:54,834 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/meta-llama-3-70b-instruct/predictions "HTTP/1.1 201 Created"
+2026-03-23 23:52:05,339 - INFO - [LIVE] Attempting to fire Phantom 2735348618161173 for https://www.linkedin.com/in/shilpa-m-talawar-abba86322/
+2026-03-23 23:52:06,618 - INFO - [LIVE] Successfully launched Phantom for https://www.linkedin.com/in/shilpa-m-talawar-abba86322/. Response: {"status":"success","data":{"containerId":"285175010165615"}}
+2026-03-23 23:52:09,827 - INFO - Successfully appended lead https://www.linkedin.com/in/shilpa-m-talawar-abba86322/ to Google Sheets.

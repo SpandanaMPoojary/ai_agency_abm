@@ -84,6 +84,46 @@ class ResearchAgent:
         hooks_obj = self.llm_client.generate(prompt)
         return hooks_obj.text
 
+    def research_single_url(self, url: str, icp_context: str = ""):
+        """
+        Research/Enrich a specific URL (LinkedIn/Twitter)
+        """
+        # Search for this specific URL to get snippets/details
+        results = self.research_service.search_companies(url)
+        snippet = results[0].get("snippet", "No info found") if results else "Manual Target"
+        title = results[0].get("title", "Unknown Lead") if results else "Manual Target"
+        
+        # Guess name/company from title/snippet
+        guess_prompt = f"""
+        Analyze this search result title and snippet for a social media profile:
+        Title: {title}
+        Snippet: {snippet}
+        
+        Extract:
+        1. Person Name
+        2. Company Name
+        
+        Return ONLY a JSON object: {{"name": "...", "company": "..."}}
+        """
+        guess_raw = self.llm_client.generate(guess_prompt).text
+        try:
+            start = guess_raw.find('{')
+            end = guess_raw.rfind('}') + 1
+            info = json.loads(guess_raw[start:end])
+        except:
+            info = {"name": title.split('|')[0].strip(), "company": "Unknown"}
+
+        hooks = self.generate_personalization_hooks(f"{info['name']} @ {info['company']}", snippet)
+        
+        return {
+            "account": info['company'],
+            "website": url,
+            "linkedin": url,
+            "decision_maker": info['name'],
+            "dm_linkedin": url,
+            "personalization_hooks": hooks
+        }
+
     def execute_full_research(self, icp_description, limit=5, platform="linkedin"):
         """
         Execute the full research workflow
