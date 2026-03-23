@@ -6,6 +6,7 @@ import Link from 'next/link';
 
 type Lead = {
   id: string;
+  account_id: string;
   name: string;
   company: string;
   profile_url: string;
@@ -16,6 +17,7 @@ type Lead = {
   agent_id: string;
   status?: string;
   lead_score?: number;
+  human_notes?: string;
 };
 
 export default function Dashboard() {
@@ -25,7 +27,9 @@ export default function Dashboard() {
   const [icp, setIcp] = useState('');
   const [limit, setLimit] = useState(5);
   const [platform, setPlatform] = useState('linkedin');
+  const [targetUrl, setTargetUrl] = useState('');
   const [ordering, setOrdering] = useState(false);
+  const [targeting, setTargeting] = useState(false);
   
   const [loading, setLoading] = useState<string | null>(null);
   const [status, setStatus] = useState<Record<string, string>>({});
@@ -37,14 +41,18 @@ export default function Dashboard() {
     if (sortByScore) {
       return (b.lead_score || 0) - (a.lead_score || 0);
     }
-    return Number(b.id) - Number(a.id); // Default to newest first
+    const valA = Number(a.id);
+    const valB = Number(b.id);
+    if (isNaN(valA) || isNaN(valB)) return 0;
+    return valB - valA; // Default to newest first
   });
 
   const fetchLeads = async () => {
     try {
-      const res = await fetch("http://127.0.0.1:8000/api/leads");
+      const res = await fetch("http://127.0.0.1:8000/api/leads", { cache: 'no-store' });
       if (res.ok) {
         const data = await res.json();
+        console.log("Fetched leads:", data.leads);
         setLeads(data.leads || []);
       }
     } catch (err) {
@@ -74,10 +82,12 @@ export default function Dashboard() {
       const res = await fetch("http://127.0.0.1:8000/api/research", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
+        cache: 'no-store',
         body: JSON.stringify({ icp_description: icp, limit, platform })
       });
       if (res.ok) {
         const data = await res.json();
+        console.log("Research output:", data.leads);
         setLeads(data.leads || []);
       } else {
         alert("Failed to order agents.");
@@ -86,6 +96,28 @@ export default function Dashboard() {
       alert("Error connecting to backend API.");
     }
     setOrdering(false);
+  };
+
+  const handleTargetSpecific = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setTargeting(true);
+    try {
+      const res = await fetch("http://127.0.0.1:8000/api/target-specific", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ url: targetUrl, icp_context: icp || "B2B AI Automation" })
+      });
+      if (res.ok) {
+        const data = await res.json();
+        setLeads(prev => [data.lead, ...prev]);
+        setTargetUrl('');
+      } else {
+        alert("Failed to target specific lead.");
+      }
+    } catch (err) {
+      alert("Error connecting to backend API.");
+    }
+    setTargeting(false);
   };
 
   const handleApprove = async (lead: Lead) => {
@@ -138,7 +170,61 @@ export default function Dashboard() {
     }
   };
 
-  if (!isAuthenticated) return null;
+  const handleUpdateSequence = async (leadId: string, step: number, newText: string) => {
+    try {
+      const payload: any = {};
+      if (step === 0) payload.step_1 = newText;
+      if (step === 1) payload.step_2 = newText;
+      if (step === 2) payload.step_3 = newText;
+
+      const res = await fetch(`http://127.0.0.1:8000/api/sequences/${leadId}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
+      if (res.ok) {
+        setLeads(prev => prev.map(l => l.id === leadId ? { ...l, [`step_${step + 1}`]: newText } : l));
+      }
+    } catch (err) {
+      console.error("Update failed:", err);
+    }
+  };
+
+  const handleUpdateNotes = async (leadId: string, accountId: string, notes: string) => {
+    try {
+      const res = await fetch(`http://127.0.0.1:8000/api/leads/${accountId}/notes`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ notes })
+      });
+      if (res.ok) {
+        setLeads(prev => prev.map(l => l.id === leadId ? { ...l, human_notes: notes } : l));
+      }
+    } catch (err) {
+      console.error("Notes update failed:", err);
+    }
+  };
+
+  const handleUpdateProfileUrl = async (leadId: string, accountId: string, newUrl: string) => {
+    try {
+      const res = await fetch(`http://127.0.0.1:8000/api/leads/${accountId}/url`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ url: newUrl })
+      });
+      if (res.ok) {
+        setLeads(prev => prev.map(l => l.id === leadId ? { ...l, profile_url: newUrl } : l));
+      }
+    } catch (err) {
+      console.error("URL update failed:", err);
+    }
+  };
+
+  if (!isAuthenticated) return (
+    <div className="min-h-screen flex items-center justify-center bg-brand-white">
+      <p className="font-bold uppercase tracking-widest text-brand-darkgrey">Authenticating...</p>
+    </div>
+  );
 
   return (
     <main className="min-h-screen p-8 md:p-16 max-w-5xl mx-auto bg-brand-white">
@@ -227,6 +313,31 @@ export default function Dashboard() {
         </form>
       </section>
 
+      {/* Manual Target Section */}
+      <section className="mb-12 border-2 border-dashed border-brand-grey p-6 bg-brand-white/50">
+        <h2 className="text-lg font-bold tracking-wide uppercase mb-4 text-brand-darkgrey">Target Specific Profile</h2>
+        <form onSubmit={handleTargetSpecific} className="flex gap-4">
+          <input
+            type="url"
+            className="flex-1 border border-brand-grey p-3 outline-none focus:border-brand-brown text-brand-black transition-colors"
+            placeholder="Paste LinkedIn or Twitter URL here..."
+            value={targetUrl}
+            onChange={e => setTargetUrl(e.target.value)}
+            required
+          />
+          <button
+            type="submit"
+            disabled={targeting}
+            className="bg-brand-brown hover:bg-brand-black text-white px-8 py-3 uppercase tracking-wider font-semibold disabled:bg-brand-grey transition-colors"
+          >
+            {targeting ? "Processing..." : "Target Now"}
+          </button>
+        </form>
+        <p className="text-[10px] uppercase font-bold text-brand-darkgrey mt-2 tracking-widest">
+          AI will research the profile and generate a personalized 3-step sequence automatically.
+        </p>
+      </section>
+
       {/* Leads List */}
       <section className="space-y-8">
         {leads.length > 0 && <h2 className="text-xl font-bold tracking-wide uppercase text-brand-black border-b border-brand-grey pb-2">Generated Campaigns</h2>}
@@ -271,10 +382,32 @@ export default function Dashboard() {
                 </div>
               </div>
 
-              <div className="bg-brand-white p-5 border border-brand-grey text-brand-black mb-6 italic min-h-[120px] whitespace-pre-wrap">
-                {(status[`tab_${lead.id}`] || "0") === "0" && (lead.step_1 || lead.message)}
-                {(status[`tab_${lead.id}`] || "0") === "1" && (lead.step_2 || "No email generated.")}
-                {(status[`tab_${lead.id}`] || "0") === "2" && (lead.step_3 || "No follow-up generated.")}
+              <div className="bg-brand-white p-5 border border-brand-grey text-brand-black mb-6 italic min-h-[120px] whitespace-pre-wrap relative group">
+                <textarea
+                  className="w-full bg-transparent border-none outline-none italic resize-none"
+                  rows={4}
+                  value={
+                    (status[`tab_${lead.id}`] || "0") === "0" ? (lead.step_1 || lead.message) :
+                    (status[`tab_${lead.id}`] || "1") === "1" ? (lead.step_2 || "No email generated.") :
+                    (lead.step_3 || "No follow-up generated.")
+                  }
+                  onChange={(e) => handleUpdateSequence(lead.id, parseInt(status[`tab_${lead.id}`] || "0"), e.target.value)}
+                />
+                <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
+                  <span className="text-[9px] font-bold uppercase bg-brand-black text-white px-2 py-0.5 shadow-sm">Editable</span>
+                </div>
+              </div>
+
+              {/* Human Notes Section */}
+              <div className="mb-6">
+                <label className="text-[10px] font-bold text-brand-darkgrey uppercase tracking-widest mb-1 block">Internal Human Notes</label>
+                <input 
+                  type="text"
+                  placeholder="Add a human note for this account..."
+                  className="w-full border-b border-brand-grey py-1 text-sm outline-none focus:border-brand-brown transition-colors bg-transparent italic"
+                  value={lead.human_notes || ''}
+                  onChange={(e) => handleUpdateNotes(lead.id, lead.account_id, e.target.value)}
+                />
               </div>
               
               <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
