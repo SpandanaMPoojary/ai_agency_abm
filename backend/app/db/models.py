@@ -1,3 +1,4 @@
+from datetime import datetime
 from typing import Optional
 from sqlmodel import SQLModel, Field, Relationship
 
@@ -6,6 +7,7 @@ class Account(SQLModel, table=True):
     
     id: Optional[int] = Field(default=None, primary_key=True)
     company_name: str
+    first_name: Optional[str] = None
     industry: Optional[str] = None
     website: Optional[str] = None
     email: Optional[str] = None
@@ -30,3 +32,12 @@ class OutreachSequence(SQLModel, table=True):
     approval_status: str = Field(default="draft")
     
     account: Optional[Account] = Relationship(back_populates="outreach_sequences")
+    
+class LeadScore(SQLModel, table=True):
+    __tablename__ = "lead_scores"
+    
+    id: Optional[int] = Field(default=None, primary_key=True)
+    account_id: int = Field(foreign_key="accounts.id")
+    score: int = Field(default=0)
+    reason: str = Field(default="Initial approval")
+    timestamp: datetime = Field(default_factory=datetime.utcnow)

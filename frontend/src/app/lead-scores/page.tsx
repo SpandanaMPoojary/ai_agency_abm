@@ -6,6 +6,7 @@ import Link from "next/link";
 type AccountScore = {
   id: number;
   company_name: string;
+  first_name: string;
   industry: string;
   lead_score: number;
   status: string;
@@ -63,7 +64,7 @@ export default function LeadScoresPage() {
               <thead>
                 <tr className="bg-brand-black text-white uppercase tracking-widest text-sm">
                   <th className="p-4 border-r border-white/20">Rank</th>
-                  <th className="p-4 border-r border-white/20">Company</th>
+                  <th className="p-4 border-r border-white/20">Name</th>
                   <th className="p-4 border-r border-white/20">Status</th>
                   <th className="p-4 text-center">Engagement Score</th>
                 </tr>
@@ -75,8 +76,8 @@ export default function LeadScoresPage() {
                       #{index + 1}
                     </td>
                     <td className="p-4 border-r border-brand-grey">
-                      <div className="font-bold text-lg">{acc.company_name}</div>
-                      <div className="text-xs text-brand-darkgrey uppercase tracking-tighter">{acc.industry}</div>
+                      <div className="font-bold text-lg">{acc.first_name || acc.company_name}</div>
+                      <div className="text-xs text-brand-darkgrey uppercase tracking-tighter">{acc.company_name}</div>
                     </td>
                     <td className="p-4 border-r border-brand-grey">
                       <span className={`px-3 py-1 text-[10px] font-black uppercase tracking-widest rounded-full ${

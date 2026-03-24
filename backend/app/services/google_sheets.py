@@ -26,7 +26,7 @@ class GoogleSheetsService:
             logging.error(f"Failed to authenticate with Google Sheets: {e}")
             return False
 
-    def append_lead(self, profile_url: str, message: str):
+    def append_lead(self, profile_url: str, first_name: str, connection_note: str):
         """
         Appends a lead to the 'Approved_LinkedIn_Outreach' spreadsheet with deduplication.
         """
@@ -41,26 +41,37 @@ class GoogleSheetsService:
                 # Fallback to name if ID not set
                 sheet = self.client.open("Approved_LinkedIn_Outreach").sheet1
 
+            logging.info(f"Connected to sheet: {sheet.title}")
+
             # 1. Initialize headers if missing or wrong
-            header_row = ["profileURL", "messagetobesent"]
+            header_row = ["profileUrl", "firstName", "connectionNote"]
             try:
                 current_headers = sheet.row_values(1)
-                if current_headers != header_row:
-                    sheet.insert_row(header_row, index=1)
-                    logging.info("Updated headers in Google Sheets.")
-            except:
+                if not current_headers or current_headers != header_row:
+                    logging.info(f"Updating headers from {current_headers} to {header_row}")
+                    # If wrong headers, clear and insert or just update row 1
+                    if len(current_headers) > 0:
+                        sheet.update('A1:C1', [header_row])
+                    else:
+                        sheet.insert_row(header_row, index=1)
+                    logging.info("Successfully updated headers in Google Sheets.")
+            except Exception as e:
+                logging.warning(f"Header update failed or sheet empty: {e}")
                 sheet.append_row(header_row)
-                logging.info("Created headers in empty Google Sheets.")
 
             # 2. Deduplication check
-            existing_urls = sheet.col_values(1) # Column A
-            if profile_url in existing_urls:
-                logging.info(f"Lead {profile_url} already exists in Sheets. Skipping.")
-                return {"status": "skipped", "message": "Lead already exists"}
+            try:
+                existing_urls = sheet.col_values(1) # Column A
+                if profile_url in existing_urls:
+                    logging.info(f"Lead {profile_url} already exists in Sheets. Skipping.")
+                    return {"status": "skipped", "message": "Lead already exists"}
+            except Exception as e:
+                logging.error(f"Deduplication check failed: {e}")
 
-            # 2. Append data
-            sheet.append_row([profile_url, message])
-            logging.info(f"Successfully appended lead {profile_url} to Google Sheets.")
+            # 3. Append data
+            row_data = [profile_url, first_name, connection_note]
+            sheet.append_row(row_data)
+            logging.info(f"Successfully appended lead {profile_url} with data: {row_data}")
             return {"status": "success"}
 
         except Exception as e:

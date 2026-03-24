@@ -89,19 +89,25 @@ class ResearchAgent:
         Research/Enrich a specific URL (LinkedIn/Twitter)
         """
         # Search for this specific URL to get snippets/details
-        results = self.research_service.search_companies(url)
+        results = []
+        try:
+            results = self.research_service.search_companies(url)
+        except:
+            pass
+            
         snippet = results[0].get("snippet", "No info found") if results else "Manual Target"
         title = results[0].get("title", "Unknown Lead") if results else "Manual Target"
         
-        # Guess name/company from title/snippet
+        # Guess name/company from title/snippet + URL slug
         guess_prompt = f"""
-        Analyze this search result title and snippet for a social media profile:
+        Analyze this social media URL and its search title/snippet:
+        URL: {url}
         Title: {title}
         Snippet: {snippet}
         
-        Extract:
-        1. Person Name
-        2. Company Name
+        Task: 
+        1. Extract the Person Name (look at the URL slug like /in/john-doe -> John Doe).
+        2. Extract or guess the Company Name. If unknown, use "LinkedIn Profile".
         
         Return ONLY a JSON object: {{"name": "...", "company": "..."}}
         """
@@ -111,15 +117,21 @@ class ResearchAgent:
             end = guess_raw.rfind('}') + 1
             info = json.loads(guess_raw[start:end])
         except:
-            info = {"name": title.split('|')[0].strip(), "company": "Unknown"}
+            # Fallback regex-ish for common social URLs
+            slug = url.rstrip('/').split('/')[-1].replace('-', ' ').title()
+            info = {"name": slug, "company": "Target Account"}
+            
+        # Ensure name is not empty or 'Manual Target'
+        if not info.get('name') or info['name'] == 'Manual Target':
+            info['name'] = url.rstrip('/').split('/')[-1].replace('-', ' ').title()
 
         hooks = self.generate_personalization_hooks(f"{info['name']} @ {info['company']}", snippet)
         
         return {
-            "account": info['company'],
+            "account": info.get('company', 'Target Account'),
             "website": url,
             "linkedin": url,
-            "decision_maker": info['name'],
+            "decision_maker": info.get('name', 'LinkedIn Lead'),
             "dm_linkedin": url,
             "personalization_hooks": hooks
         }

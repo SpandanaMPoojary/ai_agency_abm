@@ -8,6 +8,7 @@ type Lead = {
   id: string;
   account_id: string;
   name: string;
+  first_name?: string;
   company: string;
   profile_url: string;
   message: string;
@@ -22,6 +23,7 @@ type Lead = {
 
 export default function Dashboard() {
   const router = useRouter();
+  const BACKEND_URL = "http://127.0.0.1:8000";
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   const [icp, setIcp] = useState('');
@@ -34,22 +36,23 @@ export default function Dashboard() {
   const [loading, setLoading] = useState<string | null>(null);
   const [status, setStatus] = useState<Record<string, string>>({});
   const [leads, setLeads] = useState<Lead[]>([]);
+  const [localEdits, setLocalEdits] = useState<Record<string, { step_1?: string, step_2?: string, step_3?: string, notes?: string }>>({});
   const [initialLoading, setInitialLoading] = useState(true);
   const [sortByScore, setSortByScore] = useState(false);
 
   const sortedLeads = [...leads].sort((a, b) => {
-    if (sortByScore) {
-      return (b.lead_score || 0) - (a.lead_score || 0);
-    }
-    const valA = Number(a.id);
-    const valB = Number(b.id);
-    if (isNaN(valA) || isNaN(valB)) return 0;
-    return valB - valA; // Default to newest first
+    // Primary sort: lead_score (Descending)
+    const scoreA = a.lead_score || 0;
+    const scoreB = b.lead_score || 0;
+    if (scoreA !== scoreB) return scoreB - scoreA;
+    
+    // Secondary sort: newest first (using ID)
+    return Number(b.id) - Number(a.id);
   });
 
   const fetchLeads = async () => {
     try {
-      const res = await fetch("http://127.0.0.1:8000/api/leads", { cache: 'no-store' });
+      const res = await fetch(`${BACKEND_URL}/api/leads`, { cache: 'no-store' });
       if (res.ok) {
         const data = await res.json();
         console.log("Fetched leads:", data.leads);
@@ -79,7 +82,7 @@ export default function Dashboard() {
     setOrdering(true);
     setStatus({});
     try {
-      const res = await fetch("http://127.0.0.1:8000/api/research", {
+      const res = await fetch(`${BACKEND_URL}/api/research`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         cache: 'no-store',
@@ -102,7 +105,7 @@ export default function Dashboard() {
     e.preventDefault();
     setTargeting(true);
     try {
-      const res = await fetch("http://127.0.0.1:8000/api/target-specific", {
+      const res = await fetch(`${BACKEND_URL}/api/target-specific`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ url: targetUrl, icp_context: icp || "B2B AI Automation" })
@@ -120,24 +123,68 @@ export default function Dashboard() {
     setTargeting(false);
   };
 
-  const handleApprove = async (lead: Lead) => {
-    setLoading(lead.id);
+  const handleReject = async (id: string) => {
     try {
-      const res = await fetch(`http://127.0.0.1:8000/api/approve-campaign/${lead.id}`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" }
-      });
-      
-      if (res.ok) {
-        setStatus(prev => ({ ...prev, [lead.id]: "Launched Successfully" }));
-        fetchLeads(); // Refresh list to get updated statuses from DB
-      } else {
-        const errorData = await res.json().catch(() => ({}));
-        setStatus(prev => ({ ...prev, [lead.id]: errorData.detail || "Validation Failed" }));
+      const resp = await fetch(`${BACKEND_URL}/api/reject-campaign/${id}`, { method: 'POST' });
+      if (resp.ok) {
+        fetchLeads();
       }
     } catch (err) {
       console.error(err);
-      setStatus(prev => ({ ...prev, [lead.id]: "Connection Error" }));
+    }
+  };
+
+  const handleApprove = async (lead: Lead) => {
+    setLoading(lead.id);
+    try {
+      const res = await fetch(`${BACKEND_URL}/api/approve-campaign/${lead.id}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        cache: 'no-store'
+      });
+      if (res.ok) {
+        fetchLeads();
+      } else {
+        alert("Failed to approve campaign.");
+      }
+    } catch (err) {
+      alert("Error approving campaign.");
+    }
+    setLoading(null);
+  };
+
+  const handleCheckAcceptance = async (id: string) => {
+    setLoading(`check_${id}`);
+    try {
+      const res = await fetch(`${BACKEND_URL}/api/check-acceptance/${id}`, { method: 'POST' });
+      if (res.ok) {
+        const data = await res.json();
+        if (data.status === 'pending') {
+          alert("Connection not yet found in LinkedIn Connections. Please wait 24h for Phantombuster to sync!");
+        }
+        fetchLeads();
+      } else {
+        alert("Failed to check acceptance status.");
+      }
+    } catch (err) {
+      console.error(err);
+      alert("Error checking acceptance status.");
+    }
+    setLoading(null);
+  };
+
+  const handleGenerateFollowups = async (leadId: string) => {
+    setLoading(`followup_${leadId}`);
+    try {
+      const res = await fetch(`http://127.0.0.1:8000/api/generate-followups/${leadId}`, {
+        method: "POST"
+      });
+      if (res.ok) {
+        fetchLeads();
+        setStatus(prev => ({ ...prev, [leadId]: "Followups Ready" }));
+      }
+    } catch (err) {
+      console.error(err);
     }
     setLoading(null);
   };
@@ -345,10 +392,13 @@ export default function Dashboard() {
         {sortedLeads.map((lead) => (
           <article 
             key={lead.id} 
-            className="bg-white border border-brand-grey shadow-sm overflow-hidden"
+            className={`bg-white border border-brand-grey shadow-sm overflow-hidden ${lead.status === 'REJECTED' ? 'opacity-50 grayscale' : ''}`}
           >
-            <div className={`p-4 text-white flex justify-between items-center ${lead.status === 'SENT' || lead.status === 'Active' ? 'bg-brand-brown' : 'bg-brand-black'}`}>
+            <div className={`p-4 text-white flex justify-between items-center transition-colors duration-500 ${ (lead.status === 'SENT' || lead.status === 'Active' || lead.status === 'CONNECTION_SENT' || status[lead.id]?.includes("Sent")) ? 'bg-brand-brown' : (lead.status === 'REJECTED' ? 'bg-brand-grey' : 'bg-brand-black')}`}>
               <div>
+                <p className="text-[10px] font-bold uppercase tracking-widest text-white/60 mb-1">
+                  Attn: {lead.first_name || 'Decision Maker'}
+                </p>
                 <div className="flex items-center gap-3">
                   <h2 className="text-xl font-semibold tracking-wide">{lead.name}</h2>
                   <span className="bg-white text-brand-black px-2 py-0.5 text-xs font-bold rounded-sm shadow-sm">
@@ -357,41 +407,32 @@ export default function Dashboard() {
                 </div>
                 <p className="text-brand-grey text-sm">{lead.company}</p>
               </div>
-              <span className={`px-3 py-1 text-xs uppercase tracking-wider text-white border border-white/20 ${lead.status === 'SENT' || lead.status === 'Active' ? 'bg-green-600' : 'bg-brand-black/50'}`}>
-                {lead.status === 'SENT' || lead.status === 'Active' ? 'Active' : 'Pending Review'}
+              <span className={`px-3 py-1 text-xs uppercase tracking-wider text-white border border-white/20 ${(lead.status === 'CLICKED' || lead.status === 'INTERESTED' || lead.status === 'ACCEPTED' || lead.status === 'CONNECTED') ? 'bg-green-600' : (lead.status === 'CONNECTION_SENT' || lead.status === 'Active' ? 'bg-brand-brown' : 'bg-brand-black/50')}`}>
+                {(status[lead.id] || lead.status || 'Pending Review').replace('_', ' ')}
               </span>
             </div>
             
             <div className="p-6">
               <div className="flex items-center justify-between mb-4 border-b border-brand-grey pb-2">
-                <h3 className="text-sm font-semibold text-brand-darkgrey uppercase tracking-wider">Outreach Sequence</h3>
-                <div className="flex bg-brand-white border border-brand-grey p-1 space-x-1">
-                  {['Step 1 (LI)', 'Step 2 (Email)', 'Step 3 (LI)'].map((tab, i) => (
-                    <button
-                      key={i}
-                      onClick={() => setStatus(prev => ({ ...prev, [`tab_${lead.id}`]: i.toString() }))}
-                      className={`px-3 py-1 text-[10px] font-bold uppercase transition-colors ${
-                        (status[`tab_${lead.id}`] || "0") === i.toString() 
-                        ? 'bg-brand-black text-white' 
-                        : 'text-brand-darkgrey hover:bg-brand-grey'
-                      }`}
-                    >
-                      {tab}
-                    </button>
-                  ))}
-                </div>
+                <h3 className="text-sm font-semibold text-brand-darkgrey uppercase tracking-wider">LinkedIn Connection Note</h3>
               </div>
 
               <div className="bg-brand-white p-5 border border-brand-grey text-brand-black mb-6 italic min-h-[120px] whitespace-pre-wrap relative group">
                 <textarea
-                  className="w-full bg-transparent border-none outline-none italic resize-none"
-                  rows={4}
+                  className="w-full bg-transparent border-none outline-none italic resize-none overflow-y-auto"
+                  rows={6}
                   value={
-                    (status[`tab_${lead.id}`] || "0") === "0" ? (lead.step_1 || lead.message) :
-                    (status[`tab_${lead.id}`] || "1") === "1" ? (lead.step_2 || "No email generated.") :
-                    (lead.step_3 || "No follow-up generated.")
+                    localEdits[lead.id]?.step_1 ?? (lead.step_1 || lead.message)
                   }
-                  onChange={(e) => handleUpdateSequence(lead.id, parseInt(status[`tab_${lead.id}`] || "0"), e.target.value)}
+                  onChange={(e) => {
+                    setLocalEdits(prev => ({
+                      ...prev,
+                      [lead.id]: { ...prev[lead.id], step_1: e.target.value }
+                    }));
+                  }}
+                  onBlur={(e) => {
+                    handleUpdateSequence(lead.id, 0, e.target.value);
+                  }}
                 />
                 <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
                   <span className="text-[9px] font-bold uppercase bg-brand-black text-white px-2 py-0.5 shadow-sm">Editable</span>
@@ -400,13 +441,19 @@ export default function Dashboard() {
 
               {/* Human Notes Section */}
               <div className="mb-6">
-                <label className="text-[10px] font-bold text-brand-darkgrey uppercase tracking-widest mb-1 block">Internal Human Notes</label>
+                <label className="text-[10px] font-bold text-brand-darkgrey uppercase tracking-widest mb-1 block">Account Strategy / Notes</label>
                 <input 
                   type="text"
-                  placeholder="Add a human note for this account..."
-                  className="w-full border-b border-brand-grey py-1 text-sm outline-none focus:border-brand-brown transition-colors bg-transparent italic"
-                  value={lead.human_notes || ''}
-                  onChange={(e) => handleUpdateNotes(lead.id, lead.account_id, e.target.value)}
+                  placeholder="Draft internal strategy or notes for this lead..."
+                  className="w-full border-b border-brand-grey py-1 text-sm outline-none focus:border-brand-brown transition-colors bg-transparent italic text-brand-black"
+                  value={localEdits[lead.id]?.notes ?? (lead.human_notes || '')}
+                  onChange={(e) => {
+                    setLocalEdits(prev => ({
+                      ...prev,
+                      [lead.id]: { ...prev[lead.id], notes: e.target.value }
+                    }));
+                  }}
+                  onBlur={(e) => handleUpdateNotes(lead.id, lead.account_id, e.target.value)}
                 />
               </div>
               
@@ -424,24 +471,79 @@ export default function Dashboard() {
                     onClick={() => handleSimulateClick(lead.id)}
                     className="text-[10px] font-bold uppercase tracking-tighter bg-brand-white border border-brand-grey px-2 py-1 hover:bg-brand-grey transition-colors text-brand-darkgrey"
                   >
-                    Simulate Engagement (+20)
+                    Simulate Engagement (+20 Pts)
                   </button>
                 </div>
-                
                 <div className="flex items-center space-x-4 w-full md:w-auto justify-end">
-                  {(status[lead.id] || lead.status === 'SENT' || lead.status === 'Active') && (
-                    <span className={`text-sm tracking-wide font-medium ${ (status[lead.id]?.includes("Success") || lead.status === 'SENT' || lead.status === 'Active') ? "text-green-700" : "text-red-700"}`}>
-                      {status[lead.id] || (lead.status === 'Active' ? 'Active' : 'Completed')}
+                  {/* Phase 1: Connection */}
+                  {(lead.status === 'draft' || !lead.status || lead.status === 'PENDING') && (
+                    <div className="flex gap-2">
+                       <button
+                        onClick={() => handleReject(lead.id)}
+                        className="bg-brand-grey hover:bg-brand-black text-brand-black hover:text-white px-4 py-2 uppercase tracking-wide font-bold transition-colors"
+                      >
+                        Reject
+                      </button>
+                      <button
+                        onClick={() => handleApprove(lead)}
+                        disabled={loading === lead.id}
+                        className="bg-brand-black hover:bg-brand-brown text-white px-6 py-2 uppercase tracking-wide font-bold transition-colors"
+                      >
+                        {loading === lead.id ? 'Firing...' : 'Approve & Fire'}
+                      </button>
+                    </div>
+                  )}
+
+                  {/* Stage Status Indication & Acceptance Check */}
+                  {lead.status === 'CONNECTION_SENT' && (
+                    <div className="flex flex-col items-end gap-2">
+                       <button className="bg-green-600 text-white px-6 py-2 uppercase tracking-wide font-bold cursor-default opacity-90 transition-all duration-500 whitespace-nowrap">
+                        ✓ Connection Sent
+                      </button>
+                      <button 
+                        onClick={() => handleCheckAcceptance(lead.id)}
+                        disabled={loading === `check_${lead.id}`}
+                        className="text-[10px] font-bold uppercase tracking-widest text-brand-darkgrey hover:text-brand-brown transition-colors"
+                      >
+                        {loading === `check_${lead.id}` ? "Checking..." : "Check Status (Wait 24h) ↻"}
+                      </button>
+                    </div>
+                  )}
+
+                  {lead.status === 'REJECTED' && (
+                    <span className="text-brand-darkgrey font-bold uppercase tracking-wider italic">
+                      Lead Rejected
                     </span>
                   )}
-                  
-                  <button
-                    onClick={() => handleApprove(lead)}
-                    disabled={loading === lead.id || !!status[lead.id] || lead.status === 'SENT' || lead.status === 'Active'}
-                    className="bg-brand-brown hover:bg-brand-black disabled:bg-brand-grey text-white px-6 py-2 uppercase tracking-wide font-bold transition-colors outline-none focus:ring-2 focus:ring-brand-brown focus:ring-offset-2"
-                  >
-                    {loading === lead.id ? 'Firing...' : (lead.status === 'SENT' || lead.status === 'Active' ? 'Already Fired' : 'Approve & Fire')}
-                  </button>
+
+                  {/* Phase 2: Follow-ups (Only for CONNECTED/ACCEPTED/CLICKED) */}
+                  {(lead.status === 'CONNECTED' || lead.status === 'ACCEPTED' || lead.status === 'CLICKED') && (
+                    <div className="flex gap-2">
+                       <button
+                        onClick={() => handleGenerateFollowups(lead.id)}
+                        disabled={loading === `followup_${lead.id}`}
+                        className="bg-brand-grey hover:bg-brand-darkgrey text-brand-black px-4 py-2 uppercase tracking-wide font-bold transition-colors"
+                      >
+                        {loading === `followup_${lead.id}` ? 'Generating...' : (lead.step_2 ? 'Regenerate Follow-ups' : 'Prepare Follow-ups')}
+                      </button>
+                      {lead.step_2 && (
+                        <>
+                          <button className={`px-4 py-2 uppercase tracking-wide font-bold transition-colors ${lead.status === 'CLICKED' ? 'bg-green-600 text-white' : 'bg-brand-brown text-white hover:bg-brand-black'}`}>
+                            {lead.status === 'CLICKED' ? '🔥 Send Priority DM' : 'Send LinkedIn DM'}
+                          </button>
+                          <button className="bg-brand-brown hover:bg-brand-black text-white px-4 py-2 uppercase tracking-wide font-bold transition-colors">
+                            Send Email
+                          </button>
+                        </>
+                      )}
+                    </div>
+                  )}
+
+                  {lead.status === 'INTERESTED' && (
+                    <span className="bg-green-100 text-green-800 px-4 py-2 font-bold uppercase border border-green-800">
+                      🔥 High Interest - Needs Manual Reply
+                    </span>
+                  )}
                 </div>
               </div>
             </div>

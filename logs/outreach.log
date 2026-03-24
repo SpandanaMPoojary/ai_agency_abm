@@ -167,3 +167,573 @@
 2026-03-23 23:52:05,339 - INFO - [LIVE] Attempting to fire Phantom 2735348618161173 for https://www.linkedin.com/in/shilpa-m-talawar-abba86322/
 2026-03-23 23:52:06,618 - INFO - [LIVE] Successfully launched Phantom for https://www.linkedin.com/in/shilpa-m-talawar-abba86322/. Response: {"status":"success","data":{"containerId":"285175010165615"}}
 2026-03-23 23:52:09,827 - INFO - Successfully appended lead https://www.linkedin.com/in/shilpa-m-talawar-abba86322/ to Google Sheets.
+2026-03-24 01:35:56,897 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/meta-llama-3-70b-instruct/predictions "HTTP/1.1 201 Created"
+2026-03-24 01:36:03,254 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/meta-llama-3-70b-instruct/predictions "HTTP/1.1 201 Created"
+2026-03-24 01:36:04,955 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/meta-llama-3-70b-instruct/predictions "HTTP/1.1 201 Created"
+2026-03-24 01:39:02,085 - INFO - [LIVE] Attempting to fire Phantom 2735348618161173 for https://www.linkedin.com/in/rachana-billava-034a43244/
+2026-03-24 01:39:03,369 - INFO - [LIVE] Successfully launched Phantom for https://www.linkedin.com/in/rachana-billava-034a43244/. Response: {"status":"success","data":{"containerId":"7970306224090836"}}
+2026-03-24 01:39:05,825 - INFO - Lead https://www.linkedin.com/in/rachana-billava-034a43244/ already exists in Sheets. Skipping.
+2026-03-24 01:41:30,511 - INFO - 1 change detected
+2026-03-24 01:41:30,883 - INFO - 1 change detected
+2026-03-24 01:41:31,241 - INFO - 1 change detected
+2026-03-24 01:41:31,599 - INFO - 5 changes detected
+2026-03-24 01:41:31,955 - INFO - 1 change detected
+2026-03-24 01:41:32,313 - INFO - 1 change detected
+2026-03-24 01:41:32,670 - INFO - 1 change detected
+2026-03-24 01:41:33,024 - INFO - 1 change detected
+2026-03-24 01:41:33,383 - INFO - 1 change detected
+2026-03-24 01:41:33,740 - INFO - 1 change detected
+2026-03-24 01:41:34,200 - INFO - 1 change detected
+2026-03-24 01:41:34,617 - INFO - 1 change detected
+2026-03-24 01:41:35,069 - INFO - 1 change detected
+2026-03-24 01:41:35,535 - INFO - 1 change detected
+2026-03-24 01:41:35,952 - INFO - 1 change detected
+2026-03-24 01:41:36,409 - INFO - 1 change detected
+2026-03-24 01:41:36,875 - INFO - 1 change detected
+2026-03-24 01:41:37,291 - INFO - 1 change detected
+2026-03-24 01:41:37,748 - INFO - 1 change detected
+2026-03-24 01:41:38,162 - INFO - 1 change detected
+2026-03-24 01:41:38,617 - INFO - 1 change detected
+2026-03-24 01:41:39,034 - INFO - 1 change detected
+2026-03-24 01:41:39,438 - INFO - 1 change detected
+2026-03-24 01:41:39,893 - INFO - 1 change detected
+2026-03-24 01:41:40,309 - INFO - 1 change detected
+2026-03-24 01:41:40,764 - INFO - 1 change detected
+2026-03-24 01:41:41,180 - INFO - 1 change detected
+2026-03-24 01:41:41,598 - INFO - 1 change detected
+2026-03-24 01:41:42,053 - INFO - 1 change detected
+2026-03-24 01:41:42,468 - INFO - 1 change detected
+2026-03-24 01:41:42,921 - INFO - 1 change detected
+2026-03-24 01:41:43,338 - INFO - 1 change detected
+2026-03-24 01:41:43,753 - INFO - 1 change detected
+2026-03-24 01:41:44,206 - INFO - 1 change detected
+2026-03-24 01:41:44,621 - INFO - 1 change detected
+2026-03-24 01:41:45,078 - INFO - 1 change detected
+2026-03-24 01:41:45,531 - INFO - 1 change detected
+2026-03-24 01:41:45,947 - INFO - 1 change detected
+2026-03-24 01:41:46,403 - INFO - 1 change detected
+2026-03-24 01:41:46,820 - INFO - 1 change detected
+2026-03-24 01:41:47,273 - INFO - 1 change detected
+2026-03-24 01:41:47,690 - INFO - 1 change detected
+2026-03-24 01:41:48,144 - INFO - 1 change detected
+2026-03-24 01:41:48,545 - INFO - 1 change detected
+2026-03-24 01:41:48,953 - INFO - 1 change detected
+2026-03-24 01:41:49,407 - INFO - 1 change detected
+2026-03-24 01:41:49,809 - INFO - 1 change detected
+2026-03-24 01:41:50,264 - INFO - 1 change detected
+2026-03-24 01:41:50,731 - INFO - 1 change detected
+2026-03-24 01:41:51,135 - INFO - 1 change detected
+2026-03-24 01:41:51,589 - INFO - 1 change detected
+2026-03-24 01:41:52,005 - INFO - 1 change detected
+2026-03-24 01:41:52,463 - INFO - 1 change detected
+2026-03-24 01:41:52,915 - INFO - 1 change detected
+2026-03-24 01:41:53,317 - INFO - 1 change detected
+2026-03-24 01:41:53,772 - INFO - 1 change detected
+2026-03-24 01:41:54,176 - INFO - 1 change detected
+2026-03-24 01:41:54,578 - INFO - 1 change detected
+2026-03-24 01:41:55,035 - INFO - 1 change detected
+2026-03-24 01:41:55,539 - INFO - 1 change detected
+2026-03-24 01:41:55,947 - INFO - 1 change detected
+2026-03-24 01:41:56,351 - INFO - 1 change detected
+2026-03-24 01:41:56,806 - INFO - 1 change detected
+2026-03-24 01:41:57,221 - INFO - 1 change detected
+2026-03-24 01:41:57,624 - INFO - 1 change detected
+2026-03-24 01:41:58,130 - INFO - 1 change detected
+2026-03-24 01:41:58,648 - INFO - 1 change detected
+2026-03-24 01:41:59,064 - INFO - 1 change detected
+2026-03-24 01:41:59,478 - INFO - 1 change detected
+2026-03-24 01:41:59,935 - INFO - 1 change detected
+2026-03-24 01:42:00,351 - INFO - 1 change detected
+2026-03-24 01:42:00,754 - INFO - 1 change detected
+2026-03-24 01:42:01,310 - INFO - 1 change detected
+2026-03-24 01:42:01,713 - INFO - 1 change detected
+2026-03-24 01:42:02,119 - INFO - 1 change detected
+2026-03-24 01:42:02,572 - INFO - 1 change detected
+2026-03-24 01:42:02,987 - INFO - 1 change detected
+2026-03-24 01:42:03,393 - INFO - 1 change detected
+2026-03-24 01:42:03,847 - INFO - 1 change detected
+2026-03-24 01:42:04,344 - INFO - 1 change detected
+2026-03-24 01:42:04,762 - INFO - 1 change detected
+2026-03-24 01:42:05,218 - INFO - 1 change detected
+2026-03-24 01:42:05,621 - INFO - 1 change detected
+2026-03-24 01:42:06,024 - INFO - 1 change detected
+2026-03-24 01:42:06,482 - INFO - 1 change detected
+2026-03-24 01:42:06,899 - INFO - 1 change detected
+2026-03-24 01:42:07,352 - INFO - 1 change detected
+2026-03-24 01:42:07,756 - INFO - 1 change detected
+2026-03-24 01:42:08,162 - INFO - 1 change detected
+2026-03-24 01:42:08,565 - INFO - 1 change detected
+2026-03-24 01:42:09,019 - INFO - 1 change detected
+2026-03-24 01:42:09,434 - INFO - 1 change detected
+2026-03-24 01:42:09,890 - INFO - 1 change detected
+2026-03-24 01:42:10,306 - INFO - 1 change detected
+2026-03-24 01:42:10,712 - INFO - 1 change detected
+2026-03-24 01:42:11,168 - INFO - 1 change detected
+2026-03-24 01:42:11,571 - INFO - 1 change detected
+2026-03-24 01:42:12,048 - INFO - 1 change detected
+2026-03-24 01:42:12,507 - INFO - 1 change detected
+2026-03-24 01:42:12,923 - INFO - 1 change detected
+2026-03-24 01:42:13,382 - INFO - 1 change detected
+2026-03-24 01:42:13,836 - INFO - 1 change detected
+2026-03-24 01:42:14,258 - INFO - 1 change detected
+2026-03-24 01:42:14,724 - INFO - 1 change detected
+2026-03-24 01:42:15,178 - INFO - 1 change detected
+2026-03-24 01:42:15,689 - INFO - 1 change detected
+2026-03-24 01:42:16,155 - INFO - 1 change detected
+2026-03-24 01:42:16,571 - INFO - 1 change detected
+2026-03-24 01:42:17,047 - INFO - 1 change detected
+2026-03-24 01:42:17,508 - INFO - 1 change detected
+2026-03-24 01:42:17,911 - INFO - 1 change detected
+2026-03-24 01:42:18,365 - INFO - 1 change detected
+2026-03-24 01:42:18,778 - INFO - 1 change detected
+2026-03-24 01:42:19,187 - INFO - 1 change detected
+2026-03-24 01:42:19,641 - INFO - 1 change detected
+2026-03-24 01:42:20,057 - INFO - 1 change detected
+2026-03-24 01:42:20,510 - INFO - 1 change detected
+2026-03-24 01:42:20,976 - INFO - 1 change detected
+2026-03-24 01:42:21,390 - INFO - 1 change detected
+2026-03-24 01:42:21,844 - INFO - 1 change detected
+2026-03-24 01:42:22,257 - INFO - 1 change detected
+2026-03-24 01:42:22,662 - INFO - 1 change detected
+2026-03-24 01:42:23,116 - INFO - 1 change detected
+2026-03-24 01:42:23,521 - INFO - 1 change detected
+2026-03-24 01:42:23,974 - INFO - 1 change detected
+2026-03-24 01:42:24,428 - INFO - 1 change detected
+2026-03-24 01:42:24,831 - INFO - 1 change detected
+2026-03-24 01:42:25,287 - INFO - 1 change detected
+2026-03-24 01:42:25,703 - INFO - 1 change detected
+2026-03-24 01:42:26,109 - INFO - 1 change detected
+2026-03-24 01:42:26,563 - INFO - 1 change detected
+2026-03-24 01:42:26,978 - INFO - 1 change detected
+2026-03-24 01:42:27,431 - INFO - 1 change detected
+2026-03-24 01:42:27,847 - INFO - 1 change detected
+2026-03-24 01:42:28,249 - INFO - 1 change detected
+2026-03-24 01:42:28,703 - INFO - 1 change detected
+2026-03-24 01:42:29,105 - INFO - 1 change detected
+2026-03-24 01:42:29,559 - INFO - 1 change detected
+2026-03-24 01:42:29,963 - INFO - 1 change detected
+2026-03-24 01:42:30,417 - INFO - 1 change detected
+2026-03-24 01:42:30,819 - INFO - 1 change detected
+2026-03-24 01:42:31,274 - INFO - 1 change detected
+2026-03-24 01:42:31,678 - INFO - 1 change detected
+2026-03-24 01:42:32,132 - INFO - 1 change detected
+2026-03-24 01:42:32,545 - INFO - 1 change detected
+2026-03-24 01:42:32,949 - INFO - 1 change detected
+2026-03-24 01:42:33,405 - INFO - 1 change detected
+2026-03-24 01:42:33,820 - INFO - 1 change detected
+2026-03-24 01:42:34,175 - INFO - 1 change detected
+2026-03-24 01:42:34,569 - INFO - 1 change detected
+2026-03-24 01:42:34,923 - INFO - 1 change detected
+2026-03-24 01:42:35,278 - INFO - 1 change detected
+2026-03-24 01:42:35,689 - INFO - 1 change detected
+2026-03-24 01:42:36,043 - INFO - 2 changes detected
+2026-03-24 01:42:36,453 - INFO - 1 change detected
+2026-03-24 01:42:36,909 - INFO - 1 change detected
+2026-03-24 01:42:37,324 - INFO - 1 change detected
+2026-03-24 01:42:37,781 - INFO - 1 change detected
+2026-03-24 01:42:38,195 - INFO - 1 change detected
+2026-03-24 01:42:38,600 - INFO - 1 change detected
+2026-03-24 01:42:39,055 - INFO - 1 change detected
+2026-03-24 01:42:39,459 - INFO - 1 change detected
+2026-03-24 01:42:39,915 - INFO - 1 change detected
+2026-03-24 01:42:40,331 - INFO - 1 change detected
+2026-03-24 01:42:40,787 - INFO - 1 change detected
+2026-03-24 01:42:41,202 - INFO - 1 change detected
+2026-03-24 01:42:41,657 - INFO - 1 change detected
+2026-03-24 01:42:42,072 - INFO - 1 change detected
+2026-03-24 01:42:42,479 - INFO - 1 change detected
+2026-03-24 01:42:42,884 - INFO - 1 change detected
+2026-03-24 01:42:43,341 - INFO - 1 change detected
+2026-03-24 01:42:43,757 - INFO - 1 change detected
+2026-03-24 01:42:44,162 - INFO - 1 change detected
+2026-03-24 01:42:44,618 - INFO - 1 change detected
+2026-03-24 01:42:45,071 - INFO - 1 change detected
+2026-03-24 01:42:45,487 - INFO - 1 change detected
+2026-03-24 01:42:45,940 - INFO - 1 change detected
+2026-03-24 01:42:46,342 - INFO - 1 change detected
+2026-03-24 01:42:46,798 - INFO - 1 change detected
+2026-03-24 01:42:47,251 - INFO - 1 change detected
+2026-03-24 01:42:47,667 - INFO - 1 change detected
+2026-03-24 01:42:48,124 - INFO - 1 change detected
+2026-03-24 01:42:48,541 - INFO - 1 change detected
+2026-03-24 01:42:48,996 - INFO - 1 change detected
+2026-03-24 01:42:49,409 - INFO - 1 change detected
+2026-03-24 01:42:49,866 - INFO - 1 change detected
+2026-03-24 01:42:50,269 - INFO - 1 change detected
+2026-03-24 01:42:50,676 - INFO - 1 change detected
+2026-03-24 01:42:51,128 - INFO - 1 change detected
+2026-03-24 01:42:51,544 - INFO - 1 change detected
+2026-03-24 01:42:52,000 - INFO - 1 change detected
+2026-03-24 01:42:52,453 - INFO - 1 change detected
+2026-03-24 01:42:52,870 - INFO - 1 change detected
+2026-03-24 01:42:53,275 - INFO - 1 change detected
+2026-03-24 01:42:53,731 - INFO - 1 change detected
+2026-03-24 01:42:54,135 - INFO - 1 change detected
+2026-03-24 01:42:54,590 - INFO - 1 change detected
+2026-03-24 01:42:54,992 - INFO - 1 change detected
+2026-03-24 01:42:55,447 - INFO - 1 change detected
+2026-03-24 01:42:55,860 - INFO - 1 change detected
+2026-03-24 01:42:56,314 - INFO - 1 change detected
+2026-03-24 01:42:56,729 - INFO - 1 change detected
+2026-03-24 01:42:57,185 - INFO - 1 change detected
+2026-03-24 01:42:57,601 - INFO - 1 change detected
+2026-03-24 01:42:58,005 - INFO - 1 change detected
+2026-03-24 01:42:58,458 - INFO - 1 change detected
+2026-03-24 01:42:58,873 - INFO - 1 change detected
+2026-03-24 01:42:59,278 - INFO - 1 change detected
+2026-03-24 01:42:59,733 - INFO - 1 change detected
+2026-03-24 01:43:00,135 - INFO - 1 change detected
+2026-03-24 01:43:00,593 - INFO - 1 change detected
+2026-03-24 01:43:01,009 - INFO - 1 change detected
+2026-03-24 01:43:01,463 - INFO - 1 change detected
+2026-03-24 01:43:01,879 - INFO - 1 change detected
+2026-03-24 01:43:02,282 - INFO - 1 change detected
+2026-03-24 01:43:02,735 - INFO - 1 change detected
+2026-03-24 01:43:03,137 - INFO - 1 change detected
+2026-03-24 01:43:03,594 - INFO - 1 change detected
+2026-03-24 01:43:04,013 - INFO - 1 change detected
+2026-03-24 01:43:04,415 - INFO - 1 change detected
+2026-03-24 01:43:04,925 - INFO - 1 change detected
+2026-03-24 01:43:05,341 - INFO - 1 change detected
+2026-03-24 01:43:05,796 - INFO - 1 change detected
+2026-03-24 01:43:06,213 - INFO - 1 change detected
+2026-03-24 01:43:06,667 - INFO - 1 change detected
+2026-03-24 01:43:07,072 - INFO - 1 change detected
+2026-03-24 01:43:07,475 - INFO - 1 change detected
+2026-03-24 01:43:07,929 - INFO - 1 change detected
+2026-03-24 01:43:08,342 - INFO - 1 change detected
+2026-03-24 01:43:08,700 - INFO - 1 change detected
+2026-03-24 01:43:09,057 - INFO - 1 change detected
+2026-03-24 01:43:09,413 - INFO - 1 change detected
+2026-03-24 01:43:09,769 - INFO - 1 change detected
+2026-03-24 01:43:10,128 - INFO - 1 change detected
+2026-03-24 01:43:10,534 - INFO - 1 change detected
+2026-03-24 01:43:10,936 - INFO - 1 change detected
+2026-03-24 01:43:11,339 - INFO - 1 change detected
+2026-03-24 01:43:11,796 - INFO - 1 change detected
+2026-03-24 01:43:12,263 - INFO - 1 change detected
+2026-03-24 01:43:12,679 - INFO - 1 change detected
+2026-03-24 01:43:13,085 - INFO - 1 change detected
+2026-03-24 01:43:13,540 - INFO - 1 change detected
+2026-03-24 01:43:13,942 - INFO - 1 change detected
+2026-03-24 01:43:14,448 - INFO - 1 change detected
+2026-03-24 01:43:14,859 - INFO - 1 change detected
+2026-03-24 01:43:15,313 - INFO - 1 change detected
+2026-03-24 01:43:15,728 - INFO - 1 change detected
+2026-03-24 01:43:16,182 - INFO - 1 change detected
+2026-03-24 01:43:16,634 - INFO - 1 change detected
+2026-03-24 01:43:17,036 - INFO - 1 change detected
+2026-03-24 01:43:17,503 - INFO - 1 change detected
+2026-03-24 01:43:17,905 - INFO - 1 change detected
+2026-03-24 01:43:18,358 - INFO - 1 change detected
+2026-03-24 01:43:18,775 - INFO - 1 change detected
+2026-03-24 01:43:19,231 - INFO - 1 change detected
+2026-03-24 01:43:19,648 - INFO - 1 change detected
+2026-03-24 01:43:20,050 - INFO - 1 change detected
+2026-03-24 01:43:20,506 - INFO - 1 change detected
+2026-03-24 01:43:20,920 - INFO - 1 change detected
+2026-03-24 01:43:21,374 - INFO - 1 change detected
+2026-03-24 01:43:21,778 - INFO - 1 change detected
+2026-03-24 01:43:22,231 - INFO - 1 change detected
+2026-03-24 01:43:22,634 - INFO - 1 change detected
+2026-03-24 01:43:23,091 - INFO - 1 change detected
+2026-03-24 01:43:23,505 - INFO - 1 change detected
+2026-03-24 01:43:23,910 - INFO - 1 change detected
+2026-03-24 01:43:24,365 - INFO - 1 change detected
+2026-03-24 01:43:24,783 - INFO - 1 change detected
+2026-03-24 01:43:25,236 - INFO - 1 change detected
+2026-03-24 01:43:25,650 - INFO - 1 change detected
+2026-03-24 01:43:26,055 - INFO - 1 change detected
+2026-03-24 01:43:26,509 - INFO - 1 change detected
+2026-03-24 01:43:26,926 - INFO - 1 change detected
+2026-03-24 01:43:27,381 - INFO - 1 change detected
+2026-03-24 01:43:27,788 - INFO - 1 change detected
+2026-03-24 01:43:28,246 - INFO - 1 change detected
+2026-03-24 01:43:28,662 - INFO - 1 change detected
+2026-03-24 01:43:29,065 - INFO - 1 change detected
+2026-03-24 01:43:29,518 - INFO - 1 change detected
+2026-03-24 01:43:29,921 - INFO - 1 change detected
+2026-03-24 01:43:30,378 - INFO - 1 change detected
+2026-03-24 01:43:30,792 - INFO - 1 change detected
+2026-03-24 01:43:31,209 - INFO - 1 change detected
+2026-03-24 01:43:31,663 - INFO - 1 change detected
+2026-03-24 01:43:32,081 - INFO - 1 change detected
+2026-03-24 01:43:32,484 - INFO - 1 change detected
+2026-03-24 01:43:32,942 - INFO - 1 change detected
+2026-03-24 01:43:33,355 - INFO - 1 change detected
+2026-03-24 01:43:33,771 - INFO - 1 change detected
+2026-03-24 01:43:34,228 - INFO - 1 change detected
+2026-03-24 01:43:34,631 - INFO - 1 change detected
+2026-03-24 01:43:35,046 - INFO - 1 change detected
+2026-03-24 01:43:35,502 - INFO - 1 change detected
+2026-03-24 01:43:35,904 - INFO - 1 change detected
+2026-03-24 01:43:36,359 - INFO - 1 change detected
+2026-03-24 01:43:36,761 - INFO - 1 change detected
+2026-03-24 01:43:37,217 - INFO - 1 change detected
+2026-03-24 01:43:37,633 - INFO - 1 change detected
+2026-03-24 01:43:38,092 - INFO - 1 change detected
+2026-03-24 01:43:38,508 - INFO - 1 change detected
+2026-03-24 01:43:38,914 - INFO - 1 change detected
+2026-03-24 01:43:39,368 - INFO - 1 change detected
+2026-03-24 01:43:39,772 - INFO - 1 change detected
+2026-03-24 01:43:40,178 - INFO - 1 change detected
+2026-03-24 01:43:40,633 - INFO - 1 change detected
+2026-03-24 01:43:41,099 - INFO - 1 change detected
+2026-03-24 01:43:41,515 - INFO - 1 change detected
+2026-03-24 01:43:41,970 - INFO - 1 change detected
+2026-03-24 01:43:42,384 - INFO - 1 change detected
+2026-03-24 01:43:42,838 - INFO - 1 change detected
+2026-03-24 01:43:43,254 - INFO - 1 change detected
+2026-03-24 01:43:43,709 - INFO - 1 change detected
+2026-03-24 01:43:44,113 - INFO - 1 change detected
+2026-03-24 01:43:44,519 - INFO - 1 change detected
+2026-03-24 01:43:44,973 - INFO - 1 change detected
+2026-03-24 01:43:45,375 - INFO - 1 change detected
+2026-03-24 01:43:45,827 - INFO - 1 change detected
+2026-03-24 01:43:46,229 - INFO - 1 change detected
+2026-03-24 01:43:46,685 - INFO - 1 change detected
+2026-03-24 01:43:47,087 - INFO - 1 change detected
+2026-03-24 01:43:47,543 - INFO - 1 change detected
+2026-03-24 01:43:47,959 - INFO - 1 change detected
+2026-03-24 01:43:48,365 - INFO - 1 change detected
+2026-03-24 01:43:48,767 - INFO - 1 change detected
+2026-03-24 01:43:49,224 - INFO - 1 change detected
+2026-03-24 01:43:49,638 - INFO - 1 change detected
+2026-03-24 01:43:50,044 - INFO - 1 change detected
+2026-03-24 01:43:50,499 - INFO - 1 change detected
+2026-03-24 01:43:50,903 - INFO - 1 change detected
+2026-03-24 01:43:51,358 - INFO - 1 change detected
+2026-03-24 01:43:51,773 - INFO - 1 change detected
+2026-03-24 01:43:52,228 - INFO - 1 change detected
+2026-03-24 01:44:33,236 - INFO - [LIVE] Attempting to fire Phantom 2735348618161173 for https://www.linkedin.com/in/rachana-billava-034a43244/
+2026-03-24 01:44:34,718 - INFO - [LIVE] Successfully launched Phantom for https://www.linkedin.com/in/rachana-billava-034a43244/. Response: {"status":"success","data":{"containerId":"6002078832564304"}}
+2026-03-24 01:44:37,070 - INFO - Lead https://www.linkedin.com/in/rachana-billava-034a43244/ already exists in Sheets. Skipping.
+2026-03-24 01:55:04,547 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/meta-llama-3-70b-instruct/predictions "HTTP/1.1 201 Created"
+2026-03-24 01:55:13,992 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/meta-llama-3-70b-instruct/predictions "HTTP/1.1 201 Created"
+2026-03-24 01:55:15,917 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/meta-llama-3-70b-instruct/predictions "HTTP/1.1 201 Created"
+2026-03-24 01:55:21,964 - INFO - [LIVE] Attempting to fire Phantom 2735348618161173 for https://www.linkedin.com/in/rachana-billava-034a43244/
+2026-03-24 01:55:23,343 - INFO - [LIVE] Successfully launched Phantom for https://www.linkedin.com/in/rachana-billava-034a43244/. Response: {"status":"success","data":{"containerId":"8754949521470145"}}
+2026-03-24 01:55:25,638 - INFO - Lead https://www.linkedin.com/in/rachana-billava-034a43244/ already exists in Sheets. Skipping.
+2026-03-24 10:44:32,235 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/meta-llama-3-70b-instruct/predictions "HTTP/1.1 201 Created"
+2026-03-24 10:44:40,070 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/meta-llama-3-70b-instruct/predictions "HTTP/1.1 201 Created"
+2026-03-24 10:44:42,030 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/meta-llama-3-70b-instruct/predictions "HTTP/1.1 201 Created"
+2026-03-24 10:45:50,292 - INFO - [LIVE] Attempting to fire Phantom 2735348618161173 for https://www.linkedin.com/in/surabhi-suvarna-866b77385/
+2026-03-24 10:45:52,053 - INFO - [LIVE] Successfully launched Phantom for https://www.linkedin.com/in/surabhi-suvarna-866b77385/. Response: {"status":"success","data":{"containerId":"1239695841868686"}}
+2026-03-24 10:45:55,418 - INFO - Successfully appended lead https://www.linkedin.com/in/surabhi-suvarna-866b77385/ to Google Sheets.
+2026-03-24 11:37:32,608 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/meta-llama-3-70b-instruct/predictions "HTTP/1.1 201 Created"
+2026-03-24 11:37:40,980 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/meta-llama-3-70b-instruct/predictions "HTTP/1.1 201 Created"
+2026-03-24 11:37:43,387 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/meta-llama-3-70b-instruct/predictions "HTTP/1.1 201 Created"
+2026-03-24 11:37:52,441 - INFO - [LIVE] Attempting to fire Phantom 2735348618161173 for https://www.linkedin.com/in/yamini-sridhar-7258b72a5/
+2026-03-24 11:37:54,513 - INFO - [LIVE] Successfully launched Phantom for https://www.linkedin.com/in/yamini-sridhar-7258b72a5/. Response: {"status":"success","data":{"containerId":"1016974756515226"}}
+2026-03-24 11:37:58,045 - INFO - Connected to sheet: Sheet1
+2026-03-24 11:37:59,040 - INFO - Lead https://www.linkedin.com/in/yamini-sridhar-7258b72a5/ already exists in Sheets. Skipping.
+2026-03-24 11:40:38,547 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/meta-llama-3-70b-instruct/predictions "HTTP/1.1 201 Created"
+2026-03-24 11:40:46,602 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/meta-llama-3-70b-instruct/predictions "HTTP/1.1 201 Created"
+2026-03-24 11:40:48,770 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/meta-llama-3-70b-instruct/predictions "HTTP/1.1 201 Created"
+2026-03-24 11:40:56,084 - INFO - [LIVE] Attempting to fire Phantom 2735348618161173 for https://www.linkedin.com/in/yamini-sridhar-7258b72a5/
+2026-03-24 11:40:58,097 - INFO - [LIVE] Successfully launched Phantom for https://www.linkedin.com/in/yamini-sridhar-7258b72a5/. Response: {"status":"success","data":{"containerId":"8635501381623679"}}
+2026-03-24 11:41:00,261 - INFO - Connected to sheet: Sheet1
+2026-03-24 11:41:01,887 - INFO - Successfully appended lead https://www.linkedin.com/in/yamini-sridhar-7258b72a5/ with data: ['https://www.linkedin.com/in/yamini-sridhar-7258b72a5/', 'Yamini', 'Hi Yamini, Excited to connect with PES University! Our AI Agency helps B2B organizations like yours drive growth and automate processes. Check out our success stories [[TRACKING_LINK]]. Looking forward to exploring opportunities together!', 'http://127.0.0.1:8000/api/track-click/39']
+2026-03-24 11:43:16,304 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/meta-llama-3-70b-instruct/predictions "HTTP/1.1 201 Created"
+2026-03-24 11:43:26,080 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/meta-llama-3-70b-instruct/predictions "HTTP/1.1 201 Created"
+2026-03-24 11:43:28,415 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/meta-llama-3-70b-instruct/predictions "HTTP/1.1 201 Created"
+2026-03-24 11:43:48,297 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/meta-llama-3-70b-instruct/predictions "HTTP/1.1 201 Created"
+2026-03-24 11:43:56,540 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/meta-llama-3-70b-instruct/predictions "HTTP/1.1 201 Created"
+2026-03-24 11:43:58,821 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/meta-llama-3-70b-instruct/predictions "HTTP/1.1 201 Created"
+2026-03-24 11:44:05,421 - INFO - [LIVE] Attempting to fire Phantom 2735348618161173 for https://www.linkedin.com/in/srushti-annigeri-3a18022b2/
+2026-03-24 11:44:08,130 - INFO - [LIVE] Successfully launched Phantom for https://www.linkedin.com/in/srushti-annigeri-3a18022b2/. Response: {"status":"success","data":{"containerId":"8883665332149542"}}
+2026-03-24 11:44:10,036 - INFO - Connected to sheet: Sheet1
+2026-03-24 11:44:11,492 - INFO - Successfully appended lead https://www.linkedin.com/in/srushti-annigeri-3a18022b2/ with data: ['https://www.linkedin.com/in/srushti-annigeri-3a18022b2/', 'Srushti', 'Hi Srushti, excited to connect with PES University! Our AI Agency helps B2B institutions like yours drive growth and automate processes. Check out [[TRACKING_LINK]] to explore how we can help. Looking forward to collaborating!', 'http://127.0.0.1:8000/api/track-click/41']
+2026-03-24 11:44:15,821 - INFO - [LIVE] Attempting to fire Phantom 2735348618161173 for https://www.linkedin.com/in/surabhi-suvarna-866b77385/
+2026-03-24 11:44:17,633 - INFO - [LIVE] Successfully launched Phantom for https://www.linkedin.com/in/surabhi-suvarna-866b77385/. Response: {"status":"success","data":{"containerId":"2997433489511644"}}
+2026-03-24 11:44:19,485 - INFO - Connected to sheet: Sheet1
+2026-03-24 11:44:20,930 - INFO - Successfully appended lead https://www.linkedin.com/in/surabhi-suvarna-866b77385/ with data: ['https://www.linkedin.com/in/surabhi-suvarna-866b77385/', 'Surabhi', 'Hi Surabhi, Excited to connect with PES University! Our AI Agency helps B2B organizations like yours drive growth and automation. Would love to explore opportunities [[TRACKING_LINK]].', 'http://127.0.0.1:8000/api/track-click/40']
+2026-03-24 12:24:47,513 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/meta-llama-3-70b-instruct/predictions "HTTP/1.1 201 Created"
+2026-03-24 12:24:55,692 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/meta-llama-3-70b-instruct/predictions "HTTP/1.1 201 Created"
+2026-03-24 12:24:57,344 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/meta-llama-3-70b-instruct/predictions "HTTP/1.1 201 Created"
+2026-03-24 12:25:18,587 - INFO - [LIVE] Attempting to fire Phantom 2735348618161173 for https://www.linkedin.com/in/varuni-sridhar-19706a3b4/
+2026-03-24 12:25:19,840 - ERROR - [LIVE] Failed to trigger Phantom for https://www.linkedin.com/in/varuni-sridhar-19706a3b4/: 400 Client Error: Bad Request for url: https://api.phantombuster.com/api/v1/agent/2735348618161173/launch
+2026-03-24 12:25:21,630 - INFO - Connected to sheet: Sheet1
+2026-03-24 12:25:22,965 - INFO - Successfully appended lead https://www.linkedin.com/in/varuni-sridhar-19706a3b4/ with data: ['https://www.linkedin.com/in/varuni-sridhar-19706a3b4/', 'Manual', 'Hi [[FIRST_NAME]], saw your work in B2B AI automation. Explore how our AI agency can accelerate your growth with automation solutions [[TRACKING_LINK]].', 'http://127.0.0.1:8000/t/42']
+2026-03-24 12:46:17,736 - INFO - [LIVE] Attempting to fire Phantom 2735348618161173 for https://www.linkedin.com/in/varuni-sridhar-19706a3b4/
+2026-03-24 12:46:19,182 - ERROR - [LIVE] Failed to trigger Phantom 2735348618161173 for https://www.linkedin.com/in/varuni-sridhar-19706a3b4/: 400 Client Error: Bad Request for url: https://api.phantombuster.com/api/v2/agents/launch
+2026-03-24 12:46:21,728 - INFO - Connected to sheet: Sheet1
+2026-03-24 12:46:23,263 - INFO - Successfully appended lead https://www.linkedin.com/in/varuni-sridhar-19706a3b4/ with data: ['https://www.linkedin.com/in/varuni-sridhar-19706a3b4/', 'Manual', 'Hi [[FIRST_NAME]], saw your work in B2B AI automation. Explore how our AI agency can accelerate your growth with automation solutions [[TRACKING_LINK]].', 'http://127.0.0.1:8000/t/42']
+2026-03-24 15:00:02,288 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/meta-llama-3-70b-instruct/predictions "HTTP/1.1 201 Created"
+2026-03-24 15:00:08,482 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/meta-llama-3-70b-instruct/predictions "HTTP/1.1 201 Created"
+2026-03-24 15:00:10,217 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/meta-llama-3-70b-instruct/predictions "HTTP/1.1 201 Created"
+2026-03-24 15:00:35,954 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/meta-llama-3-70b-instruct/predictions "HTTP/1.1 201 Created"
+2026-03-24 15:00:41,773 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/meta-llama-3-70b-instruct/predictions "HTTP/1.1 201 Created"
+2026-03-24 15:00:43,928 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/meta-llama-3-70b-instruct/predictions "HTTP/1.1 201 Created"
+2026-03-24 15:06:40,326 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/meta-llama-3-70b-instruct/predictions "HTTP/1.1 201 Created"
+2026-03-24 15:06:45,656 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/meta-llama-3-70b-instruct/predictions "HTTP/1.1 201 Created"
+2026-03-24 15:06:47,545 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/meta-llama-3-70b-instruct/predictions "HTTP/1.1 201 Created"
+2026-03-24 15:07:26,686 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/meta-llama-3-70b-instruct/predictions "HTTP/1.1 201 Created"
+2026-03-24 15:07:32,987 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/meta-llama-3-70b-instruct/predictions "HTTP/1.1 201 Created"
+2026-03-24 15:07:34,803 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/meta-llama-3-70b-instruct/predictions "HTTP/1.1 201 Created"
+2026-03-24 15:08:22,691 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/meta-llama-3-70b-instruct/predictions "HTTP/1.1 201 Created"
+2026-03-24 15:08:30,777 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/meta-llama-3-70b-instruct/predictions "HTTP/1.1 201 Created"
+2026-03-24 15:08:34,861 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/meta-llama-3-70b-instruct/predictions "HTTP/1.1 201 Created"
+2026-03-24 15:15:56,638 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/meta-llama-3-70b-instruct/predictions "HTTP/1.1 201 Created"
+2026-03-24 15:16:03,020 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/meta-llama-3-70b-instruct/predictions "HTTP/1.1 201 Created"
+2026-03-24 15:16:05,100 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/meta-llama-3-70b-instruct/predictions "HTTP/1.1 201 Created"
+2026-03-24 15:17:19,135 - INFO - [LIVE] Attempting to fire Phantom 2735348618161173 for https://www.linkedin.com/in/apeksha-n-6b26062a4/
+2026-03-24 15:17:19,909 - ERROR - [LIVE] Failed to trigger Phantom 2735348618161173 for https://www.linkedin.com/in/apeksha-n-6b26062a4/: 401 Client Error: Unauthorized for url: https://api.phantombuster.com/api/v2/agents/launch
+2026-03-24 15:17:21,480 - INFO - Connected to sheet: Sheet1
+2026-03-24 15:17:22,909 - INFO - Successfully appended lead https://www.linkedin.com/in/apeksha-n-6b26062a4/ with data: ['https://www.linkedin.com/in/apeksha-n-6b26062a4/', 'Apeksha', "Hi Apeksha, saw your profile and thought our B2B AI automation expertise could help drive growth. Let's connect! [[TRACKING_LINK]]", 'http://127.0.0.1:8000/t/48']
+2026-03-24 15:17:22,921 - ERROR - Failed to sync to Google Sheets: (psycopg2.errors.UndefinedTable) relation "lead_scores" does not exist
+LINE 1: INSERT INTO lead_scores (account_id, score, reason, timestam...
+                    ^
+
+[SQL: INSERT INTO lead_scores (account_id, score, reason, timestamp) VALUES (%(account_id)s, %(score)s, %(reason)s, %(timestamp)s) RETURNING lead_scores.id]
+[parameters: {'account_id': 48, 'score': 0, 'reason': 'Initial approval and connection firing', 'timestamp': datetime.datetime(2026, 3, 24, 9, 47, 22, 909254)}]
+(Background on this error at: https://sqlalche.me/e/20/f405)
+2026-03-24 16:06:35,999 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/meta-llama-3-70b-instruct/predictions "HTTP/1.1 201 Created"
+2026-03-24 16:06:45,551 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/meta-llama-3-70b-instruct/predictions "HTTP/1.1 201 Created"
+2026-03-24 16:06:47,523 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/meta-llama-3-70b-instruct/predictions "HTTP/1.1 201 Created"
+2026-03-24 16:06:55,017 - INFO - [LIVE] Attempting to fire Phantom 1602407155181306 for https://www.linkedin.com/in/apeksha-n-6b26062a4/
+2026-03-24 16:06:56,041 - ERROR - [LIVE] Failed to trigger Phantom 1602407155181306 for https://www.linkedin.com/in/apeksha-n-6b26062a4/: 401 Client Error: Unauthorized for url: https://api.phantombuster.com/api/v2/agents/launch
+2026-03-24 16:12:58,893 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/meta-llama-3-70b-instruct/predictions "HTTP/1.1 201 Created"
+2026-03-24 16:13:06,915 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/meta-llama-3-70b-instruct/predictions "HTTP/1.1 201 Created"
+2026-03-24 16:13:09,273 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/meta-llama-3-70b-instruct/predictions "HTTP/1.1 201 Created"
+2026-03-24 16:13:28,105 - INFO - [LIVE] Attempting to fire Phantom 1602407155181306 for https://www.linkedin.com/in/apeksha-n-6b26062a4/
+2026-03-24 16:13:29,293 - ERROR - [LIVE] Failed to trigger Phantom 1602407155181306 for https://www.linkedin.com/in/apeksha-n-6b26062a4/: 401 Client Error: Unauthorized for url: https://api.phantombuster.com/api/v2/agents/launch
+2026-03-24 16:23:17,297 - INFO - [LIVE] Attempting to fire Phantom 1602407155181306 for https://www.linkedin.com/in/apeksha-n-6b26062a4/
+2026-03-24 16:23:18,447 - ERROR - [LIVE] Failed to trigger Phantom 1602407155181306 for https://www.linkedin.com/in/apeksha-n-6b26062a4/: 401 Client Error: Unauthorized for url: https://api.phantombuster.com/api/v2/agents/launch
+2026-03-24 16:39:03,423 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/meta-llama-3-70b-instruct/predictions "HTTP/1.1 201 Created"
+2026-03-24 16:39:09,676 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/meta-llama-3-70b-instruct/predictions "HTTP/1.1 201 Created"
+2026-03-24 16:39:11,249 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/meta-llama-3-70b-instruct/predictions "HTTP/1.1 201 Created"
+2026-03-24 16:39:18,964 - INFO - [LIVE] Attempting to fire Phantom 1602407155181306 for https://www.linkedin.com/in/surabhi-suvarna-866b77385/
+2026-03-24 16:39:41,213 - ERROR - [LIVE] Failed to trigger Phantom 1602407155181306 for https://www.linkedin.com/in/surabhi-suvarna-866b77385/: 400 Client Error: Bad Request for url: https://api.phantombuster.com/api/v2/agents/launch
+2026-03-24 16:39:56,141 - INFO - [LIVE] Attempting to fire Phantom 1602407155181306 for https://www.linkedin.com/in/surabhi-suvarna-866b77385/
+2026-03-24 16:39:57,478 - ERROR - [LIVE] Failed to trigger Phantom 1602407155181306 for https://www.linkedin.com/in/surabhi-suvarna-866b77385/: 400 Client Error: Bad Request for url: https://api.phantombuster.com/api/v2/agents/launch
+2026-03-24 16:48:41,377 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/meta-llama-3-70b-instruct/predictions "HTTP/1.1 201 Created"
+2026-03-24 16:48:49,063 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/meta-llama-3-70b-instruct/predictions "HTTP/1.1 201 Created"
+2026-03-24 16:48:50,899 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/meta-llama-3-70b-instruct/predictions "HTTP/1.1 201 Created"
+2026-03-24 16:48:58,890 - INFO - [LIVE] Attempting to fire Phantom 3250037032664621 for https://www.linkedin.com/in/srushti-annigeri-3a18022b2/
+2026-03-24 16:49:00,748 - INFO - [LIVE] Successfully launched Phantom 3250037032664621 for https://www.linkedin.com/in/srushti-annigeri-3a18022b2/. Response: {"containerId":"8474676124948378"}
+2026-03-24 16:49:02,987 - INFO - Connected to sheet: Sheet1
+2026-03-24 16:49:03,542 - INFO - Updating headers from ['profileUrl', 'firstName', 'connectionNote', 'trackLink'] to ['profileUrl', 'firstName', 'connectionNote']
+2026-03-24 16:49:04,214 - INFO - Successfully updated headers in Google Sheets.
+2026-03-24 16:49:05,338 - INFO - Successfully appended lead https://www.linkedin.com/in/srushti-annigeri-3a18022b2/ with data: ['https://www.linkedin.com/in/srushti-annigeri-3a18022b2/', 'Srushti', 'Hi Srushti, excited to connect with a fellow B2B innovator! Our AI agency helps businesses like yours scale with automation solutions. Looking forward to exploring potential collaborations.']
+2026-03-24 16:50:41,598 - INFO - [LIVE] Attempting to fire Phantom 3250037032664621 for https://www.linkedin.com/in/surabhi-suvarna-866b77385/
+2026-03-24 16:50:43,278 - INFO - [LIVE] Successfully launched Phantom 3250037032664621 for https://www.linkedin.com/in/surabhi-suvarna-866b77385/. Response: {"containerId":"2767821804932321"}
+2026-03-24 16:50:45,077 - INFO - Connected to sheet: Sheet1
+2026-03-24 16:50:45,657 - INFO - Updating headers from ['profileUrl', 'firstName', 'connectionNote', 'trackLink'] to ['profileUrl', 'firstName', 'connectionNote']
+2026-03-24 16:50:46,311 - INFO - Successfully updated headers in Google Sheets.
+2026-03-24 16:50:47,504 - INFO - Successfully appended lead https://www.linkedin.com/in/surabhi-suvarna-866b77385/ with data: ['https://www.linkedin.com/in/surabhi-suvarna-866b77385/', 'Surabhi', 'Hi Surabhi, excited to connect with PES University. Our AI agency helps B2B organizations like yours drive growth through automation. Looking forward to exploring opportunities together.']
+2026-03-24 16:55:22,504 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/meta-llama-3-70b-instruct/predictions "HTTP/1.1 201 Created"
+2026-03-24 16:55:30,302 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/meta-llama-3-70b-instruct/predictions "HTTP/1.1 201 Created"
+2026-03-24 16:55:32,386 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/meta-llama-3-70b-instruct/predictions "HTTP/1.1 201 Created"
+2026-03-24 16:55:37,236 - INFO - [LIVE] Attempting to fire Phantom 3250037032664621 for https://www.linkedin.com/in/rachana-billava-034a43244/
+2026-03-24 16:55:38,996 - INFO - [LIVE] Successfully launched Phantom 3250037032664621 for https://www.linkedin.com/in/rachana-billava-034a43244/. Response: {"containerId":"4321406640332451"}
+2026-03-24 16:55:41,741 - INFO - Connected to sheet: Sheet1
+2026-03-24 16:55:43,428 - INFO - Successfully appended lead https://www.linkedin.com/in/rachana-billava-034a43244/ with data: ['https://www.linkedin.com/in/rachana-billava-034a43244/', 'Rachana', 'Hi Rachana, excited to connect with a fellow B2B innovator. Our AI agency helps businesses like yours thrive through automation and growth strategies.']
+2026-03-24 16:57:56,405 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/meta-llama-3-70b-instruct/predictions "HTTP/1.1 201 Created"
+2026-03-24 16:58:03,290 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/meta-llama-3-70b-instruct/predictions "HTTP/1.1 201 Created"
+2026-03-24 16:58:05,030 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/meta-llama-3-70b-instruct/predictions "HTTP/1.1 201 Created"
+2026-03-24 16:58:16,064 - INFO - [LIVE] Attempting to fire Phantom 3250037032664621 for https://www.linkedin.com/in/varuni-sridhar-19706a3b4/
+2026-03-24 16:58:17,660 - INFO - [LIVE] Successfully launched Phantom 3250037032664621 for https://www.linkedin.com/in/varuni-sridhar-19706a3b4/. Response: {"containerId":"6669817218061065"}
+2026-03-24 16:58:19,248 - INFO - Connected to sheet: Sheet1
+2026-03-24 16:58:20,776 - INFO - Successfully appended lead https://www.linkedin.com/in/varuni-sridhar-19706a3b4/ with data: ['https://www.linkedin.com/in/varuni-sridhar-19706a3b4/', 'Varuni', 'Hi Varuni, excited to connect with a fellow B2B AI enthusiast! Our agency helps automate growth for businesses like yours.']
+2026-03-24 17:57:24,640 - INFO - [DEBUG] Checking acceptance for https://www.linkedin.com/in/varuni-sridhar-19706a3b4. Found 0 connections.
+2026-03-24 17:57:24,641 - INFO - [LIVE] Connection NOT yet found for https://www.linkedin.com/in/varuni-sridhar-19706a3b4/. Checked 0 items.
+2026-03-24 18:37:35,519 - DEBUG - connect_tcp.started host='api.replicate.com' port=443 local_address=None timeout=5.0 socket_options=None
+2026-03-24 18:37:37,360 - DEBUG - connect_tcp.complete return_value=<httpcore._backends.sync.SyncStream object at 0x000001DCE4F0D930>
+2026-03-24 18:37:37,361 - DEBUG - start_tls.started ssl_context=<ssl.SSLContext object at 0x000001DCE4C46840> server_hostname='api.replicate.com' timeout=5.0
+2026-03-24 18:37:37,605 - DEBUG - start_tls.complete return_value=<httpcore._backends.sync.SyncStream object at 0x000001DCE4F0D900>
+2026-03-24 18:37:37,605 - DEBUG - send_request_headers.started request=<Request [b'POST']>
+2026-03-24 18:37:37,606 - DEBUG - send_request_headers.complete
+2026-03-24 18:37:37,607 - DEBUG - send_request_body.started request=<Request [b'POST']>
+2026-03-24 18:37:37,608 - DEBUG - send_request_body.complete
+2026-03-24 18:37:37,608 - DEBUG - receive_response_headers.started request=<Request [b'POST']>
+2026-03-24 18:37:43,263 - DEBUG - receive_response_headers.complete return_value=(b'HTTP/1.1', 201, b'Created', [(b'Date', b'Tue, 24 Mar 2026 13:07:43 GMT'), (b'Content-Type', b'application/json; charset=utf-8'), (b'Content-Length', b'4442'), (b'Connection', b'keep-alive'), (b'CF-Ray', b'9e15e664a81ab5bf-MAA'), (b'CF-Cache-Status', b'DYNAMIC'), (b'Server', b'cloudflare'), (b'Strict-Transport-Security', b'max-age=15552000'), (b'Preference-Applied', b'wait=60'), (b'expect-ct', b'max-age=86400, enforce'), (b'ratelimit-remaining', b'599'), (b'ratelimit-reset', b'1'), (b'referrer-policy', b'same-origin'), (b'replicate-prediction-id', b'wy4shd1wmhrn80cx3ztscyxm5w'), (b'x-content-type-options', b'nosniff'), (b'x-frame-options', b'SAMEORIGIN'), (b'x-xss-protection', b'1; mode=block'), (b'Vary', b'accept-encoding'), (b'Report-To', b'{"group":"cf-nel","max_age":604800,"endpoints":[{"url":"https://a.nel.cloudflare.com/report/v4?s=9d4hpPIyqN1cTd4emqpBUbOt1%2F5mhsjjSrnCO0YDftnR86XzRzyMJVwDF3SvAgTCBF72aBrJkP%2Fkyc5QvZAN5msVuhzCbZoM%2FElOFgL8am7FZrVB5TM5%2FgI0smo%3D"}]}'), (b'Nel', b'{"report_to":"cf-nel","success_fraction":0.0,"max_age":604800}'), (b'alt-svc', b'h3=":443"; ma=86400')])
+2026-03-24 18:37:43,270 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/meta-llama-3-70b-instruct/predictions "HTTP/1.1 201 Created"
+2026-03-24 18:37:43,270 - DEBUG - receive_response_body.started request=<Request [b'POST']>
+2026-03-24 18:37:43,271 - DEBUG - receive_response_body.complete
+2026-03-24 18:37:43,271 - DEBUG - response_closed.started
+2026-03-24 18:37:43,272 - DEBUG - response_closed.complete
+2026-03-24 18:37:43,293 - DEBUG - Starting new HTTPS connection (1): serpapi.com:443
+2026-03-24 18:37:47,838 - DEBUG - https://serpapi.com:443 "GET /search?q=site%3Alinkedin.com%2Fcompany+%28%22AI+automation%22+OR+%22Automation+Agency%22+OR+%22Intelligent+Automation%22%29+%28%22Founder%22+OR+%22Co-Founder%22+OR+%22CEO%22%29&api_key=1acab9ae8ffee956ede2d979ea0b7ed4cd4d438689de60d7690874eda0fe587d&engine=google&output=json&source=python HTTP/1.1" 200 None
+2026-03-24 18:37:47,860 - DEBUG - Starting new HTTPS connection (1): serpapi.com:443
+2026-03-24 18:37:50,904 - DEBUG - https://serpapi.com:443 "GET /search?q=Ai+Automation+LinkedIn+company+page&api_key=1acab9ae8ffee956ede2d979ea0b7ed4cd4d438689de60d7690874eda0fe587d&engine=google&output=json&source=python HTTP/1.1" 200 None
+2026-03-24 18:37:50,925 - DEBUG - Starting new HTTPS connection (1): serpapi.com:443
+2026-03-24 18:37:52,349 - DEBUG - https://serpapi.com:443 "GET /search?q=Ai+Automation+CEO+OR+%27Head+of+Sales%27+LinkedIn&api_key=1acab9ae8ffee956ede2d979ea0b7ed4cd4d438689de60d7690874eda0fe587d&engine=google&output=json&source=python HTTP/1.1" 200 None
+2026-03-24 18:37:52,359 - DEBUG - close.started
+2026-03-24 18:37:52,360 - DEBUG - close.complete
+2026-03-24 18:37:52,360 - DEBUG - connect_tcp.started host='api.replicate.com' port=443 local_address=None timeout=5.0 socket_options=None
+2026-03-24 18:37:52,395 - DEBUG - connect_tcp.complete return_value=<httpcore._backends.sync.SyncStream object at 0x000001DCE4F0D930>
+2026-03-24 18:37:52,396 - DEBUG - start_tls.started ssl_context=<ssl.SSLContext object at 0x000001DCE4C46840> server_hostname='api.replicate.com' timeout=5.0
+2026-03-24 18:37:52,443 - DEBUG - start_tls.complete return_value=<httpcore._backends.sync.SyncStream object at 0x000001DCE4F0E110>
+2026-03-24 18:37:52,444 - DEBUG - send_request_headers.started request=<Request [b'POST']>
+2026-03-24 18:37:52,445 - DEBUG - send_request_headers.complete
+2026-03-24 18:37:52,446 - DEBUG - send_request_body.started request=<Request [b'POST']>
+2026-03-24 18:37:52,446 - DEBUG - send_request_body.complete
+2026-03-24 18:37:52,447 - DEBUG - receive_response_headers.started request=<Request [b'POST']>
+2026-03-24 18:37:59,103 - DEBUG - receive_response_headers.complete return_value=(b'HTTP/1.1', 201, b'Created', [(b'Date', b'Tue, 24 Mar 2026 13:07:59 GMT'), (b'Content-Type', b'application/json; charset=utf-8'), (b'Content-Length', b'5035'), (b'Connection', b'keep-alive'), (b'CF-Ray', b'9e15e6c17aec6091-MAA'), (b'CF-Cache-Status', b'DYNAMIC'), (b'Server', b'cloudflare'), (b'Strict-Transport-Security', b'max-age=15552000'), (b'Preference-Applied', b'wait=60'), (b'expect-ct', b'max-age=86400, enforce'), (b'ratelimit-remaining', b'599'), (b'ratelimit-reset', b'1'), (b'referrer-policy', b'same-origin'), (b'replicate-prediction-id', b'gmjd343njsrn80cx3ztv8yehsc'), (b'x-content-type-options', b'nosniff'), (b'x-frame-options', b'SAMEORIGIN'), (b'x-xss-protection', b'1; mode=block'), (b'Vary', b'accept-encoding'), (b'Report-To', b'{"group":"cf-nel","max_age":604800,"endpoints":[{"url":"https://a.nel.cloudflare.com/report/v4?s=Eki80A9gFpk1N1a40IEWr1lycKcNCmJm8AIosNywWD0Yju4Q9uhCichoM6GAsvgLFK1Gxd9KIkCV6A40WBUTt4%2Be9D1xVdnq7CHGQcQLOpIen5qJT8%2Bue8nD%2Bqc%3D"}]}'), (b'Nel', b'{"report_to":"cf-nel","success_fraction":0.0,"max_age":604800}'), (b'alt-svc', b'h3=":443"; ma=86400')])
+2026-03-24 18:37:59,105 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/meta-llama-3-70b-instruct/predictions "HTTP/1.1 201 Created"
+2026-03-24 18:37:59,105 - DEBUG - receive_response_body.started request=<Request [b'POST']>
+2026-03-24 18:37:59,107 - DEBUG - receive_response_body.complete
+2026-03-24 18:37:59,107 - DEBUG - response_closed.started
+2026-03-24 18:37:59,108 - DEBUG - response_closed.complete
+2026-03-24 18:37:59,120 - DEBUG - Starting new HTTPS connection (1): serpapi.com:443
+2026-03-24 18:38:01,352 - DEBUG - https://serpapi.com:443 "GET /search?q=AI+Automation+HQ+LinkedIn+company+page&api_key=1acab9ae8ffee956ede2d979ea0b7ed4cd4d438689de60d7690874eda0fe587d&engine=google&output=json&source=python HTTP/1.1" 200 None
+2026-03-24 18:38:01,364 - DEBUG - Starting new HTTPS connection (1): serpapi.com:443
+2026-03-24 18:38:05,143 - DEBUG - https://serpapi.com:443 "GET /search?q=AI+Automation+HQ+CEO+OR+%27Head+of+Sales%27+LinkedIn&api_key=1acab9ae8ffee956ede2d979ea0b7ed4cd4d438689de60d7690874eda0fe587d&engine=google&output=json&source=python HTTP/1.1" 200 None
+2026-03-24 18:38:05,150 - DEBUG - close.started
+2026-03-24 18:38:05,150 - DEBUG - close.complete
+2026-03-24 18:38:05,151 - DEBUG - connect_tcp.started host='api.replicate.com' port=443 local_address=None timeout=5.0 socket_options=None
+2026-03-24 18:38:05,478 - DEBUG - connect_tcp.complete return_value=<httpcore._backends.sync.SyncStream object at 0x000001DCE4F0EEF0>
+2026-03-24 18:38:05,478 - DEBUG - start_tls.started ssl_context=<ssl.SSLContext object at 0x000001DCE4C46840> server_hostname='api.replicate.com' timeout=5.0
+2026-03-24 18:38:05,659 - DEBUG - start_tls.complete return_value=<httpcore._backends.sync.SyncStream object at 0x000001DCE4F0ED10>
+2026-03-24 18:38:05,660 - DEBUG - send_request_headers.started request=<Request [b'POST']>
+2026-03-24 18:38:05,661 - DEBUG - send_request_headers.complete
+2026-03-24 18:38:05,663 - DEBUG - send_request_body.started request=<Request [b'POST']>
+2026-03-24 18:38:05,664 - DEBUG - send_request_body.complete
+2026-03-24 18:38:05,665 - DEBUG - receive_response_headers.started request=<Request [b'POST']>
+2026-03-24 18:38:13,639 - DEBUG - receive_response_headers.complete return_value=(b'HTTP/1.1', 201, b'Created', [(b'Date', b'Tue, 24 Mar 2026 13:08:14 GMT'), (b'Content-Type', b'application/json; charset=utf-8'), (b'Content-Length', b'5674'), (b'Connection', b'keep-alive'), (b'CF-Ray', b'9e15e7140fa6b5bf-MAA'), (b'CF-Cache-Status', b'DYNAMIC'), (b'Server', b'cloudflare'), (b'Strict-Transport-Security', b'max-age=15552000'), (b'Preference-Applied', b'wait=60'), (b'expect-ct', b'max-age=86400, enforce'), (b'ratelimit-remaining', b'599'), (b'ratelimit-reset', b'1'), (b'referrer-policy', b'same-origin'), (b'replicate-prediction-id', b'nzqm1jn945rna0cx3zts6vrhym'), (b'x-content-type-options', b'nosniff'), (b'x-frame-options', b'SAMEORIGIN'), (b'x-xss-protection', b'1; mode=block'), (b'Vary', b'accept-encoding'), (b'Report-To', b'{"group":"cf-nel","max_age":604800,"endpoints":[{"url":"https://a.nel.cloudflare.com/report/v4?s=heD326KnOF28gUDSbS7laHu4AZx8MIi35GxUqP9uwGUs1IsPt2ra%2BNkFj68zspymb4TpGeb6RGEvm2J12zLvbuLrfwsaObtZd8SFv0joBpyu6OlMAug5qW09gvI%3D"}]}'), (b'Nel', b'{"report_to":"cf-nel","success_fraction":0.0,"max_age":604800}'), (b'alt-svc', b'h3=":443"; ma=86400')])
+2026-03-24 18:38:13,641 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/meta-llama-3-70b-instruct/predictions "HTTP/1.1 201 Created"
+2026-03-24 18:38:13,642 - DEBUG - receive_response_body.started request=<Request [b'POST']>
+2026-03-24 18:38:13,642 - DEBUG - receive_response_body.complete
+2026-03-24 18:38:13,644 - DEBUG - response_closed.started
+2026-03-24 18:38:13,644 - DEBUG - response_closed.complete
+2026-03-24 18:38:13,649 - DEBUG - send_request_headers.started request=<Request [b'POST']>
+2026-03-24 18:38:13,650 - DEBUG - send_request_headers.complete
+2026-03-24 18:38:13,650 - DEBUG - send_request_body.started request=<Request [b'POST']>
+2026-03-24 18:38:13,651 - DEBUG - send_request_body.complete
+2026-03-24 18:38:13,652 - DEBUG - receive_response_headers.started request=<Request [b'POST']>
+2026-03-24 18:38:15,416 - DEBUG - receive_response_headers.complete return_value=(b'HTTP/1.1', 201, b'Created', [(b'Date', b'Tue, 24 Mar 2026 13:08:15 GMT'), (b'Content-Type', b'application/json; charset=utf-8'), (b'Content-Length', b'4752'), (b'Connection', b'keep-alive'), (b'CF-Ray', b'9e15e745ffb6b5bf-MAA'), (b'CF-Cache-Status', b'DYNAMIC'), (b'Server', b'cloudflare'), (b'Strict-Transport-Security', b'max-age=15552000'), (b'Preference-Applied', b'wait=60'), (b'expect-ct', b'max-age=86400, enforce'), (b'ratelimit-remaining', b'599'), (b'ratelimit-reset', b'1'), (b'referrer-policy', b'same-origin'), (b'replicate-prediction-id', b'whwsy4e8cnrna0cx3zttkv4zj0'), (b'x-content-type-options', b'nosniff'), (b'x-frame-options', b'SAMEORIGIN'), (b'x-xss-protection', b'1; mode=block'), (b'Vary', b'accept-encoding'), (b'Report-To', b'{"group":"cf-nel","max_age":604800,"endpoints":[{"url":"https://a.nel.cloudflare.com/report/v4?s=M3d9%2BKVr6RmETC9mnGVEnMfgQL4tfOX8zbj2pb40JE4%2BHHPtgVDSjF2MSEzqj5%2BtbqqerzpDrk9gWE%2BgrXvRLl8If5y0F8dblg%2FycRFC2%2BmAc23L8woiWsnTUUc%3D"}]}'), (b'Nel', b'{"report_to":"cf-nel","success_fraction":0.0,"max_age":604800}'), (b'alt-svc', b'h3=":443"; ma=86400')])
+2026-03-24 18:38:15,417 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/meta-llama-3-70b-instruct/predictions "HTTP/1.1 201 Created"
+2026-03-24 18:38:15,418 - DEBUG - receive_response_body.started request=<Request [b'POST']>
+2026-03-24 18:38:15,418 - DEBUG - receive_response_body.complete
+2026-03-24 18:38:15,419 - DEBUG - response_closed.started
+2026-03-24 18:38:15,419 - DEBUG - response_closed.complete
+2026-03-24 18:38:15,993 - DEBUG - send_request_headers.started request=<Request [b'POST']>
+2026-03-24 18:38:15,995 - DEBUG - send_request_headers.complete
+2026-03-24 18:38:15,995 - DEBUG - send_request_body.started request=<Request [b'POST']>
+2026-03-24 18:38:15,996 - DEBUG - send_request_body.complete
+2026-03-24 18:38:15,996 - DEBUG - receive_response_headers.started request=<Request [b'POST']>
+2026-03-24 18:38:17,633 - DEBUG - receive_response_headers.complete return_value=(b'HTTP/1.1', 201, b'Created', [(b'Date', b'Tue, 24 Mar 2026 13:08:18 GMT'), (b'Content-Type', b'application/json; charset=utf-8'), (b'Content-Length', b'4809'), (b'Connection', b'keep-alive'), (b'CF-Ray', b'9e15e754aeaab5bf-MAA'), (b'CF-Cache-Status', b'DYNAMIC'), (b'Server', b'cloudflare'), (b'Strict-Transport-Security', b'max-age=15552000'), (b'Preference-Applied', b'wait=60'), (b'expect-ct', b'max-age=86400, enforce'), (b'ratelimit-remaining', b'599'), (b'ratelimit-reset', b'1'), (b'referrer-policy', b'same-origin'), (b'replicate-prediction-id', b'wfw55rphhdrn80cx3ztr50dspg'), (b'x-content-type-options', b'nosniff'), (b'x-frame-options', b'SAMEORIGIN'), (b'x-xss-protection', b'1; mode=block'), (b'Vary', b'accept-encoding'), (b'Report-To', b'{"group":"cf-nel","max_age":604800,"endpoints":[{"url":"https://a.nel.cloudflare.com/report/v4?s=5BiRi1k3lojMQDozFytVdQSQJ09UELgpNd4GEVGiQWPzLaHESdrxV05Hdd5CpmhIz220QNdFS0v5sN1kdLFDO8st2sxXRhXvh4ZRYA3PFgbJDb7mqn%2Fi7IhJzBc%3D"}]}'), (b'Nel', b'{"report_to":"cf-nel","success_fraction":0.0,"max_age":604800}'), (b'alt-svc', b'h3=":443"; ma=86400')])
+2026-03-24 18:38:17,635 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/meta-llama-3-70b-instruct/predictions "HTTP/1.1 201 Created"
+2026-03-24 18:38:17,635 - DEBUG - receive_response_body.started request=<Request [b'POST']>
+2026-03-24 18:38:17,636 - DEBUG - receive_response_body.complete
+2026-03-24 18:38:17,636 - DEBUG - response_closed.started
+2026-03-24 18:38:17,637 - DEBUG - response_closed.complete
+2026-03-24 18:40:17,415 - INFO - [LIVE] Attempting to fire Phantom 3250037032664621 for https://pl.linkedin.com/in/vincenrussotto
+2026-03-24 18:40:17,421 - DEBUG - Starting new HTTPS connection (1): api.phantombuster.com:443
+2026-03-24 18:40:19,214 - DEBUG - https://api.phantombuster.com:443 "POST /api/v2/agents/launch HTTP/1.1" 200 34
+2026-03-24 18:40:19,215 - INFO - [LIVE] Successfully launched Phantom 3250037032664621 for https://pl.linkedin.com/in/vincenrussotto. Response: {"containerId":"1409640088049943"}
+2026-03-24 18:40:19,512 - DEBUG - Converted retries value: 3 -> Retry(total=3, connect=None, read=None, redirect=None, status=None)
+2026-03-24 18:40:19,564 - DEBUG - Starting new HTTPS connection (1): oauth2.googleapis.com:443
+2026-03-24 18:40:22,211 - DEBUG - https://oauth2.googleapis.com:443 "POST /token HTTP/1.1" 200 None
+2026-03-24 18:40:22,222 - DEBUG - Starting new HTTPS connection (1): sheets.googleapis.com:443
+2026-03-24 18:40:25,373 - DEBUG - https://sheets.googleapis.com:443 "GET /v4/spreadsheets/1louNQ1-ai2j57wwfsE0_QaxRo6zisfiC6KINstwIGPo?includeGridData=false HTTP/1.1" 200 None
+2026-03-24 18:40:26,349 - DEBUG - https://sheets.googleapis.com:443 "GET /v4/spreadsheets/1louNQ1-ai2j57wwfsE0_QaxRo6zisfiC6KINstwIGPo?includeGridData=false HTTP/1.1" 200 None
+2026-03-24 18:40:26,353 - INFO - Connected to sheet: Sheet1
+2026-03-24 18:40:27,173 - DEBUG - https://sheets.googleapis.com:443 "GET /v4/spreadsheets/1louNQ1-ai2j57wwfsE0_QaxRo6zisfiC6KINstwIGPo/values/%27Sheet1%27%21A1%3A1 HTTP/1.1" 200 None
+2026-03-24 18:40:27,638 - DEBUG - https://sheets.googleapis.com:443 "GET /v4/spreadsheets/1louNQ1-ai2j57wwfsE0_QaxRo6zisfiC6KINstwIGPo/values/%27Sheet1%27%21A1%3AA?valueRenderOption=FORMATTED_VALUE&majorDimension=COLUMNS HTTP/1.1" 200 None
+2026-03-24 18:40:28,642 - DEBUG - https://sheets.googleapis.com:443 "POST /v4/spreadsheets/1louNQ1-ai2j57wwfsE0_QaxRo6zisfiC6KINstwIGPo/values/%27Sheet1%27:append?valueInputOption=RAW&includeValuesInResponse=False HTTP/1.1" 200 None
+2026-03-24 18:40:28,644 - INFO - Successfully appended lead https://pl.linkedin.com/in/vincenrussotto with data: ['https://pl.linkedin.com/in/vincenrussotto', 'Vincenzo', 'Hi Vincenzo, excited to connect with a fellow AI automation pioneer. Looking forward to exploring ways to accelerate B2B growth for AI Automation HQ.']
+2026-03-24 22:53:24,712 - DEBUG - Starting new HTTPS connection (1): api.phantombuster.com:443
+2026-03-24 22:53:26,440 - DEBUG - https://api.phantombuster.com:443 "GET /api/v2/containers/fetch-result-object?id=1354832949428923 HTTP/1.1" 404 48
+2026-03-24 22:53:26,443 - ERROR - [LIVE] Failed to fetch connections for https://www.linkedin.com/in/varuni-sridhar-19706a3b4/: 404 Client Error: Not Found for url: https://api.phantombuster.com/api/v2/containers/fetch-result-object?id=1354832949428923
