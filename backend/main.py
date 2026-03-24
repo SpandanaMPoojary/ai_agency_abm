@@ -221,6 +221,105 @@ async def update_url(id: int, request: UpdateUrlRequest, session: Session = Depe
     session.commit()
     return {"status": "success"}
 
+class UpdateSequenceRequest(BaseModel):
+    step_1: Optional[str] = None
+    step_2: Optional[str] = None
+    step_3: Optional[str] = None
+
+@app.patch("/api/sequences/{id}")
+async def update_sequence(id: int, request: UpdateSequenceRequest, session: Session = Depends(get_session)):
+    os_obj = session.get(OutreachSequence, id)
+    if not os_obj:
+        raise HTTPException(status_code=404, detail="Sequence not found")
+        
+    if request.step_1 is not None:
+        os_obj.step_1_linkedin = request.step_1
+    if request.step_2 is not None:
+        os_obj.step_2_email = request.step_2
+    if request.step_3 is not None:
+        os_obj.step_3_followup = request.step_3
+        
+    session.add(os_obj)
+    session.commit()
+    return {"status": "success"}
+
+@app.post("/api/generate-followups/{id}")
+async def generate_followups(id: int, session: Session = Depends(get_session)):
+    os_obj = session.get(OutreachSequence, id)
+    if not os_obj: raise HTTPException(status_code=404, detail="Sequence not found")
+        
+    acc_obj = os_obj.account
+    if not acc_obj: raise HTTPException(status_code=404, detail="Account not found")
+
+    abm_agent = ABMAgent()
+    account_data = f"{acc_obj.company_name} - {acc_obj.first_name}"
+    icp = acc_obj.industry or "B2B Target"
+    value_prop = "Our AI Agency specializes in B2B growth and automations."
+    
+    followups = abm_agent.generate_followups(account_data, icp, value_prop)
+    if "error" in followups: raise HTTPException(status_code=500, detail="Failed to generate followups")
+        
+    backend_url = os.getenv("BACKEND_URL", "http://127.0.0.1:8000")
+    track_link = f"{backend_url}/t/{acc_obj.id}"
+    
+    step_2 = followups.get("step_2_linkedin_dm", "").replace("[[TRACKING_LINK]]", track_link)
+    step_3 = followups.get("step_3_email", "").replace("[[TRACKING_LINK]]", track_link)
+    
+    os_obj.step_2_email = step_2
+    os_obj.step_3_followup = step_3
+    session.add(os_obj)
+    
+    # Optionally update account status if needed, but not required yet
+    session.commit()
+    
+    return {"status": "success", "step_2": step_2, "step_3": step_3}
+
+@app.post("/api/fire-linkedin-dm/{id}")
+async def fire_linkedin_dm(id: int, session: Session = Depends(get_session)):
+    os_obj = session.get(OutreachSequence, id)
+    if not os_obj: raise HTTPException(status_code=404, detail="Sequence not found")
+    if not os_obj.step_2_email: raise HTTPException(status_code=400, detail="LinkedIn DM message not generated yet")
+        
+    acc_obj = os_obj.account
+    if not acc_obj: raise HTTPException(status_code=404, detail="Account not found")
+
+    profile_url = acc_obj.website
+    
+    # 1. Append to Sheets
+    sheets_service = GoogleSheetsService()
+    sheets_service.append_followup(profile_url, os_obj.step_2_email)
+    
+    # 2. Trigger Phantombuster
+    automation = AutomationService()
+    result = automation.trigger_message_sender(profile_url, os_obj.step_2_email)
+    
+    if result.get("status") != "success":
+        logging.error(f"Failed to fire LinkedIn DM Phantom: {result}")
+        raise HTTPException(status_code=500, detail=result.get("message", "Failed to trigger Phantom"))
+        
+    return {"status": "success", "message": "LinkedIn DM Fired Successfully!"}
+
+@app.post("/api/fire-cold-email/{id}")
+async def fire_cold_email(id: int, session: Session = Depends(get_session)):
+    os_obj = session.get(OutreachSequence, id)
+    if not os_obj: raise HTTPException(status_code=404, detail="Sequence not found")
+    if not os_obj.step_3_followup: raise HTTPException(status_code=400, detail="Cold Email message not generated yet")
+        
+    acc_obj = os_obj.account
+    if not acc_obj: raise HTTPException(status_code=404, detail="Account not found")
+
+    profile_url = acc_obj.website
+    
+    # 1. Append to Sheets specifically marked as Email
+    sheets_service = GoogleSheetsService()
+    sheets_service.append_followup(profile_url, f"COLD EMAIL:\n{os_obj.step_3_followup}")
+    
+    # 2. Log Mail simulation
+    logging.info(f"Simulating sending Cold Email to {acc_obj.email or profile_url}")
+    
+
+    return {"status": "success", "message": "Cold Email Logged and Sent!"}
+
 class ResearchRequest(BaseModel):
     icp_description: str
     limit: int = 5
@@ -350,12 +449,17 @@ async def run_research(request: ResearchRequest, session: Session = Depends(get_
 
 @app.post("/api/webhooks/activity")
 async def activity_webhook(payload: dict, session: Session = Depends(get_session)):
-    lead_id = payload.get("lead_id")
+    # payload['lead_id'] is the OutreachSequence.id from frontend
+    seq_id = payload.get("lead_id")
     activity = payload.get("activity")
     
-    acc_obj = session.get(Account, lead_id)
+    os_obj = session.get(OutreachSequence, seq_id)
+    if not os_obj:
+        raise HTTPException(status_code=404, detail="Sequence not found")
+    
+    acc_obj = os_obj.account
     if not acc_obj:
-        raise HTTPException(status_code=404, detail="Lead not found")
+        raise HTTPException(status_code=404, detail="Account not found for this sequence")
     
     if activity == "LINK_CLICKED" or activity == "SIMULATED_ENGAGEMENT":
         acc_obj.lead_score += 20
@@ -399,11 +503,15 @@ async def reject_campaign(id: int, session: Session = Depends(get_session)):
 
 @app.post("/api/check-acceptance/{id}")
 async def check_acceptance(id: int, session: Session = Depends(get_session)):
-    # The 'id' from frontend is Account ID
-    stmt = select(OutreachSequence).where(OutreachSequence.account_id == id)
-    os_obj = session.exec(stmt).first()
+    # The 'id' from frontend is OutreachSequence.id
+    print(f"Checking acceptance for Sequence ID: {id}")
+    os_obj = session.get(OutreachSequence, id)
     if not os_obj:
-        raise HTTPException(status_code=404, detail="Sequence not found for this account")
+        # Fallback: check if it was an account ID (just in case)
+        stmt = select(OutreachSequence).where(OutreachSequence.account_id == id)
+        os_obj = session.exec(stmt).first()
+        if not os_obj:
+            raise HTTPException(status_code=404, detail=f"Sequence not found for ID {id}")
     
     acc_obj = os_obj.account
     

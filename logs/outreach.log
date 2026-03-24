@@ -737,3 +737,52 @@ LINE 1: INSERT INTO lead_scores (account_id, score, reason, timestam...
 2026-03-24 22:53:24,712 - DEBUG - Starting new HTTPS connection (1): api.phantombuster.com:443
 2026-03-24 22:53:26,440 - DEBUG - https://api.phantombuster.com:443 "GET /api/v2/containers/fetch-result-object?id=1354832949428923 HTTP/1.1" 404 48
 2026-03-24 22:53:26,443 - ERROR - [LIVE] Failed to fetch connections for https://www.linkedin.com/in/varuni-sridhar-19706a3b4/: 404 Client Error: Not Found for url: https://api.phantombuster.com/api/v2/containers/fetch-result-object?id=1354832949428923
+2026-03-24 23:48:15,351 - DEBUG - Starting new HTTPS connection (1): api.phantombuster.com:443
+2026-03-24 23:48:16,128 - DEBUG - https://api.phantombuster.com:443 "GET /api/v2/agents/fetch-output?id=1354832949428923&format=json-array HTTP/1.1" 200 None
+2026-03-24 23:48:16,131 - WARNING - [PB] Connections object is not a list: <class 'dict'>
+2026-03-24 23:48:16,131 - INFO - [DEBUG] Checking acceptance for https://www.linkedin.com/in/surabhi-suvarna-866b77385 (ID: surabhi-suvarna-866b77385). Found 0 connections.
+2026-03-24 23:48:16,133 - INFO - [LIVE] Connection NOT yet found for https://www.linkedin.com/in/surabhi-suvarna-866b77385/. Checked 0 items.
+2026-03-24 23:51:47,988 - DEBUG - Starting new HTTPS connection (1): api.phantombuster.com:443
+2026-03-24 23:51:49,659 - DEBUG - https://api.phantombuster.com:443 "GET /api/v2/agents/fetch-output?id=1354832949428923 HTTP/1.1" 200 None
+2026-03-24 23:51:49,664 - DEBUG - Starting new HTTPS connection (1): api.phantombuster.com:443
+2026-03-24 23:51:50,777 - DEBUG - https://api.phantombuster.com:443 "GET /api/v2/containers/fetch-result-object?id=5026263815390465 HTTP/1.1" 200 None
+2026-03-24 23:51:50,778 - INFO - [DEBUG] Checking acceptance for https://www.linkedin.com/in/varuni-sridhar-19706a3b4 (ID: varuni-sridhar-19706a3b4). Found 9 connections.
+2026-03-24 23:51:50,779 - INFO - [LIVE] Connection accepted confirmed for https://www.linkedin.com/in/varuni-sridhar-19706a3b4/
+2026-03-24 23:52:39,176 - DEBUG - Starting new HTTPS connection (1): api.phantombuster.com:443
+2026-03-24 23:52:39,901 - DEBUG - https://api.phantombuster.com:443 "GET /api/v2/agents/fetch-output?id=1354832949428923 HTTP/1.1" 200 None
+2026-03-24 23:52:39,906 - DEBUG - Starting new HTTPS connection (1): api.phantombuster.com:443
+2026-03-24 23:52:40,625 - DEBUG - https://api.phantombuster.com:443 "GET /api/v2/containers/fetch-result-object?id=5026263815390465 HTTP/1.1" 200 None
+2026-03-24 23:52:40,628 - INFO - [DEBUG] Checking acceptance for https://www.linkedin.com/in/surabhi-suvarna-866b77385 (ID: surabhi-suvarna-866b77385). Found 9 connections.
+2026-03-24 23:52:40,628 - INFO - [LIVE] Connection NOT yet found for https://www.linkedin.com/in/surabhi-suvarna-866b77385/. Checked 9 items.
+2026-03-25 00:38:14,398 - DEBUG - connect_tcp.started host='api.replicate.com' port=443 local_address=None timeout=5.0 socket_options=None
+2026-03-25 00:38:14,462 - DEBUG - connect_tcp.complete return_value=<httpcore._backends.sync.SyncStream object at 0x0000015D30B54B50>
+2026-03-25 00:38:14,462 - DEBUG - start_tls.started ssl_context=<ssl.SSLContext object at 0x0000015D308D9340> server_hostname='api.replicate.com' timeout=5.0
+2026-03-25 00:38:14,551 - DEBUG - start_tls.complete return_value=<httpcore._backends.sync.SyncStream object at 0x0000015D30B54B20>
+2026-03-25 00:38:14,552 - DEBUG - send_request_headers.started request=<Request [b'POST']>
+2026-03-25 00:38:14,553 - DEBUG - send_request_headers.complete
+2026-03-25 00:38:14,554 - DEBUG - send_request_body.started request=<Request [b'POST']>
+2026-03-25 00:38:14,555 - DEBUG - send_request_body.complete
+2026-03-25 00:38:14,555 - DEBUG - receive_response_headers.started request=<Request [b'POST']>
+2026-03-25 00:38:21,137 - DEBUG - receive_response_headers.complete return_value=(b'HTTP/1.1', 201, b'Created', [(b'Date', b'Tue, 24 Mar 2026 19:08:21 GMT'), (b'Content-Type', b'application/json; charset=utf-8'), (b'Content-Length', b'6196'), (b'Connection', b'keep-alive'), (b'CF-Ray', b'9e17f6a06fde20c5-BLR'), (b'CF-Cache-Status', b'DYNAMIC'), (b'Server', b'cloudflare'), (b'Strict-Transport-Security', b'max-age=15552000'), (b'Preference-Applied', b'wait=60'), (b'expect-ct', b'max-age=86400, enforce'), (b'ratelimit-remaining', b'599'), (b'ratelimit-reset', b'1'), (b'referrer-policy', b'same-origin'), (b'replicate-prediction-id', b'dkkx86b1y1rnc0cx44ztsppsg8'), (b'x-content-type-options', b'nosniff'), (b'x-frame-options', b'SAMEORIGIN'), (b'x-xss-protection', b'1; mode=block'), (b'Vary', b'accept-encoding'), (b'Report-To', b'{"group":"cf-nel","max_age":604800,"endpoints":[{"url":"https://a.nel.cloudflare.com/report/v4?s=o1OZQsfdgRjJy21PAfx%2B522zEa7vZ8eM7Z%2Bsjr26p%2FN5DQ4W5ELS%2FiMeYaVcHsrY7CzJPIp4Ie5RRE2Ul%2BWqn1eKPfSJH%2BcRcxNaWK7QR8E%3D"}]}'), (b'Nel', b'{"report_to":"cf-nel","success_fraction":0.0,"max_age":604800}'), (b'alt-svc', b'h3=":443"; ma=86400')])
+2026-03-25 00:38:21,139 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/meta-llama-3-70b-instruct/predictions "HTTP/1.1 201 Created"
+2026-03-25 00:38:21,140 - DEBUG - receive_response_body.started request=<Request [b'POST']>
+2026-03-25 00:38:21,141 - DEBUG - receive_response_body.complete
+2026-03-25 00:38:21,143 - DEBUG - response_closed.started
+2026-03-25 00:38:21,143 - DEBUG - response_closed.complete
+2026-03-25 00:38:48,364 - DEBUG - close.started
+2026-03-25 00:38:48,364 - DEBUG - close.complete
+2026-03-25 00:38:48,365 - DEBUG - connect_tcp.started host='api.replicate.com' port=443 local_address=None timeout=5.0 socket_options=None
+2026-03-25 00:38:48,445 - DEBUG - connect_tcp.complete return_value=<httpcore._backends.sync.SyncStream object at 0x0000015D30B552D0>
+2026-03-25 00:38:48,446 - DEBUG - start_tls.started ssl_context=<ssl.SSLContext object at 0x0000015D308D9340> server_hostname='api.replicate.com' timeout=5.0
+2026-03-25 00:38:48,464 - DEBUG - start_tls.complete return_value=<httpcore._backends.sync.SyncStream object at 0x0000015D30B572E0>
+2026-03-25 00:38:48,465 - DEBUG - send_request_headers.started request=<Request [b'POST']>
+2026-03-25 00:38:48,467 - DEBUG - send_request_headers.complete
+2026-03-25 00:38:48,467 - DEBUG - send_request_body.started request=<Request [b'POST']>
+2026-03-25 00:38:48,468 - DEBUG - send_request_body.complete
+2026-03-25 00:38:48,468 - DEBUG - receive_response_headers.started request=<Request [b'POST']>
+2026-03-25 00:38:54,542 - DEBUG - receive_response_headers.complete return_value=(b'HTTP/1.1', 201, b'Created', [(b'Date', b'Tue, 24 Mar 2026 19:08:54 GMT'), (b'Content-Type', b'application/json; charset=utf-8'), (b'Content-Length', b'6064'), (b'Connection', b'keep-alive'), (b'CF-Ray', b'9e17f77469f8741b-BLR'), (b'CF-Cache-Status', b'DYNAMIC'), (b'Server', b'cloudflare'), (b'Strict-Transport-Security', b'max-age=15552000'), (b'Preference-Applied', b'wait=60'), (b'expect-ct', b'max-age=86400, enforce'), (b'ratelimit-remaining', b'599'), (b'ratelimit-reset', b'1'), (b'referrer-policy', b'same-origin'), (b'replicate-prediction-id', b'k5q4ddq5j5rne0cx44zvq2v90c'), (b'x-content-type-options', b'nosniff'), (b'x-frame-options', b'SAMEORIGIN'), (b'x-xss-protection', b'1; mode=block'), (b'Vary', b'accept-encoding'), (b'Report-To', b'{"group":"cf-nel","max_age":604800,"endpoints":[{"url":"https://a.nel.cloudflare.com/report/v4?s=dRLuMLx7xsTWh3KqBa5gGt1OdvQ0tzg1vqPYdg1nsFF6yhxdZIAhnb5jzkNw8EiLYKEk1c%2FKtdNty3e0hZEZCdlTsHiQhqwFTubIbP%2FE%2BvY%3D"}]}'), (b'Nel', b'{"report_to":"cf-nel","success_fraction":0.0,"max_age":604800}'), (b'alt-svc', b'h3=":443"; ma=86400')])
+2026-03-25 00:38:54,543 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/meta-llama-3-70b-instruct/predictions "HTTP/1.1 201 Created"
+2026-03-25 00:38:54,543 - DEBUG - receive_response_body.started request=<Request [b'POST']>
+2026-03-25 00:38:54,544 - DEBUG - receive_response_body.complete
+2026-03-25 00:38:54,545 - DEBUG - response_closed.started
+2026-03-25 00:38:54,545 - DEBUG - response_closed.complete

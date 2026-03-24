@@ -157,14 +157,15 @@ export default function Dashboard() {
     setLoading(`check_${id}`);
     try {
       const res = await fetch(`${BACKEND_URL}/api/check-acceptance/${id}`, { method: 'POST' });
+      const data = await res.json();
+      
       if (res.ok) {
-        const data = await res.json();
         if (data.status === 'pending') {
           alert("Connection not yet found in LinkedIn Connections. Please wait 24h for Phantombuster to sync!");
         }
         fetchLeads();
       } else {
-        alert("Failed to check acceptance status.");
+        alert(`Error: ${data.detail || "Failed to check acceptance status"}`);
       }
     } catch (err) {
       console.error(err);
@@ -176,15 +177,51 @@ export default function Dashboard() {
   const handleGenerateFollowups = async (leadId: string) => {
     setLoading(`followup_${leadId}`);
     try {
-      const res = await fetch(`http://127.0.0.1:8000/api/generate-followups/${leadId}`, {
+      const res = await fetch(`${BACKEND_URL}/api/generate-followups/${leadId}`, {
         method: "POST"
       });
       if (res.ok) {
         fetchLeads();
-        setStatus(prev => ({ ...prev, [leadId]: "Followups Ready" }));
       }
     } catch (err) {
       console.error(err);
+      alert("Failed to generate followups.");
+    }
+    setLoading(null);
+  };
+
+  const handleFireLinkedInDM = async (leadId: string) => {
+    setLoading(`fire_dm_${leadId}`);
+    try {
+      const res = await fetch(`${BACKEND_URL}/api/fire-linkedin-dm/${leadId}`, { method: "POST" });
+      const data = await res.json();
+      if (res.ok) {
+        alert(data.message || "LinkedIn DM Fired!");
+        fetchLeads();
+      } else {
+        alert(`Error: ${data.detail}`);
+      }
+    } catch (err) {
+      console.error(err);
+      alert("Failed to fire LinkedIn DM.");
+    }
+    setLoading(null);
+  };
+
+  const handleFireColdEmail = async (leadId: string) => {
+    setLoading(`fire_email_${leadId}`);
+    try {
+      const res = await fetch(`${BACKEND_URL}/api/fire-cold-email/${leadId}`, { method: "POST" });
+      const data = await res.json();
+      if (res.ok) {
+        alert(data.message || "Cold Email Fired!");
+        fetchLeads();
+      } else {
+        alert(`Error: ${data.detail}`);
+      }
+    } catch (err) {
+      console.error(err);
+      alert("Failed to fire Cold Email.");
     }
     setLoading(null);
   };
@@ -516,26 +553,89 @@ export default function Dashboard() {
                     </span>
                   )}
 
-                  {/* Phase 2: Follow-ups (Only for CONNECTED/ACCEPTED/CLICKED) */}
+                  {/* Phase 2: Follow-ups */}
                   {(lead.status === 'CONNECTED' || lead.status === 'ACCEPTED' || lead.status === 'CLICKED') && (
-                    <div className="flex gap-2">
-                       <button
-                        onClick={() => handleGenerateFollowups(lead.id)}
-                        disabled={loading === `followup_${lead.id}`}
-                        className="bg-brand-grey hover:bg-brand-darkgrey text-brand-black px-4 py-2 uppercase tracking-wide font-bold transition-colors"
-                      >
-                        {loading === `followup_${lead.id}` ? 'Generating...' : (lead.step_2 ? 'Regenerate Follow-ups' : 'Prepare Follow-ups')}
-                      </button>
+                    <div className="mt-8 pt-6 border-t border-brand-grey w-full">
+                      <div className="flex items-center justify-between xl:justify-start xl:gap-6 mb-4">
+                        <h3 className="text-sm font-semibold text-brand-darkgrey uppercase tracking-wider">Phase 2: Follow-ups</h3>
+                        {!lead.step_2 && (
+                           <button
+                            onClick={() => handleGenerateFollowups(lead.id)}
+                            disabled={loading === `followup_${lead.id}`}
+                            className="bg-brand-brown hover:bg-brand-black text-white px-4 py-1.5 uppercase tracking-wide text-xs font-bold transition-colors shadow-sm"
+                          >
+                            {loading === `followup_${lead.id}` ? 'Drafting AI Message...' : 'Generate Follow-ups'}
+                          </button>
+                        )}
+                      </div>
+
                       {lead.step_2 && (
-                        <>
-                          <button className={`px-4 py-2 uppercase tracking-wide font-bold transition-colors ${lead.status === 'CLICKED' ? 'bg-green-600 text-white' : 'bg-brand-brown text-white hover:bg-brand-black'}`}>
-                            {lead.status === 'CLICKED' ? '🔥 Send Priority DM' : 'Send LinkedIn DM'}
-                          </button>
-                          <button className="bg-brand-brown hover:bg-brand-black text-white px-4 py-2 uppercase tracking-wide font-bold transition-colors">
-                            Send Email
-                          </button>
-                        </>
+                        <div className="space-y-6 w-full">
+                          {/* LinkedIn Follow-up */}
+                          <div>
+                            <div className="flex items-center justify-between mb-2">
+                              <label className="text-[10px] font-bold text-brand-darkgrey uppercase tracking-widest block">LinkedIn DM</label>
+                              <button
+                                onClick={() => handleFireLinkedInDM(lead.id)}
+                                disabled={loading === `fire_dm_${lead.id}`}
+                                className="text-[10px] font-bold uppercase tracking-widest bg-brand-black hover:bg-brand-brown text-white px-3 py-1 transition-colors"
+                              >
+                                {loading === `fire_dm_${lead.id}` ? 'Firing...' : 'Fire LinkedIn DM'}
+                              </button>
+                            </div>
+                            <div className="bg-brand-white p-4 border border-brand-grey text-brand-black italic min-h-[100px] whitespace-pre-wrap relative group">
+                              <textarea
+                                className="w-full bg-transparent border-none outline-none italic resize-none overflow-y-auto"
+                                rows={5}
+                                value={localEdits[lead.id]?.step_2 ?? (lead.step_2 || '')}
+                                onChange={(e) => {
+                                  setLocalEdits(prev => ({
+                                    ...prev,
+                                    [lead.id]: { ...prev[lead.id], step_2: e.target.value }
+                                  }));
+                                }}
+                                onBlur={(e) => handleUpdateSequence(lead.id, 1, e.target.value)}
+                              />
+                            </div>
+                          </div>
+
+                          {/* Cold Email */}
+                          <div>
+                            <div className="flex items-center justify-between mb-2">
+                              <label className="text-[10px] font-bold text-brand-darkgrey uppercase tracking-widest block">Cold Email</label>
+                              <button
+                                onClick={() => handleFireColdEmail(lead.id)}
+                                disabled={loading === `fire_email_${lead.id}`}
+                                className="text-[10px] font-bold uppercase tracking-widest bg-brand-black hover:bg-brand-brown text-white px-3 py-1 transition-colors"
+                              >
+                                {loading === `fire_email_${lead.id}` ? 'Firing...' : 'Fire Cold Email'}
+                              </button>
+                            </div>
+                            <div className="bg-brand-white p-4 border border-brand-grey text-brand-black italic min-h-[100px] whitespace-pre-wrap relative group">
+                              <textarea
+                                className="w-full bg-transparent border-none outline-none italic resize-none overflow-y-auto"
+                                rows={5}
+                                value={localEdits[lead.id]?.step_3 ?? (lead.step_3 || '')}
+                                onChange={(e) => {
+                                  setLocalEdits(prev => ({
+                                    ...prev,
+                                    [lead.id]: { ...prev[lead.id], step_3: e.target.value }
+                                  }));
+                                }}
+                                onBlur={(e) => handleUpdateSequence(lead.id, 2, e.target.value)}
+                              />
+                            </div>
+                          </div>
+                        </div>
                       )}
+                    </div>
+                  )}
+
+                  {lead.status === 'CLICKED' && (
+                    <div className="flex gap-2 justify-end">
+                      <span className="bg-red-600 text-white font-bold uppercase tracking-widest px-6 py-2 shadow-sm flex items-center gap-2">
+                        🔥 HOT LEAD - GO TO CRM
+                      </span>
                     </div>
                   )}
 

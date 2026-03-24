@@ -77,3 +77,40 @@ class GoogleSheetsService:
         except Exception as e:
             logging.error(f"Error appending to Google Sheets: {e}")
             return {"status": "error", "message": str(e)}
+
+    def append_followup(self, profile_url: str, followup_message: str):
+        """
+        Finds the lead by profileUrl and appends the followup message to the 4th column.
+        """
+        if not self._authenticate():
+            return {"status": "error"}
+
+        try:
+            if self.spreadsheet_id:
+                sheet = self.client.open_by_key(self.spreadsheet_id).sheet1
+            else:
+                sheet = self.client.open("Approved_LinkedIn_Outreach").sheet1
+                
+            # Ensure Header exists
+            header_row = ["profileUrl", "firstName", "connectionNote", "followupMessage"]
+            current_headers = sheet.row_values(1)
+            if len(current_headers) < 4 or current_headers[3] != "followupMessage":
+                sheet.update('A1:D1', [header_row[:max(4, len(current_headers))]])
+
+            # Find row
+            urls = sheet.col_values(1)
+            try:
+                # col_values is 1-indexed for rows in gspread when doing update_cell
+                row_index = urls.index(profile_url) + 1
+                # Update 4th column
+                sheet.update_cell(row_index, 4, followup_message)
+                logging.info(f"Appended followup to row {row_index} for {profile_url}")
+                return {"status": "success"}
+            except ValueError:
+                logging.warning(f"Profile URL {profile_url} not found in Sheets. Appending as new row.")
+                sheet.append_row([profile_url, "", "", followup_message])
+                return {"status": "success"}
+
+        except Exception as e:
+            logging.error(f"Error appending follow-up to Sheets: {e}")
+            return {"status": "error", "message": str(e)}

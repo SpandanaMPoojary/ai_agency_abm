@@ -92,26 +92,43 @@ class AutomationService:
             return {"status": "error", "message": "Missing Phantombuster configuration for connections"}
 
         try:
-            # 1. Fetch the output of the connections phantom (Standard Result Endpoint)
-            # format=json-array is often the most reliable way to get the array directly
-            url = f"https://api.phantombuster.com/api/v2/agents/fetch-output?id={self.connections_phantom_id}&format=json-array"
+            # 1. Fetch the agent's latest metadata to get the containerId
+            agent_url = f"https://api.phantombuster.com/api/v2/agents/fetch-output?id={self.connections_phantom_id}"
             headers = {"X-Phantombuster-Key": self.api_key}
             
-            response = requests.get(url, headers=headers)
+            response = requests.get(agent_url, headers=headers)
             response.raise_for_status()
             
-            # Phantombuster fetch-output?format=json-array returns a JSON list directly
-            connections = response.json()
+            agent_data = response.json()
+            container_id = agent_data.get("containerId")
+            
+            if not container_id:
+                logging.error(f"[LIVE] No containerId found in agent output: {agent_data}")
+                return {"status": "error", "message": "Phantom hasn't run successfully yet (No container ID)."}
+
+            # 2. Fetch the actual result object from the container
+            container_url = f"https://api.phantombuster.com/api/v2/containers/fetch-result-object?id={container_id}"
+            res_response = requests.get(container_url, headers=headers)
+            res_response.raise_for_status()
+            
+            res_data = res_response.json()
+            result_obj = res_data.get("resultObject")
+            
+            connections = []
+            if isinstance(result_obj, str):
+                import json
+                try:
+                    connections = json.loads(result_obj)
+                except Exception as e:
+                    logging.error(f"[LIVE] JSON parse failed for resultObject: {e}")
+            elif isinstance(result_obj, list):
+                connections = result_obj
             
             if not isinstance(connections, list):
-                # Fallback to checking for a 'result' key if it returned an object
-                if isinstance(connections, dict) and "result" in connections:
-                    connections = connections["result"] or []
-                else:
-                    logging.warning(f"[PB] Connections object is not a list: {type(connections)}")
-                    connections = []
+                logging.warning(f"[PB] Connections object is not a list: {type(connections)}")
+                connections = []
 
-            # 2. Search for the profile_url in the connections list
+            # 3. Search for the profile_url in the connections list
             target_profile = profile_url.lower().rstrip('/')
             
             def get_id(url):
@@ -135,3 +152,36 @@ class AutomationService:
         except Exception as e:
             logging.error(f"[LIVE] Failed to fetch connections for {profile_url}: {str(e)}")
             return {"status": "error", "message": f"Fetch failed: {str(e)}"}
+
+    def trigger_message_sender(self, profile_url: str, message: str):
+        """
+        Triggers the LinkedIn Message Sender Phantom.
+        """
+        if not self.live_mode:
+            logging.info(f"[SANDBOX] Simulating Followup Message to {profile_url}")
+            return {"status": "success", "container_id": "sandbox_12345"}
+            
+        if not self.api_key or not self.message_sender_phantom_id:
+            logging.error("[LIVE] Missing API Key or Message Sender Phantom ID")
+            return {"status": "error", "message": "Missing Phantombuster configuration for Message Sender"}
+            
+        try:
+            url = f"https://api.phantombuster.com/api/v2/agents/launch?id={self.message_sender_phantom_id}"
+            headers = {"X-Phantombuster-Key": self.api_key}
+            
+            # Message Sender expects multiple parameters or simply profile and message.
+            # Using standard phantom argument injection.
+            payload = {
+                "profileUrl": profile_url,
+                "message": message
+            }
+            
+            response = requests.post(url, headers=headers, json=payload)
+            response.raise_for_status()
+            
+            data = response.json()
+            return {"status": "success", "container_id": data.get("containerId")}
+        except Exception as e:
+            logging.error(f"[LIVE] Failed to trigger Message Sender Phantom: {str(e)}")
+            return {"status": "error", "message": str(e)}
+
