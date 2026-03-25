@@ -4,6 +4,7 @@ import logging
 from typing import List, Optional
 from datetime import datetime
 from fastapi import FastAPI, HTTPException, Depends
+from fastapi.responses import RedirectResponse
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from sqlmodel import SQLModel, create_engine, select, Relationship, Field, Session
@@ -287,7 +288,7 @@ async def fire_linkedin_dm(id: int, session: Session = Depends(get_session)):
     
     # 1. Append to Sheets
     sheets_service = GoogleSheetsService()
-    sheets_service.append_followup(profile_url, os_obj.step_2_email)
+    sheets_service.append_linkedin_dm(profile_url, os_obj.step_2_email)
     
     # 2. Trigger Phantombuster
     automation = AutomationService()
@@ -312,7 +313,7 @@ async def fire_cold_email(id: int, session: Session = Depends(get_session)):
     
     # 1. Append to Sheets specifically marked as Email
     sheets_service = GoogleSheetsService()
-    sheets_service.append_followup(profile_url, f"COLD EMAIL:\n{os_obj.step_3_followup}")
+    sheets_service.append_cold_email(profile_url, os_obj.step_3_followup)
     
     # 2. Log Mail simulation
     logging.info(f"Simulating sending Cold Email to {acc_obj.email or profile_url}")
@@ -346,11 +347,17 @@ async def target_specific(request: TargetSpecificRequest, session: Session = Dep
         
         dm_name = lead.get('decision_maker', 'Target')
         f_name = dm_name.split()[0] if dm_name and len(dm_name.split()) > 0 else "Target"
+        target_website = lead.get('dm_linkedin') or lead.get('website') or request.url
+        
+        # Guard against duplicates
+        stmt_dup = select(Account).where(Account.website == target_website)
+        if session.exec(stmt_dup).first():
+            raise HTTPException(status_code=400, detail="This lead has already been targeted and exists in the pipeline.")
         
         new_acc = Account(
             company_name=lead.get('account', 'Target Account'),
             first_name=f_name,
-            website=lead.get('dm_linkedin') or lead.get('website') or request.url,
+            website=target_website,
             industry=request.icp_context[:50],
             status="pending",
             lead_score=0
@@ -404,6 +411,11 @@ async def run_research(request: ResearchRequest, session: Session = Depends(get_
             account_data = f"{lead['account']} - {lead['decision_maker']}"
             value_prop = "Our AI Agency specializes in B2B growth and automations."
             
+            target_website = lead['dm_linkedin'] or lead['website']
+            stmt_dup = select(Account).where(Account.website == target_website)
+            if session.exec(stmt_dup).first():
+                continue  # Skip duplicate lead
+            
             sequence = abm_agent.generate_outreach_sequence(
                 account_data, request.icp_description, value_prop
             )
@@ -411,7 +423,7 @@ async def run_research(request: ResearchRequest, session: Session = Depends(get_
             new_acc = Account(
                 company_name=lead['account'],
                 first_name=lead['decision_maker'].split()[0],
-                website=lead['dm_linkedin'] or lead['website'],
+                website=target_website,
                 industry=request.icp_description[:50],
                 status="pending",
                 lead_score=0
@@ -462,26 +474,64 @@ async def activity_webhook(payload: dict, session: Session = Depends(get_session
         raise HTTPException(status_code=404, detail="Account not found for this sequence")
     
     if activity == "LINK_CLICKED" or activity == "SIMULATED_ENGAGEMENT":
-        acc_obj.lead_score += 20
-        acc_obj.status = "CONNECTED"
+        reason = f"Scoring Event: {activity}"
         
-        # Also update sequence if exists
-        stmt = select(OutreachSequence).where(OutreachSequence.account_id == acc_obj.id)
-        os_obj = session.exec(stmt).first()
-        if os_obj:
-            os_obj.approval_status = "ACCEPTED"
-            session.add(os_obj)
+        # Check for duplicates
+        stmt_score = select(LeadScore).where(LeadScore.account_id == acc_obj.id, LeadScore.reason == reason)
+        if not session.exec(stmt_score).first():
+            acc_obj.lead_score += 20
+            acc_obj.status = "CONNECTED"
+            
+            # Also update sequence if exists
+            stmt = select(OutreachSequence).where(OutreachSequence.account_id == acc_obj.id)
+            os_obj = session.exec(stmt).first()
+            if os_obj:
+                os_obj.approval_status = "ACCEPTED"
+                session.add(os_obj)
 
-        new_score = LeadScore(
-            account_id=acc_obj.id,
-            score=20,
-            reason=f"Scoring Event: {activity}",
-            timestamp=datetime.utcnow()
-        )
-        session.add(new_score)
+            new_score = LeadScore(
+                account_id=acc_obj.id,
+                score=20,
+                reason=reason,
+                timestamp=datetime.utcnow()
+            )
+            session.add(new_score)
+            
     session.add(acc_obj)
     session.commit()
     return {"status": "success"}
+
+@app.get("/t/{id}")
+async def track_click(id: int, session: Session = Depends(get_session)):
+    acc_obj = session.get(Account, id)
+    if acc_obj:
+        reason = "Follow-up Link Clicked"
+        stmt_score = select(LeadScore).where(LeadScore.account_id == acc_obj.id, LeadScore.reason == reason)
+        if not session.exec(stmt_score).first():
+            # Increase score, status
+            acc_obj.lead_score += 20
+            acc_obj.status = "CLICKED"
+            
+            # Update sequence if exists
+            stmt = select(OutreachSequence).where(OutreachSequence.account_id == acc_obj.id)
+            os_obj = session.exec(stmt).first()
+            if os_obj:
+                os_obj.approval_status = "CLICKED"
+                session.add(os_obj)
+
+            new_score = LeadScore(
+                account_id=acc_obj.id,
+                score=20,
+                reason=reason,
+                timestamp=datetime.utcnow()
+            )
+            session.add(new_score)
+            
+        session.add(acc_obj)
+        session.commit()
+        
+    destination_url = os.getenv("TRACKING_DESTINATION", "https://linkedin.com")
+    return RedirectResponse(url=destination_url)
 
 @app.post("/api/reject-campaign/{id}")
 async def reject_campaign(id: int, session: Session = Depends(get_session)):
@@ -523,21 +573,26 @@ async def check_acceptance(id: int, session: Session = Depends(get_session)):
     
     if check_result.get("status") == "success" and check_result.get("accepted"):
         os_obj.approval_status = "ACCEPTED"
-        acc_obj.lead_score += 20
-        acc_obj.status = "CONNECTED"
         
-        # Track scoring event
-        new_score = LeadScore(
-            account_id=acc_obj.id,
-            score=20,
-            reason="LinkedIn Connection Accepted (Automated Check)",
-            timestamp=datetime.utcnow()
-        )
+        reason = "LinkedIn Connection Accepted (Automated Check)"
+        stmt_score = select(LeadScore).where(LeadScore.account_id == acc_obj.id, LeadScore.reason == reason)
+        if not session.exec(stmt_score).first():
+            acc_obj.lead_score += 20
+            acc_obj.status = "CONNECTED"
+            
+            # Track scoring event
+            new_score = LeadScore(
+                account_id=acc_obj.id,
+                score=20,
+                reason=reason,
+                timestamp=datetime.utcnow()
+            )
+            session.add(new_score)
+            
         session.add(acc_obj)
         session.add(os_obj)
-        session.add(new_score)
         session.commit()
-        return {"status": "success", "message": "Connection verified and score increased!"}
+        return {"status": "success", "message": "Connection verified and score updated!"}
     elif check_result.get("status") == "error":
         raise HTTPException(status_code=500, detail=check_result.get("message"))
     else:

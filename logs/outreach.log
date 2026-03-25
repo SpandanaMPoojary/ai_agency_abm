@@ -786,3 +786,377 @@ LINE 1: INSERT INTO lead_scores (account_id, score, reason, timestam...
 2026-03-25 00:38:54,544 - DEBUG - receive_response_body.complete
 2026-03-25 00:38:54,545 - DEBUG - response_closed.started
 2026-03-25 00:38:54,545 - DEBUG - response_closed.complete
+2026-03-25 11:53:46,232 - DEBUG - Converted retries value: 3 -> Retry(total=3, connect=None, read=None, redirect=None, status=None)
+2026-03-25 11:53:46,327 - DEBUG - Starting new HTTPS connection (1): oauth2.googleapis.com:443
+2026-03-25 11:53:47,398 - DEBUG - https://oauth2.googleapis.com:443 "POST /token HTTP/1.1" 200 None
+2026-03-25 11:53:47,416 - DEBUG - Starting new HTTPS connection (1): sheets.googleapis.com:443
+2026-03-25 11:53:48,367 - DEBUG - https://sheets.googleapis.com:443 "GET /v4/spreadsheets/1louNQ1-ai2j57wwfsE0_QaxRo6zisfiC6KINstwIGPo?includeGridData=false HTTP/1.1" 200 None
+2026-03-25 11:53:48,986 - DEBUG - https://sheets.googleapis.com:443 "GET /v4/spreadsheets/1louNQ1-ai2j57wwfsE0_QaxRo6zisfiC6KINstwIGPo?includeGridData=false HTTP/1.1" 200 None
+2026-03-25 11:53:49,786 - DEBUG - https://sheets.googleapis.com:443 "GET /v4/spreadsheets/1louNQ1-ai2j57wwfsE0_QaxRo6zisfiC6KINstwIGPo/values/%27Sheet1%27%21A1%3A1 HTTP/1.1" 200 None
+2026-03-25 11:53:50,425 - DEBUG - https://sheets.googleapis.com:443 "PUT /v4/spreadsheets/1louNQ1-ai2j57wwfsE0_QaxRo6zisfiC6KINstwIGPo/values/%27Sheet1%27%21A1%3AD1?valueInputOption=RAW HTTP/1.1" 200 None
+2026-03-25 11:53:50,929 - DEBUG - https://sheets.googleapis.com:443 "GET /v4/spreadsheets/1louNQ1-ai2j57wwfsE0_QaxRo6zisfiC6KINstwIGPo/values/%27Sheet1%27%21A1%3AA?valueRenderOption=FORMATTED_VALUE&majorDimension=COLUMNS HTTP/1.1" 200 None
+2026-03-25 11:53:51,554 - DEBUG - https://sheets.googleapis.com:443 "PUT /v4/spreadsheets/1louNQ1-ai2j57wwfsE0_QaxRo6zisfiC6KINstwIGPo/values/%27Sheet1%27%21D5?valueInputOption=USER_ENTERED HTTP/1.1" 200 None
+2026-03-25 11:53:51,555 - INFO - Appended followup to row 5 for https://www.linkedin.com/in/varuni-sridhar-19706a3b4/
+2026-03-25 12:26:13,631 - DEBUG - Converted retries value: 3 -> Retry(total=3, connect=None, read=None, redirect=None, status=None)
+2026-03-25 12:26:13,654 - DEBUG - Starting new HTTPS connection (1): oauth2.googleapis.com:443
+2026-03-25 12:26:14,020 - DEBUG - https://oauth2.googleapis.com:443 "POST /token HTTP/1.1" 200 None
+2026-03-25 12:26:14,023 - DEBUG - Starting new HTTPS connection (1): sheets.googleapis.com:443
+2026-03-25 12:26:14,928 - DEBUG - https://sheets.googleapis.com:443 "GET /v4/spreadsheets/1louNQ1-ai2j57wwfsE0_QaxRo6zisfiC6KINstwIGPo?includeGridData=false HTTP/1.1" 200 None
+2026-03-25 12:26:16,322 - DEBUG - https://sheets.googleapis.com:443 "GET /v4/spreadsheets/1louNQ1-ai2j57wwfsE0_QaxRo6zisfiC6KINstwIGPo?includeGridData=false HTTP/1.1" 200 None
+2026-03-25 12:26:16,876 - DEBUG - https://sheets.googleapis.com:443 "GET /v4/spreadsheets/1louNQ1-ai2j57wwfsE0_QaxRo6zisfiC6KINstwIGPo/values/%27Sheet1%27%21A1%3A1 HTTP/1.1" 200 None
+2026-03-25 12:26:17,551 - DEBUG - https://sheets.googleapis.com:443 "GET /v4/spreadsheets/1louNQ1-ai2j57wwfsE0_QaxRo6zisfiC6KINstwIGPo/values/%27Sheet1%27%21A1%3AA?valueRenderOption=FORMATTED_VALUE&majorDimension=COLUMNS HTTP/1.1" 200 None
+2026-03-25 12:26:18,130 - DEBUG - https://sheets.googleapis.com:443 "PUT /v4/spreadsheets/1louNQ1-ai2j57wwfsE0_QaxRo6zisfiC6KINstwIGPo/values/%27Sheet1%27%21D5?valueInputOption=USER_ENTERED HTTP/1.1" 200 None
+2026-03-25 12:26:18,131 - INFO - Appended followup to row 5 for https://www.linkedin.com/in/varuni-sridhar-19706a3b4/
+2026-03-25 12:26:42,431 - DEBUG - Converted retries value: 3 -> Retry(total=3, connect=None, read=None, redirect=None, status=None)
+2026-03-25 12:26:42,435 - DEBUG - Starting new HTTPS connection (1): oauth2.googleapis.com:443
+2026-03-25 12:26:42,757 - DEBUG - https://oauth2.googleapis.com:443 "POST /token HTTP/1.1" 200 None
+2026-03-25 12:26:42,761 - DEBUG - Starting new HTTPS connection (1): sheets.googleapis.com:443
+2026-03-25 12:26:43,441 - DEBUG - https://sheets.googleapis.com:443 "GET /v4/spreadsheets/1louNQ1-ai2j57wwfsE0_QaxRo6zisfiC6KINstwIGPo?includeGridData=false HTTP/1.1" 200 None
+2026-03-25 12:26:44,086 - DEBUG - https://sheets.googleapis.com:443 "GET /v4/spreadsheets/1louNQ1-ai2j57wwfsE0_QaxRo6zisfiC6KINstwIGPo?includeGridData=false HTTP/1.1" 200 None
+2026-03-25 12:26:44,683 - DEBUG - https://sheets.googleapis.com:443 "GET /v4/spreadsheets/1louNQ1-ai2j57wwfsE0_QaxRo6zisfiC6KINstwIGPo/values/%27Sheet1%27%21A1%3A1 HTTP/1.1" 200 None
+2026-03-25 12:26:45,203 - DEBUG - https://sheets.googleapis.com:443 "GET /v4/spreadsheets/1louNQ1-ai2j57wwfsE0_QaxRo6zisfiC6KINstwIGPo/values/%27Sheet1%27%21A1%3AA?valueRenderOption=FORMATTED_VALUE&majorDimension=COLUMNS HTTP/1.1" 200 None
+2026-03-25 12:26:45,818 - DEBUG - https://sheets.googleapis.com:443 "PUT /v4/spreadsheets/1louNQ1-ai2j57wwfsE0_QaxRo6zisfiC6KINstwIGPo/values/%27Sheet1%27%21D5?valueInputOption=USER_ENTERED HTTP/1.1" 200 None
+2026-03-25 12:26:45,819 - INFO - Appended followup to row 5 for https://www.linkedin.com/in/varuni-sridhar-19706a3b4/
+2026-03-25 12:26:45,821 - INFO - Simulating sending Cold Email to https://www.linkedin.com/in/varuni-sridhar-19706a3b4/
+2026-03-25 12:28:17,475 - DEBUG - Converted retries value: 3 -> Retry(total=3, connect=None, read=None, redirect=None, status=None)
+2026-03-25 12:28:17,503 - DEBUG - Starting new HTTPS connection (1): oauth2.googleapis.com:443
+2026-03-25 12:28:18,485 - DEBUG - https://oauth2.googleapis.com:443 "POST /token HTTP/1.1" 200 None
+2026-03-25 12:28:18,492 - DEBUG - Starting new HTTPS connection (1): sheets.googleapis.com:443
+2026-03-25 12:28:20,729 - DEBUG - https://sheets.googleapis.com:443 "GET /v4/spreadsheets/1louNQ1-ai2j57wwfsE0_QaxRo6zisfiC6KINstwIGPo?includeGridData=false HTTP/1.1" 200 None
+2026-03-25 12:28:21,528 - DEBUG - https://sheets.googleapis.com:443 "GET /v4/spreadsheets/1louNQ1-ai2j57wwfsE0_QaxRo6zisfiC6KINstwIGPo?includeGridData=false HTTP/1.1" 200 None
+2026-03-25 12:28:22,115 - DEBUG - https://sheets.googleapis.com:443 "GET /v4/spreadsheets/1louNQ1-ai2j57wwfsE0_QaxRo6zisfiC6KINstwIGPo/values/%27Sheet1%27%21A1%3A1 HTTP/1.1" 200 None
+2026-03-25 12:28:22,656 - DEBUG - https://sheets.googleapis.com:443 "GET /v4/spreadsheets/1louNQ1-ai2j57wwfsE0_QaxRo6zisfiC6KINstwIGPo/values/%27Sheet1%27%21A1%3AA?valueRenderOption=FORMATTED_VALUE&majorDimension=COLUMNS HTTP/1.1" 200 None
+2026-03-25 12:28:23,295 - DEBUG - https://sheets.googleapis.com:443 "PUT /v4/spreadsheets/1louNQ1-ai2j57wwfsE0_QaxRo6zisfiC6KINstwIGPo/values/%27Sheet1%27%21D5?valueInputOption=USER_ENTERED HTTP/1.1" 200 None
+2026-03-25 12:28:23,296 - INFO - Appended followup to row 5 for https://www.linkedin.com/in/varuni-sridhar-19706a3b4/
+2026-03-25 12:28:23,298 - DEBUG - Starting new HTTPS connection (1): api.phantombuster.com:443
+2026-03-25 12:28:25,515 - DEBUG - https://api.phantombuster.com:443 "POST /api/v2/agents/launch HTTP/1.1" 200 34
+2026-03-25 12:28:52,023 - DEBUG - Converted retries value: 3 -> Retry(total=3, connect=None, read=None, redirect=None, status=None)
+2026-03-25 12:28:52,026 - DEBUG - Starting new HTTPS connection (1): oauth2.googleapis.com:443
+2026-03-25 12:28:52,337 - DEBUG - https://oauth2.googleapis.com:443 "POST /token HTTP/1.1" 200 None
+2026-03-25 12:28:52,341 - DEBUG - Starting new HTTPS connection (1): sheets.googleapis.com:443
+2026-03-25 12:28:53,007 - DEBUG - https://sheets.googleapis.com:443 "GET /v4/spreadsheets/1louNQ1-ai2j57wwfsE0_QaxRo6zisfiC6KINstwIGPo?includeGridData=false HTTP/1.1" 200 None
+2026-03-25 12:28:53,771 - DEBUG - https://sheets.googleapis.com:443 "GET /v4/spreadsheets/1louNQ1-ai2j57wwfsE0_QaxRo6zisfiC6KINstwIGPo?includeGridData=false HTTP/1.1" 200 None
+2026-03-25 12:28:54,253 - DEBUG - https://sheets.googleapis.com:443 "GET /v4/spreadsheets/1louNQ1-ai2j57wwfsE0_QaxRo6zisfiC6KINstwIGPo/values/%27Sheet1%27%21A1%3A1 HTTP/1.1" 200 None
+2026-03-25 12:28:54,827 - DEBUG - https://sheets.googleapis.com:443 "GET /v4/spreadsheets/1louNQ1-ai2j57wwfsE0_QaxRo6zisfiC6KINstwIGPo/values/%27Sheet1%27%21A1%3AA?valueRenderOption=FORMATTED_VALUE&majorDimension=COLUMNS HTTP/1.1" 200 None
+2026-03-25 12:28:55,294 - DEBUG - https://sheets.googleapis.com:443 "PUT /v4/spreadsheets/1louNQ1-ai2j57wwfsE0_QaxRo6zisfiC6KINstwIGPo/values/%27Sheet1%27%21D5?valueInputOption=USER_ENTERED HTTP/1.1" 200 None
+2026-03-25 12:28:55,295 - INFO - Appended followup to row 5 for https://www.linkedin.com/in/varuni-sridhar-19706a3b4/
+2026-03-25 12:28:55,298 - DEBUG - Starting new HTTPS connection (1): api.phantombuster.com:443
+2026-03-25 12:28:58,200 - DEBUG - https://api.phantombuster.com:443 "POST /api/v2/agents/launch HTTP/1.1" 200 34
+2026-03-25 12:35:57,671 - DEBUG - Converted retries value: 3 -> Retry(total=3, connect=None, read=None, redirect=None, status=None)
+2026-03-25 12:35:57,683 - DEBUG - Starting new HTTPS connection (1): oauth2.googleapis.com:443
+2026-03-25 12:35:58,183 - DEBUG - https://oauth2.googleapis.com:443 "POST /token HTTP/1.1" 200 None
+2026-03-25 12:35:58,187 - DEBUG - Starting new HTTPS connection (1): sheets.googleapis.com:443
+2026-03-25 12:36:00,864 - DEBUG - https://sheets.googleapis.com:443 "GET /v4/spreadsheets/1louNQ1-ai2j57wwfsE0_QaxRo6zisfiC6KINstwIGPo?includeGridData=false HTTP/1.1" 200 None
+2026-03-25 12:36:01,319 - DEBUG - https://sheets.googleapis.com:443 "GET /v4/spreadsheets/1louNQ1-ai2j57wwfsE0_QaxRo6zisfiC6KINstwIGPo?includeGridData=false HTTP/1.1" 200 None
+2026-03-25 12:36:01,775 - DEBUG - https://sheets.googleapis.com:443 "GET /v4/spreadsheets/1louNQ1-ai2j57wwfsE0_QaxRo6zisfiC6KINstwIGPo/values/%27Sheet1%27%21A1%3A1 HTTP/1.1" 200 None
+2026-03-25 12:36:02,434 - DEBUG - https://sheets.googleapis.com:443 "GET /v4/spreadsheets/1louNQ1-ai2j57wwfsE0_QaxRo6zisfiC6KINstwIGPo/values/%27Sheet1%27%21A1%3AA?valueRenderOption=FORMATTED_VALUE&majorDimension=COLUMNS HTTP/1.1" 200 None
+2026-03-25 12:36:03,050 - DEBUG - https://sheets.googleapis.com:443 "PUT /v4/spreadsheets/1louNQ1-ai2j57wwfsE0_QaxRo6zisfiC6KINstwIGPo/values/%27Sheet1%27%21D5?valueInputOption=USER_ENTERED HTTP/1.1" 200 None
+2026-03-25 12:36:03,052 - INFO - Updated followupMessage on row 5 for https://www.linkedin.com/in/varuni-sridhar-19706a3b4/
+2026-03-25 12:36:03,056 - DEBUG - Starting new HTTPS connection (1): api.phantombuster.com:443
+2026-03-25 12:36:04,545 - DEBUG - https://api.phantombuster.com:443 "POST /api/v2/agents/launch HTTP/1.1" 200 34
+2026-03-25 12:36:08,659 - DEBUG - Converted retries value: 3 -> Retry(total=3, connect=None, read=None, redirect=None, status=None)
+2026-03-25 12:36:08,661 - DEBUG - Starting new HTTPS connection (1): oauth2.googleapis.com:443
+2026-03-25 12:36:09,078 - DEBUG - https://oauth2.googleapis.com:443 "POST /token HTTP/1.1" 200 None
+2026-03-25 12:36:09,083 - DEBUG - Starting new HTTPS connection (1): sheets.googleapis.com:443
+2026-03-25 12:36:09,886 - DEBUG - https://sheets.googleapis.com:443 "GET /v4/spreadsheets/1louNQ1-ai2j57wwfsE0_QaxRo6zisfiC6KINstwIGPo?includeGridData=false HTTP/1.1" 200 None
+2026-03-25 12:36:10,441 - DEBUG - https://sheets.googleapis.com:443 "GET /v4/spreadsheets/1louNQ1-ai2j57wwfsE0_QaxRo6zisfiC6KINstwIGPo?includeGridData=false HTTP/1.1" 200 None
+2026-03-25 12:36:11,108 - DEBUG - https://sheets.googleapis.com:443 "GET /v4/spreadsheets/1louNQ1-ai2j57wwfsE0_QaxRo6zisfiC6KINstwIGPo/values/%27Sheet1%27%21A1%3A1 HTTP/1.1" 200 None
+2026-03-25 12:36:11,808 - DEBUG - https://sheets.googleapis.com:443 "PUT /v4/spreadsheets/1louNQ1-ai2j57wwfsE0_QaxRo6zisfiC6KINstwIGPo/values/%27Sheet1%27%21A1%3AE1?valueInputOption=RAW HTTP/1.1" 200 None
+2026-03-25 12:36:12,308 - DEBUG - https://sheets.googleapis.com:443 "GET /v4/spreadsheets/1louNQ1-ai2j57wwfsE0_QaxRo6zisfiC6KINstwIGPo/values/%27Sheet1%27%21A1%3AA?valueRenderOption=FORMATTED_VALUE&majorDimension=COLUMNS HTTP/1.1" 200 None
+2026-03-25 12:36:12,908 - DEBUG - https://sheets.googleapis.com:443 "PUT /v4/spreadsheets/1louNQ1-ai2j57wwfsE0_QaxRo6zisfiC6KINstwIGPo/values/%27Sheet1%27%21E5?valueInputOption=USER_ENTERED HTTP/1.1" 200 None
+2026-03-25 12:36:12,909 - INFO - Updated coldMail on row 5 for https://www.linkedin.com/in/varuni-sridhar-19706a3b4/
+2026-03-25 12:36:12,909 - INFO - Simulating sending Cold Email to https://www.linkedin.com/in/varuni-sridhar-19706a3b4/
+2026-03-25 12:51:08,090 - DEBUG - Converted retries value: 3 -> Retry(total=3, connect=None, read=None, redirect=None, status=None)
+2026-03-25 12:51:08,119 - DEBUG - Starting new HTTPS connection (1): oauth2.googleapis.com:443
+2026-03-25 12:51:09,941 - DEBUG - https://oauth2.googleapis.com:443 "POST /token HTTP/1.1" 200 None
+2026-03-25 12:51:09,951 - DEBUG - Starting new HTTPS connection (1): sheets.googleapis.com:443
+2026-03-25 12:51:10,993 - DEBUG - https://sheets.googleapis.com:443 "GET /v4/spreadsheets/1louNQ1-ai2j57wwfsE0_QaxRo6zisfiC6KINstwIGPo?includeGridData=false HTTP/1.1" 200 None
+2026-03-25 12:51:11,650 - DEBUG - https://sheets.googleapis.com:443 "GET /v4/spreadsheets/1louNQ1-ai2j57wwfsE0_QaxRo6zisfiC6KINstwIGPo?includeGridData=false HTTP/1.1" 200 None
+2026-03-25 12:51:12,196 - DEBUG - https://sheets.googleapis.com:443 "GET /v4/spreadsheets/1louNQ1-ai2j57wwfsE0_QaxRo6zisfiC6KINstwIGPo/values/%27Sheet1%27%21A1%3A1 HTTP/1.1" 200 None
+2026-03-25 12:51:12,694 - DEBUG - https://sheets.googleapis.com:443 "GET /v4/spreadsheets/1louNQ1-ai2j57wwfsE0_QaxRo6zisfiC6KINstwIGPo/values/%27Sheet1%27%21A1%3AA?valueRenderOption=FORMATTED_VALUE&majorDimension=COLUMNS HTTP/1.1" 200 None
+2026-03-25 12:51:15,790 - DEBUG - https://sheets.googleapis.com:443 "PUT /v4/spreadsheets/1louNQ1-ai2j57wwfsE0_QaxRo6zisfiC6KINstwIGPo/values/%27Sheet1%27%21D5?valueInputOption=USER_ENTERED HTTP/1.1" 200 None
+2026-03-25 12:51:15,792 - INFO - Updated followupMessage on row 5 for https://www.linkedin.com/in/varuni-sridhar-19706a3b4/
+2026-03-25 12:51:15,796 - DEBUG - Starting new HTTPS connection (1): api.phantombuster.com:443
+2026-03-25 12:51:17,808 - DEBUG - https://api.phantombuster.com:443 "POST /api/v2/agents/launch HTTP/1.1" 200 33
+2026-03-25 15:17:26,215 - DEBUG - Starting new HTTPS connection (1): api.phantombuster.com:443
+2026-03-25 15:17:27,050 - DEBUG - https://api.phantombuster.com:443 "GET /api/v2/agents/fetch-output?id=1354832949428923 HTTP/1.1" 200 None
+2026-03-25 15:17:27,056 - DEBUG - Starting new HTTPS connection (1): api.phantombuster.com:443
+2026-03-25 15:17:27,874 - DEBUG - https://api.phantombuster.com:443 "GET /api/v2/containers/fetch-result-object?id=5026263815390465 HTTP/1.1" 200 None
+2026-03-25 15:17:27,911 - INFO - [DEBUG] Checking acceptance for https://www.linkedin.com/in/rachana-billava-034a43244 (ID: rachana-billava-034a43244). Found 9 connections.
+2026-03-25 15:17:27,916 - INFO - [LIVE] Connection accepted confirmed for https://www.linkedin.com/in/rachana-billava-034a43244/
+2026-03-25 15:17:36,573 - DEBUG - connect_tcp.started host='api.replicate.com' port=443 local_address=None timeout=5.0 socket_options=None
+2026-03-25 15:17:37,928 - DEBUG - connect_tcp.complete return_value=<httpcore._backends.sync.SyncStream object at 0x000001FDD974ED10>
+2026-03-25 15:17:37,928 - DEBUG - start_tls.started ssl_context=<ssl.SSLContext object at 0x000001FDD94893C0> server_hostname='api.replicate.com' timeout=5.0
+2026-03-25 15:17:38,018 - DEBUG - start_tls.complete return_value=<httpcore._backends.sync.SyncStream object at 0x000001FDD974ECE0>
+2026-03-25 15:17:38,018 - DEBUG - send_request_headers.started request=<Request [b'POST']>
+2026-03-25 15:17:38,024 - DEBUG - send_request_headers.complete
+2026-03-25 15:17:38,024 - DEBUG - send_request_body.started request=<Request [b'POST']>
+2026-03-25 15:17:38,024 - DEBUG - send_request_body.complete
+2026-03-25 15:17:38,024 - DEBUG - receive_response_headers.started request=<Request [b'POST']>
+2026-03-25 15:17:47,104 - DEBUG - receive_response_headers.complete return_value=(b'HTTP/1.1', 201, b'Created', [(b'Date', b'Wed, 25 Mar 2026 09:47:48 GMT'), (b'Content-Type', b'application/json; charset=utf-8'), (b'Content-Length', b'6339'), (b'Connection', b'keep-alive'), (b'CF-Ray', b'9e1cfed2fbe7bcff-CCU'), (b'CF-Cache-Status', b'DYNAMIC'), (b'Server', b'cloudflare'), (b'Strict-Transport-Security', b'max-age=15552000'), (b'Preference-Applied', b'wait=60'), (b'expect-ct', b'max-age=86400, enforce'), (b'ratelimit-remaining', b'599'), (b'ratelimit-reset', b'1'), (b'referrer-policy', b'same-origin'), (b'replicate-prediction-id', b'7rpwbm49hdrna0cx4hjass8a3c'), (b'x-content-type-options', b'nosniff'), (b'x-frame-options', b'SAMEORIGIN'), (b'x-xss-protection', b'1; mode=block'), (b'Vary', b'accept-encoding'), (b'Report-To', b'{"group":"cf-nel","max_age":604800,"endpoints":[{"url":"https://a.nel.cloudflare.com/report/v4?s=TKjx3u0HaZDwTLsHw%2Fv2svuIWQIckfju6cwPq1zh%2FUmXJfjntil6AEH54JuH7AhREcJpvcgFdHcOYN1IGC0Y9tx1hltl9u0eaDYYrIgDmJ%2BYW6LMMIG2Q0n4YMU%3D"}]}'), (b'Nel', b'{"report_to":"cf-nel","success_fraction":0.0,"max_age":604800}'), (b'alt-svc', b'h3=":443"; ma=86400')])
+2026-03-25 15:17:47,105 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/meta-llama-3-70b-instruct/predictions "HTTP/1.1 201 Created"
+2026-03-25 15:17:47,105 - DEBUG - receive_response_body.started request=<Request [b'POST']>
+2026-03-25 15:17:47,110 - DEBUG - receive_response_body.complete
+2026-03-25 15:17:47,110 - DEBUG - response_closed.started
+2026-03-25 15:17:47,110 - DEBUG - response_closed.complete
+2026-03-25 15:17:57,080 - DEBUG - close.started
+2026-03-25 15:17:57,080 - DEBUG - close.complete
+2026-03-25 15:17:57,081 - DEBUG - connect_tcp.started host='api.replicate.com' port=443 local_address=None timeout=5.0 socket_options=None
+2026-03-25 15:17:57,156 - DEBUG - connect_tcp.complete return_value=<httpcore._backends.sync.SyncStream object at 0x000001FDD974FA00>
+2026-03-25 15:17:57,158 - DEBUG - start_tls.started ssl_context=<ssl.SSLContext object at 0x000001FDD94893C0> server_hostname='api.replicate.com' timeout=5.0
+2026-03-25 15:17:57,253 - DEBUG - start_tls.complete return_value=<httpcore._backends.sync.SyncStream object at 0x000001FDD974F550>
+2026-03-25 15:17:57,256 - DEBUG - send_request_headers.started request=<Request [b'POST']>
+2026-03-25 15:17:57,256 - DEBUG - send_request_headers.complete
+2026-03-25 15:17:57,256 - DEBUG - send_request_body.started request=<Request [b'POST']>
+2026-03-25 15:17:57,256 - DEBUG - send_request_body.complete
+2026-03-25 15:17:57,258 - DEBUG - receive_response_headers.started request=<Request [b'POST']>
+2026-03-25 15:18:03,243 - DEBUG - receive_response_headers.complete return_value=(b'HTTP/1.1', 201, b'Created', [(b'Date', b'Wed, 25 Mar 2026 09:48:04 GMT'), (b'Content-Type', b'application/json; charset=utf-8'), (b'Content-Length', b'6146'), (b'Connection', b'keep-alive'), (b'CF-Ray', b'9e1cff4b69aa320b-BOM'), (b'CF-Cache-Status', b'DYNAMIC'), (b'Server', b'cloudflare'), (b'Strict-Transport-Security', b'max-age=15552000'), (b'Preference-Applied', b'wait=60'), (b'expect-ct', b'max-age=86400, enforce'), (b'ratelimit-remaining', b'599'), (b'ratelimit-reset', b'1'), (b'referrer-policy', b'same-origin'), (b'replicate-prediction-id', b'gtcj0apc19rn80cx4hjbbctqxr'), (b'x-content-type-options', b'nosniff'), (b'x-frame-options', b'SAMEORIGIN'), (b'x-xss-protection', b'1; mode=block'), (b'Vary', b'accept-encoding'), (b'Report-To', b'{"group":"cf-nel","max_age":604800,"endpoints":[{"url":"https://a.nel.cloudflare.com/report/v4?s=cB02QmXR5Vu0u9L3rpeiL22K0SvT01qwJlKP3AO36r5hmb2V4iouBfEQc5h4Ma9%2FRYAKHPrdpFQbHKiBr5lM0r0pzcKMOgjpa7rWkP1pGMgP040E2yoYaW4L"}]}'), (b'Nel', b'{"report_to":"cf-nel","success_fraction":0.0,"max_age":604800}'), (b'alt-svc', b'h3=":443"; ma=86400')])
+2026-03-25 15:18:03,245 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/meta-llama-3-70b-instruct/predictions "HTTP/1.1 201 Created"
+2026-03-25 15:18:03,245 - DEBUG - receive_response_body.started request=<Request [b'POST']>
+2026-03-25 15:18:03,245 - DEBUG - receive_response_body.complete
+2026-03-25 15:18:03,245 - DEBUG - response_closed.started
+2026-03-25 15:18:03,245 - DEBUG - response_closed.complete
+2026-03-25 15:18:25,939 - DEBUG - Converted retries value: 3 -> Retry(total=3, connect=None, read=None, redirect=None, status=None)
+2026-03-25 15:18:25,955 - DEBUG - Starting new HTTPS connection (1): oauth2.googleapis.com:443
+2026-03-25 15:18:26,200 - DEBUG - https://oauth2.googleapis.com:443 "POST /token HTTP/1.1" 200 None
+2026-03-25 15:18:26,202 - DEBUG - Starting new HTTPS connection (1): sheets.googleapis.com:443
+2026-03-25 15:18:27,586 - DEBUG - https://sheets.googleapis.com:443 "GET /v4/spreadsheets/1louNQ1-ai2j57wwfsE0_QaxRo6zisfiC6KINstwIGPo?includeGridData=false HTTP/1.1" 200 None
+2026-03-25 15:18:28,010 - DEBUG - https://sheets.googleapis.com:443 "GET /v4/spreadsheets/1louNQ1-ai2j57wwfsE0_QaxRo6zisfiC6KINstwIGPo?includeGridData=false HTTP/1.1" 200 None
+2026-03-25 15:18:28,475 - DEBUG - https://sheets.googleapis.com:443 "GET /v4/spreadsheets/1louNQ1-ai2j57wwfsE0_QaxRo6zisfiC6KINstwIGPo/values/%27Sheet1%27%21A1%3A1 HTTP/1.1" 200 None
+2026-03-25 15:18:28,950 - DEBUG - https://sheets.googleapis.com:443 "GET /v4/spreadsheets/1louNQ1-ai2j57wwfsE0_QaxRo6zisfiC6KINstwIGPo/values/%27Sheet1%27%21A1%3AA?valueRenderOption=FORMATTED_VALUE&majorDimension=COLUMNS HTTP/1.1" 200 None
+2026-03-25 15:18:29,432 - DEBUG - https://sheets.googleapis.com:443 "PUT /v4/spreadsheets/1louNQ1-ai2j57wwfsE0_QaxRo6zisfiC6KINstwIGPo/values/%27Sheet1%27%21D4?valueInputOption=USER_ENTERED HTTP/1.1" 200 None
+2026-03-25 15:18:29,433 - INFO - Updated followupMessage on row 4 for https://www.linkedin.com/in/rachana-billava-034a43244/
+2026-03-25 15:18:29,434 - DEBUG - Starting new HTTPS connection (1): api.phantombuster.com:443
+2026-03-25 15:18:30,906 - DEBUG - https://api.phantombuster.com:443 "POST /api/v2/agents/launch HTTP/1.1" 200 34
+2026-03-25 15:19:23,424 - DEBUG - Converted retries value: 3 -> Retry(total=3, connect=None, read=None, redirect=None, status=None)
+2026-03-25 15:19:23,424 - DEBUG - Starting new HTTPS connection (1): oauth2.googleapis.com:443
+2026-03-25 15:19:25,819 - DEBUG - https://oauth2.googleapis.com:443 "POST /token HTTP/1.1" 200 None
+2026-03-25 15:19:25,824 - DEBUG - Starting new HTTPS connection (1): sheets.googleapis.com:443
+2026-03-25 15:19:26,368 - DEBUG - https://sheets.googleapis.com:443 "GET /v4/spreadsheets/1louNQ1-ai2j57wwfsE0_QaxRo6zisfiC6KINstwIGPo?includeGridData=false HTTP/1.1" 200 None
+2026-03-25 15:19:26,690 - DEBUG - https://sheets.googleapis.com:443 "GET /v4/spreadsheets/1louNQ1-ai2j57wwfsE0_QaxRo6zisfiC6KINstwIGPo?includeGridData=false HTTP/1.1" 200 None
+2026-03-25 15:19:27,059 - DEBUG - https://sheets.googleapis.com:443 "GET /v4/spreadsheets/1louNQ1-ai2j57wwfsE0_QaxRo6zisfiC6KINstwIGPo/values/%27Sheet1%27%21A1%3A1 HTTP/1.1" 200 None
+2026-03-25 15:19:27,470 - DEBUG - https://sheets.googleapis.com:443 "GET /v4/spreadsheets/1louNQ1-ai2j57wwfsE0_QaxRo6zisfiC6KINstwIGPo/values/%27Sheet1%27%21A1%3AA?valueRenderOption=FORMATTED_VALUE&majorDimension=COLUMNS HTTP/1.1" 200 None
+2026-03-25 15:19:27,953 - DEBUG - https://sheets.googleapis.com:443 "PUT /v4/spreadsheets/1louNQ1-ai2j57wwfsE0_QaxRo6zisfiC6KINstwIGPo/values/%27Sheet1%27%21D5?valueInputOption=USER_ENTERED HTTP/1.1" 200 None
+2026-03-25 15:19:27,953 - INFO - Updated followupMessage on row 5 for https://www.linkedin.com/in/varuni-sridhar-19706a3b4/
+2026-03-25 15:19:27,956 - DEBUG - Starting new HTTPS connection (1): api.phantombuster.com:443
+2026-03-25 15:19:29,608 - DEBUG - https://api.phantombuster.com:443 "POST /api/v2/agents/launch HTTP/1.1" 200 34
+2026-03-25 15:24:30,481 - DEBUG - Starting new HTTPS connection (1): serpapi.com:443
+2026-03-25 15:24:32,752 - DEBUG - https://serpapi.com:443 "GET /search?q=https%3A%2F%2Fwww.linkedin.com%2Fin%2Fraashi-shetty-447b842aa%2F&api_key=1acab9ae8ffee956ede2d979ea0b7ed4cd4d438689de60d7690874eda0fe587d&engine=google&output=json&source=python HTTP/1.1" 200 None
+2026-03-25 15:24:32,800 - DEBUG - close.started
+2026-03-25 15:24:32,800 - DEBUG - close.complete
+2026-03-25 15:24:32,800 - DEBUG - connect_tcp.started host='api.replicate.com' port=443 local_address=None timeout=5.0 socket_options=None
+2026-03-25 15:24:32,977 - DEBUG - connect_tcp.complete return_value=<httpcore._backends.sync.SyncStream object at 0x000001FDD974EF80>
+2026-03-25 15:24:32,977 - DEBUG - start_tls.started ssl_context=<ssl.SSLContext object at 0x000001FDD94893C0> server_hostname='api.replicate.com' timeout=5.0
+2026-03-25 15:24:33,056 - DEBUG - start_tls.complete return_value=<httpcore._backends.sync.SyncStream object at 0x000001FDD974FE20>
+2026-03-25 15:24:33,060 - DEBUG - send_request_headers.started request=<Request [b'POST']>
+2026-03-25 15:24:33,065 - DEBUG - send_request_headers.complete
+2026-03-25 15:24:33,065 - DEBUG - send_request_body.started request=<Request [b'POST']>
+2026-03-25 15:24:33,066 - DEBUG - send_request_body.complete
+2026-03-25 15:24:33,066 - DEBUG - receive_response_headers.started request=<Request [b'POST']>
+2026-03-25 15:24:35,838 - DEBUG - receive_response_headers.complete return_value=(b'HTTP/1.1', 201, b'Created', [(b'Date', b'Wed, 25 Mar 2026 09:54:37 GMT'), (b'Content-Type', b'application/json; charset=utf-8'), (b'Content-Length', b'3828'), (b'Connection', b'keep-alive'), (b'CF-Ray', b'9e1d08f4ee5ccf38-DEL'), (b'CF-Cache-Status', b'DYNAMIC'), (b'Server', b'cloudflare'), (b'Strict-Transport-Security', b'max-age=15552000'), (b'Preference-Applied', b'wait=60'), (b'expect-ct', b'max-age=86400, enforce'), (b'ratelimit-remaining', b'599'), (b'ratelimit-reset', b'1'), (b'referrer-policy', b'same-origin'), (b'replicate-prediction-id', b'pnxvsryp01rne0cx4hn98v4x20'), (b'x-content-type-options', b'nosniff'), (b'x-frame-options', b'SAMEORIGIN'), (b'x-xss-protection', b'1; mode=block'), (b'Vary', b'accept-encoding'), (b'Report-To', b'{"group":"cf-nel","max_age":604800,"endpoints":[{"url":"https://a.nel.cloudflare.com/report/v4?s=QLPbBWeGBq%2FVSByxaCy78n%2FYdCyvDpv9zWbz661K56LaGFEDY3Sv0pwk5NE11PQuG5zjj5wBa8%2BqLvHXqga8UEZi7Mrxkn8Cs%2BAMM3IFxjZvCBvG8aYWN1d3"}]}'), (b'Nel', b'{"report_to":"cf-nel","success_fraction":0.0,"max_age":604800}'), (b'alt-svc', b'h3=":443"; ma=86400')])
+2026-03-25 15:24:35,841 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/meta-llama-3-70b-instruct/predictions "HTTP/1.1 201 Created"
+2026-03-25 15:24:35,841 - DEBUG - receive_response_body.started request=<Request [b'POST']>
+2026-03-25 15:24:35,843 - DEBUG - receive_response_body.complete
+2026-03-25 15:24:35,843 - DEBUG - response_closed.started
+2026-03-25 15:24:35,843 - DEBUG - response_closed.complete
+2026-03-25 15:24:35,850 - DEBUG - send_request_headers.started request=<Request [b'POST']>
+2026-03-25 15:24:35,853 - DEBUG - send_request_headers.complete
+2026-03-25 15:24:35,853 - DEBUG - send_request_body.started request=<Request [b'POST']>
+2026-03-25 15:24:35,853 - DEBUG - send_request_body.complete
+2026-03-25 15:24:35,853 - DEBUG - receive_response_headers.started request=<Request [b'POST']>
+2026-03-25 15:24:43,194 - DEBUG - receive_response_headers.complete return_value=(b'HTTP/1.1', 201, b'Created', [(b'Date', b'Wed, 25 Mar 2026 09:54:44 GMT'), (b'Content-Type', b'application/json; charset=utf-8'), (b'Content-Length', b'5422'), (b'Connection', b'keep-alive'), (b'CF-Ray', b'9e1d09066b6ecf38-DEL'), (b'CF-Cache-Status', b'DYNAMIC'), (b'Server', b'cloudflare'), (b'Strict-Transport-Security', b'max-age=15552000'), (b'Preference-Applied', b'wait=60'), (b'expect-ct', b'max-age=86400, enforce'), (b'ratelimit-remaining', b'599'), (b'ratelimit-reset', b'1'), (b'referrer-policy', b'same-origin'), (b'replicate-prediction-id', b'tbstwc70whrnc0cx4hna3hq6x8'), (b'x-content-type-options', b'nosniff'), (b'x-frame-options', b'SAMEORIGIN'), (b'x-xss-protection', b'1; mode=block'), (b'Vary', b'accept-encoding'), (b'Report-To', b'{"group":"cf-nel","max_age":604800,"endpoints":[{"url":"https://a.nel.cloudflare.com/report/v4?s=MMlOwq06Iuj1f088yrFTQ7MrknDSV%2BfvJsXIQcONfy0LGAUKZFmQQoPhTkYAavicMvSUzV05q%2F6AXepp9sJUrbK5wfLwkZLVg8YuFPMmBXo%2Fww3P3XnoBm4q"}]}'), (b'Nel', b'{"report_to":"cf-nel","success_fraction":0.0,"max_age":604800}'), (b'alt-svc', b'h3=":443"; ma=86400')])
+2026-03-25 15:24:43,200 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/meta-llama-3-70b-instruct/predictions "HTTP/1.1 201 Created"
+2026-03-25 15:24:43,200 - DEBUG - receive_response_body.started request=<Request [b'POST']>
+2026-03-25 15:24:43,203 - DEBUG - receive_response_body.complete
+2026-03-25 15:24:43,203 - DEBUG - response_closed.started
+2026-03-25 15:24:43,203 - DEBUG - response_closed.complete
+2026-03-25 15:24:43,210 - DEBUG - send_request_headers.started request=<Request [b'POST']>
+2026-03-25 15:24:43,210 - DEBUG - send_request_headers.complete
+2026-03-25 15:24:43,210 - DEBUG - send_request_body.started request=<Request [b'POST']>
+2026-03-25 15:24:43,210 - DEBUG - send_request_body.complete
+2026-03-25 15:24:43,210 - DEBUG - receive_response_headers.started request=<Request [b'POST']>
+2026-03-25 15:24:44,912 - DEBUG - receive_response_headers.complete return_value=(b'HTTP/1.1', 201, b'Created', [(b'Date', b'Wed, 25 Mar 2026 09:54:46 GMT'), (b'Content-Type', b'application/json; charset=utf-8'), (b'Content-Length', b'4720'), (b'Connection', b'keep-alive'), (b'CF-Ray', b'9e1d09345f19cf38-DEL'), (b'CF-Cache-Status', b'DYNAMIC'), (b'Server', b'cloudflare'), (b'Strict-Transport-Security', b'max-age=15552000'), (b'Preference-Applied', b'wait=60'), (b'expect-ct', b'max-age=86400, enforce'), (b'ratelimit-remaining', b'599'), (b'ratelimit-reset', b'1'), (b'referrer-policy', b'same-origin'), (b'replicate-prediction-id', b'7y4tghzxjnrn80cx4hn891rvs0'), (b'x-content-type-options', b'nosniff'), (b'x-frame-options', b'SAMEORIGIN'), (b'x-xss-protection', b'1; mode=block'), (b'Vary', b'accept-encoding'), (b'Report-To', b'{"group":"cf-nel","max_age":604800,"endpoints":[{"url":"https://a.nel.cloudflare.com/report/v4?s=LJkQ4RvmivymN5VoDnGVgce7%2FG%2BjsZ7YbBEm7VInv5h9i9sGzKQu9nTzSpXemd%2Bkg6NTrcTUi6CKdUlukOwEhtHdH8amxywo4%2BC3daGrEBFJejyCT9NgzwwP"}]}'), (b'Nel', b'{"report_to":"cf-nel","success_fraction":0.0,"max_age":604800}'), (b'alt-svc', b'h3=":443"; ma=86400')])
+2026-03-25 15:24:44,914 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/meta-llama-3-70b-instruct/predictions "HTTP/1.1 201 Created"
+2026-03-25 15:24:44,914 - DEBUG - receive_response_body.started request=<Request [b'POST']>
+2026-03-25 15:24:44,919 - DEBUG - receive_response_body.complete
+2026-03-25 15:24:44,919 - DEBUG - response_closed.started
+2026-03-25 15:24:44,919 - DEBUG - response_closed.complete
+2026-03-25 15:24:57,937 - INFO - [LIVE] Attempting to fire Phantom 3250037032664621 for https://www.linkedin.com/in/raashi-shetty-447b842aa/
+2026-03-25 15:24:57,948 - DEBUG - Starting new HTTPS connection (1): api.phantombuster.com:443
+2026-03-25 15:24:59,521 - DEBUG - https://api.phantombuster.com:443 "POST /api/v2/agents/launch HTTP/1.1" 200 34
+2026-03-25 15:24:59,522 - INFO - [LIVE] Successfully launched Phantom 3250037032664621 for https://www.linkedin.com/in/raashi-shetty-447b842aa/. Response: {"containerId":"2359588379680798"}
+2026-03-25 15:24:59,586 - DEBUG - Converted retries value: 3 -> Retry(total=3, connect=None, read=None, redirect=None, status=None)
+2026-03-25 15:24:59,596 - DEBUG - Starting new HTTPS connection (1): oauth2.googleapis.com:443
+2026-03-25 15:24:59,824 - DEBUG - https://oauth2.googleapis.com:443 "POST /token HTTP/1.1" 200 None
+2026-03-25 15:24:59,830 - DEBUG - Starting new HTTPS connection (1): sheets.googleapis.com:443
+2026-03-25 15:25:00,570 - DEBUG - https://sheets.googleapis.com:443 "GET /v4/spreadsheets/1louNQ1-ai2j57wwfsE0_QaxRo6zisfiC6KINstwIGPo?includeGridData=false HTTP/1.1" 200 None
+2026-03-25 15:25:00,913 - DEBUG - https://sheets.googleapis.com:443 "GET /v4/spreadsheets/1louNQ1-ai2j57wwfsE0_QaxRo6zisfiC6KINstwIGPo?includeGridData=false HTTP/1.1" 200 None
+2026-03-25 15:25:00,916 - INFO - Connected to sheet: Sheet1
+2026-03-25 15:25:01,287 - DEBUG - https://sheets.googleapis.com:443 "GET /v4/spreadsheets/1louNQ1-ai2j57wwfsE0_QaxRo6zisfiC6KINstwIGPo/values/%27Sheet1%27%21A1%3A1 HTTP/1.1" 200 None
+2026-03-25 15:25:01,287 - INFO - Updating headers from ['profileUrl', 'firstName', 'connectionNote', 'followupMessage', 'coldMail'] to ['profileUrl', 'firstName', 'connectionNote']
+2026-03-25 15:25:01,918 - DEBUG - https://sheets.googleapis.com:443 "PUT /v4/spreadsheets/1louNQ1-ai2j57wwfsE0_QaxRo6zisfiC6KINstwIGPo/values/%27Sheet1%27%21A1%3AC1?valueInputOption=RAW HTTP/1.1" 200 None
+2026-03-25 15:25:01,920 - INFO - Successfully updated headers in Google Sheets.
+2026-03-25 15:25:02,397 - DEBUG - https://sheets.googleapis.com:443 "GET /v4/spreadsheets/1louNQ1-ai2j57wwfsE0_QaxRo6zisfiC6KINstwIGPo/values/%27Sheet1%27%21A1%3AA?valueRenderOption=FORMATTED_VALUE&majorDimension=COLUMNS HTTP/1.1" 200 None
+2026-03-25 15:25:02,886 - DEBUG - https://sheets.googleapis.com:443 "POST /v4/spreadsheets/1louNQ1-ai2j57wwfsE0_QaxRo6zisfiC6KINstwIGPo/values/%27Sheet1%27:append?valueInputOption=RAW&includeValuesInResponse=False HTTP/1.1" 200 None
+2026-03-25 15:25:02,886 - INFO - Successfully appended lead https://www.linkedin.com/in/raashi-shetty-447b842aa/ with data: ['https://www.linkedin.com/in/raashi-shetty-447b842aa/', 'Raashi', 'Hi Raashi, excited to connect with a fellow B2B AI enthusiast! Our agency helps businesses like yours scale with automation solutions.']
+2026-03-25 15:30:59,317 - DEBUG - Starting new HTTPS connection (1): serpapi.com:443
+2026-03-25 15:31:03,439 - DEBUG - https://serpapi.com:443 "GET /search?q=https%3A%2F%2Fwww.linkedin.com%2Fin%2Fraashi-shetty-447b842aa%2F&api_key=1acab9ae8ffee956ede2d979ea0b7ed4cd4d438689de60d7690874eda0fe587d&engine=google&output=json&source=python HTTP/1.1" 200 None
+2026-03-25 15:31:03,870 - DEBUG - connect_tcp.started host='api.replicate.com' port=443 local_address=None timeout=5.0 socket_options=None
+2026-03-25 15:31:04,100 - DEBUG - connect_tcp.complete return_value=<httpcore._backends.sync.SyncStream object at 0x00000220BE1E4040>
+2026-03-25 15:31:04,100 - DEBUG - start_tls.started ssl_context=<ssl.SSLContext object at 0x00000220BDF39140> server_hostname='api.replicate.com' timeout=5.0
+2026-03-25 15:31:04,158 - DEBUG - start_tls.complete return_value=<httpcore._backends.sync.SyncStream object at 0x00000220BE193FD0>
+2026-03-25 15:31:04,158 - DEBUG - send_request_headers.started request=<Request [b'POST']>
+2026-03-25 15:31:04,158 - DEBUG - send_request_headers.complete
+2026-03-25 15:31:04,160 - DEBUG - send_request_body.started request=<Request [b'POST']>
+2026-03-25 15:31:04,160 - DEBUG - send_request_body.complete
+2026-03-25 15:31:04,160 - DEBUG - receive_response_headers.started request=<Request [b'POST']>
+2026-03-25 15:31:05,719 - DEBUG - receive_response_headers.complete return_value=(b'HTTP/1.1', 201, b'Created', [(b'Date', b'Wed, 25 Mar 2026 10:01:07 GMT'), (b'Content-Type', b'application/json; charset=utf-8'), (b'Content-Length', b'3818'), (b'Connection', b'keep-alive'), (b'CF-Ray', b'9e1d12814fb9a994-MAA'), (b'CF-Cache-Status', b'DYNAMIC'), (b'Server', b'cloudflare'), (b'Strict-Transport-Security', b'max-age=15552000'), (b'Preference-Applied', b'wait=60'), (b'expect-ct', b'max-age=86400, enforce'), (b'ratelimit-remaining', b'599'), (b'ratelimit-reset', b'1'), (b'referrer-policy', b'same-origin'), (b'replicate-prediction-id', b'w1vbc9pdg1rn80cx4hr8y2a1jr'), (b'x-content-type-options', b'nosniff'), (b'x-frame-options', b'SAMEORIGIN'), (b'x-xss-protection', b'1; mode=block'), (b'Vary', b'accept-encoding'), (b'Report-To', b'{"group":"cf-nel","max_age":604800,"endpoints":[{"url":"https://a.nel.cloudflare.com/report/v4?s=8QjWhqmYqduFROPd0UfiUPVMysddha8Ycaz74Ue5ViE9DirXH74F%2FquGpn6dfsh7zlfmwDBze5VOsbBewKs%2F1ghLXPPjcAg8ZcttZH%2FBT%2BE0l62Hq7BlwO3F"}]}'), (b'Nel', b'{"report_to":"cf-nel","success_fraction":0.0,"max_age":604800}'), (b'alt-svc', b'h3=":443"; ma=86400')])
+2026-03-25 15:31:05,719 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/meta-llama-3-70b-instruct/predictions "HTTP/1.1 201 Created"
+2026-03-25 15:31:05,719 - DEBUG - receive_response_body.started request=<Request [b'POST']>
+2026-03-25 15:31:05,719 - DEBUG - receive_response_body.complete
+2026-03-25 15:31:05,723 - DEBUG - response_closed.started
+2026-03-25 15:31:05,723 - DEBUG - response_closed.complete
+2026-03-25 15:31:05,724 - DEBUG - send_request_headers.started request=<Request [b'POST']>
+2026-03-25 15:31:05,724 - DEBUG - send_request_headers.complete
+2026-03-25 15:31:05,724 - DEBUG - send_request_body.started request=<Request [b'POST']>
+2026-03-25 15:31:05,724 - DEBUG - send_request_body.complete
+2026-03-25 15:31:05,724 - DEBUG - receive_response_headers.started request=<Request [b'POST']>
+2026-03-25 15:31:13,866 - DEBUG - receive_response_headers.complete return_value=(b'HTTP/1.1', 201, b'Created', [(b'Date', b'Wed, 25 Mar 2026 10:01:15 GMT'), (b'Content-Type', b'application/json; charset=utf-8'), (b'Content-Length', b'5464'), (b'Connection', b'keep-alive'), (b'CF-Ray', b'9e1d128b1ffaa994-MAA'), (b'CF-Cache-Status', b'DYNAMIC'), (b'Server', b'cloudflare'), (b'Strict-Transport-Security', b'max-age=15552000'), (b'Preference-Applied', b'wait=60'), (b'expect-ct', b'max-age=86400, enforce'), (b'ratelimit-remaining', b'599'), (b'ratelimit-reset', b'1'), (b'referrer-policy', b'same-origin'), (b'replicate-prediction-id', b'2ycysaekj1rnc0cx4hrbhfrpng'), (b'x-content-type-options', b'nosniff'), (b'x-frame-options', b'SAMEORIGIN'), (b'x-xss-protection', b'1; mode=block'), (b'Vary', b'accept-encoding'), (b'Report-To', b'{"group":"cf-nel","max_age":604800,"endpoints":[{"url":"https://a.nel.cloudflare.com/report/v4?s=CPAK9ascxEs84YwuPkZjhsn1ovxeuZtpjx8gsSd%2FrdR6Mb8%2BYNlRoNoxMuiDqnF0AO%2FlhwV9IJXAvJMv2ZNYPFrVRo5BrAkEgCfOG0jY4IQLol20j9oXvhRc"}]}'), (b'Nel', b'{"report_to":"cf-nel","success_fraction":0.0,"max_age":604800}'), (b'alt-svc', b'h3=":443"; ma=86400')])
+2026-03-25 15:31:13,874 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/meta-llama-3-70b-instruct/predictions "HTTP/1.1 201 Created"
+2026-03-25 15:31:13,874 - DEBUG - receive_response_body.started request=<Request [b'POST']>
+2026-03-25 15:31:13,874 - DEBUG - receive_response_body.complete
+2026-03-25 15:31:13,874 - DEBUG - response_closed.started
+2026-03-25 15:31:13,874 - DEBUG - response_closed.complete
+2026-03-25 15:31:13,874 - DEBUG - send_request_headers.started request=<Request [b'POST']>
+2026-03-25 15:31:13,874 - DEBUG - send_request_headers.complete
+2026-03-25 15:31:13,874 - DEBUG - send_request_body.started request=<Request [b'POST']>
+2026-03-25 15:31:13,874 - DEBUG - send_request_body.complete
+2026-03-25 15:31:13,874 - DEBUG - receive_response_headers.started request=<Request [b'POST']>
+2026-03-25 15:31:15,627 - DEBUG - receive_response_headers.complete return_value=(b'HTTP/1.1', 201, b'Created', [(b'Date', b'Wed, 25 Mar 2026 10:01:16 GMT'), (b'Content-Type', b'application/json; charset=utf-8'), (b'Content-Length', b'4792'), (b'Connection', b'keep-alive'), (b'CF-Ray', b'9e1d12be2a55a994-MAA'), (b'CF-Cache-Status', b'DYNAMIC'), (b'Server', b'cloudflare'), (b'Strict-Transport-Security', b'max-age=15552000'), (b'Preference-Applied', b'wait=60'), (b'expect-ct', b'max-age=86400, enforce'), (b'ratelimit-remaining', b'599'), (b'ratelimit-reset', b'1'), (b'referrer-policy', b'same-origin'), (b'replicate-prediction-id', b'xn5gqpzkgxrna0cx4hrb6sn3mm'), (b'x-content-type-options', b'nosniff'), (b'x-frame-options', b'SAMEORIGIN'), (b'x-xss-protection', b'1; mode=block'), (b'Vary', b'accept-encoding'), (b'Report-To', b'{"group":"cf-nel","max_age":604800,"endpoints":[{"url":"https://a.nel.cloudflare.com/report/v4?s=Kel7wddFAqcWGw5gdg6%2F2rXVuFVGoyfmoM7pwSH0L7Q6%2FtnJN2EGIymQqX4lAbRZBSCRECtdkcGPQXgMIfQVh%2BAqJkmNRc4ogEKvVFBCaoFGVcCNKC0X4g1z"}]}'), (b'Nel', b'{"report_to":"cf-nel","success_fraction":0.0,"max_age":604800}'), (b'alt-svc', b'h3=":443"; ma=86400')])
+2026-03-25 15:31:15,627 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/meta-llama-3-70b-instruct/predictions "HTTP/1.1 201 Created"
+2026-03-25 15:31:15,627 - DEBUG - receive_response_body.started request=<Request [b'POST']>
+2026-03-25 15:31:15,639 - DEBUG - receive_response_body.complete
+2026-03-25 15:31:15,639 - DEBUG - response_closed.started
+2026-03-25 15:31:15,639 - DEBUG - response_closed.complete
+2026-03-25 15:31:23,254 - INFO - [LIVE] Attempting to fire Phantom 3250037032664621 for https://www.linkedin.com/in/raashi-shetty-447b842aa/
+2026-03-25 15:31:23,255 - DEBUG - Starting new HTTPS connection (1): api.phantombuster.com:443
+2026-03-25 15:31:24,950 - DEBUG - https://api.phantombuster.com:443 "POST /api/v2/agents/launch HTTP/1.1" 200 34
+2026-03-25 15:31:24,950 - INFO - [LIVE] Successfully launched Phantom 3250037032664621 for https://www.linkedin.com/in/raashi-shetty-447b842aa/. Response: {"containerId":"7463751824298950"}
+2026-03-25 15:31:25,035 - DEBUG - Converted retries value: 3 -> Retry(total=3, connect=None, read=None, redirect=None, status=None)
+2026-03-25 15:31:25,047 - DEBUG - Starting new HTTPS connection (1): oauth2.googleapis.com:443
+2026-03-25 15:31:25,346 - DEBUG - https://oauth2.googleapis.com:443 "POST /token HTTP/1.1" 200 None
+2026-03-25 15:31:25,353 - DEBUG - Starting new HTTPS connection (1): sheets.googleapis.com:443
+2026-03-25 15:31:27,156 - DEBUG - https://sheets.googleapis.com:443 "GET /v4/spreadsheets/1louNQ1-ai2j57wwfsE0_QaxRo6zisfiC6KINstwIGPo?includeGridData=false HTTP/1.1" 200 None
+2026-03-25 15:31:27,500 - DEBUG - https://sheets.googleapis.com:443 "GET /v4/spreadsheets/1louNQ1-ai2j57wwfsE0_QaxRo6zisfiC6KINstwIGPo?includeGridData=false HTTP/1.1" 200 None
+2026-03-25 15:31:27,503 - INFO - Connected to sheet: Sheet1
+2026-03-25 15:31:28,006 - DEBUG - https://sheets.googleapis.com:443 "GET /v4/spreadsheets/1louNQ1-ai2j57wwfsE0_QaxRo6zisfiC6KINstwIGPo/values/%27Sheet1%27%21A1%3A1 HTTP/1.1" 200 None
+2026-03-25 15:31:28,006 - INFO - Updating headers from ['profileUrl', 'firstName', 'connectionNote', 'followupMessage', 'coldMail'] to ['profileUrl', 'firstName', 'connectionNote']
+2026-03-25 15:31:28,486 - DEBUG - https://sheets.googleapis.com:443 "PUT /v4/spreadsheets/1louNQ1-ai2j57wwfsE0_QaxRo6zisfiC6KINstwIGPo/values/%27Sheet1%27%21A1%3AC1?valueInputOption=RAW HTTP/1.1" 200 None
+2026-03-25 15:31:28,486 - INFO - Successfully updated headers in Google Sheets.
+2026-03-25 15:31:28,854 - DEBUG - https://sheets.googleapis.com:443 "GET /v4/spreadsheets/1louNQ1-ai2j57wwfsE0_QaxRo6zisfiC6KINstwIGPo/values/%27Sheet1%27%21A1%3AA?valueRenderOption=FORMATTED_VALUE&majorDimension=COLUMNS HTTP/1.1" 200 None
+2026-03-25 15:31:29,256 - DEBUG - https://sheets.googleapis.com:443 "POST /v4/spreadsheets/1louNQ1-ai2j57wwfsE0_QaxRo6zisfiC6KINstwIGPo/values/%27Sheet1%27:append?valueInputOption=RAW&includeValuesInResponse=False HTTP/1.1" 200 None
+2026-03-25 15:31:29,258 - INFO - Successfully appended lead https://www.linkedin.com/in/raashi-shetty-447b842aa/ with data: ['https://www.linkedin.com/in/raashi-shetty-447b842aa/', 'Raashi', 'Hi Raashi, excited to connect with a fellow B2B AI enthusiast! Our agency helps businesses like yours thrive with automation solutions. Looking forward to exploring opportunities together.']
+2026-03-25 15:37:16,571 - DEBUG - Starting new HTTPS connection (1): api.phantombuster.com:443
+2026-03-25 15:37:17,383 - DEBUG - https://api.phantombuster.com:443 "GET /api/v2/agents/fetch-output?id=1354832949428923 HTTP/1.1" 200 None
+2026-03-25 15:37:17,388 - DEBUG - Starting new HTTPS connection (1): api.phantombuster.com:443
+2026-03-25 15:37:18,151 - DEBUG - https://api.phantombuster.com:443 "GET /api/v2/containers/fetch-result-object?id=5026263815390465 HTTP/1.1" 200 None
+2026-03-25 15:37:18,154 - INFO - [DEBUG] Checking acceptance for https://www.linkedin.com/in/raashi-shetty-447b842aa (ID: raashi-shetty-447b842aa). Found 9 connections.
+2026-03-25 15:37:18,154 - INFO - [LIVE] Connection NOT yet found for https://www.linkedin.com/in/raashi-shetty-447b842aa/. Checked 9 items.
+2026-03-25 15:40:10,643 - DEBUG - Starting new HTTPS connection (1): api.phantombuster.com:443
+2026-03-25 15:40:12,514 - DEBUG - https://api.phantombuster.com:443 "GET /api/v2/agents/fetch-output?id=1354832949428923 HTTP/1.1" 200 None
+2026-03-25 15:40:12,516 - DEBUG - Starting new HTTPS connection (1): api.phantombuster.com:443
+2026-03-25 15:40:14,120 - DEBUG - https://api.phantombuster.com:443 "GET /api/v2/containers/fetch-result-object?id=7677805942115454 HTTP/1.1" 200 686
+2026-03-25 15:40:14,120 - INFO - [DEBUG] Checking acceptance for https://www.linkedin.com/in/raashi-shetty-447b842aa (ID: raashi-shetty-447b842aa). Found 2 connections.
+2026-03-25 15:40:14,120 - INFO - [LIVE] Connection accepted confirmed for https://www.linkedin.com/in/raashi-shetty-447b842aa/
+2026-03-25 15:40:56,875 - DEBUG - close.started
+2026-03-25 15:40:56,876 - DEBUG - close.complete
+2026-03-25 15:40:56,877 - DEBUG - connect_tcp.started host='api.replicate.com' port=443 local_address=None timeout=5.0 socket_options=None
+2026-03-25 15:40:58,002 - DEBUG - connect_tcp.complete return_value=<httpcore._backends.sync.SyncStream object at 0x00000220BE278850>
+2026-03-25 15:40:58,003 - DEBUG - start_tls.started ssl_context=<ssl.SSLContext object at 0x00000220BDF39140> server_hostname='api.replicate.com' timeout=5.0
+2026-03-25 15:40:58,044 - DEBUG - start_tls.complete return_value=<httpcore._backends.sync.SyncStream object at 0x00000220BE278F10>
+2026-03-25 15:40:58,045 - DEBUG - send_request_headers.started request=<Request [b'POST']>
+2026-03-25 15:40:58,046 - DEBUG - send_request_headers.complete
+2026-03-25 15:40:58,047 - DEBUG - send_request_body.started request=<Request [b'POST']>
+2026-03-25 15:40:58,047 - DEBUG - send_request_body.complete
+2026-03-25 15:40:58,047 - DEBUG - receive_response_headers.started request=<Request [b'POST']>
+2026-03-25 15:41:04,841 - DEBUG - receive_response_headers.complete return_value=(b'HTTP/1.1', 201, b'Created', [(b'Date', b'Wed, 25 Mar 2026 10:11:05 GMT'), (b'Content-Type', b'application/json; charset=utf-8'), (b'Content-Length', b'6362'), (b'Connection', b'keep-alive'), (b'CF-Ray', b'9e1d21011c2bff72-BOM'), (b'CF-Cache-Status', b'DYNAMIC'), (b'Server', b'cloudflare'), (b'Strict-Transport-Security', b'max-age=15552000'), (b'Preference-Applied', b'wait=60'), (b'expect-ct', b'max-age=86400, enforce'), (b'ratelimit-remaining', b'599'), (b'ratelimit-reset', b'1'), (b'referrer-policy', b'same-origin'), (b'replicate-prediction-id', b'rjw7vkyxcnrne0cx4hwv1wvxjg'), (b'x-content-type-options', b'nosniff'), (b'x-frame-options', b'SAMEORIGIN'), (b'x-xss-protection', b'1; mode=block'), (b'Vary', b'accept-encoding'), (b'Report-To', b'{"group":"cf-nel","max_age":604800,"endpoints":[{"url":"https://a.nel.cloudflare.com/report/v4?s=VsWwVGHq4c47sRLK2dCTzth%2BOT1kJ0cfNC0QqSSpasxTb3ditjb8PV0WKNE0GaO%2BlkPjjeVFzP0m6igFsbXcxBVH5UFXVYGiqIpqaKBoGnHZWAEaGWnb4%2FiVhz4%3D"}]}'), (b'Nel', b'{"report_to":"cf-nel","success_fraction":0.0,"max_age":604800}'), (b'alt-svc', b'h3=":443"; ma=86400')])
+2026-03-25 15:41:04,844 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/meta-llama-3-70b-instruct/predictions "HTTP/1.1 201 Created"
+2026-03-25 15:41:04,845 - DEBUG - receive_response_body.started request=<Request [b'POST']>
+2026-03-25 15:41:04,846 - DEBUG - receive_response_body.complete
+2026-03-25 15:41:04,846 - DEBUG - response_closed.started
+2026-03-25 15:41:04,846 - DEBUG - response_closed.complete
+2026-03-25 15:41:23,940 - DEBUG - Converted retries value: 3 -> Retry(total=3, connect=None, read=None, redirect=None, status=None)
+2026-03-25 15:41:23,947 - DEBUG - Starting new HTTPS connection (1): oauth2.googleapis.com:443
+2026-03-25 15:41:24,486 - DEBUG - https://oauth2.googleapis.com:443 "POST /token HTTP/1.1" 200 None
+2026-03-25 15:41:24,498 - DEBUG - Starting new HTTPS connection (1): sheets.googleapis.com:443
+2026-03-25 15:41:25,310 - DEBUG - https://sheets.googleapis.com:443 "GET /v4/spreadsheets/1louNQ1-ai2j57wwfsE0_QaxRo6zisfiC6KINstwIGPo?includeGridData=false HTTP/1.1" 200 None
+2026-03-25 15:41:25,753 - DEBUG - https://sheets.googleapis.com:443 "GET /v4/spreadsheets/1louNQ1-ai2j57wwfsE0_QaxRo6zisfiC6KINstwIGPo?includeGridData=false HTTP/1.1" 200 None
+2026-03-25 15:41:26,153 - DEBUG - https://sheets.googleapis.com:443 "GET /v4/spreadsheets/1louNQ1-ai2j57wwfsE0_QaxRo6zisfiC6KINstwIGPo/values/%27Sheet1%27%21A1%3A1 HTTP/1.1" 200 None
+2026-03-25 15:41:26,998 - DEBUG - https://sheets.googleapis.com:443 "GET /v4/spreadsheets/1louNQ1-ai2j57wwfsE0_QaxRo6zisfiC6KINstwIGPo/values/%27Sheet1%27%21A1%3AA?valueRenderOption=FORMATTED_VALUE&majorDimension=COLUMNS HTTP/1.1" 200 None
+2026-03-25 15:41:27,574 - DEBUG - https://sheets.googleapis.com:443 "PUT /v4/spreadsheets/1louNQ1-ai2j57wwfsE0_QaxRo6zisfiC6KINstwIGPo/values/%27Sheet1%27%21D7?valueInputOption=USER_ENTERED HTTP/1.1" 200 None
+2026-03-25 15:41:27,574 - INFO - Updated followupMessage on row 7 for https://www.linkedin.com/in/raashi-shetty-447b842aa/
+2026-03-25 15:41:27,581 - DEBUG - Starting new HTTPS connection (1): api.phantombuster.com:443
+2026-03-25 15:41:29,160 - DEBUG - https://api.phantombuster.com:443 "POST /api/v2/agents/launch HTTP/1.1" 200 34
+2026-03-25 16:32:40,550 - DEBUG - Starting new HTTPS connection (1): serpapi.com:443
+2026-03-25 16:32:43,551 - DEBUG - https://serpapi.com:443 "GET /search?q=https%3A%2F%2Fwww.linkedin.com%2Fin%2Fsurabhi-s-suvarna-866b77385%2F&api_key=1acab9ae8ffee956ede2d979ea0b7ed4cd4d438689de60d7690874eda0fe587d&engine=google&output=json&source=python HTTP/1.1" 200 None
+2026-03-25 16:32:43,801 - DEBUG - connect_tcp.started host='api.replicate.com' port=443 local_address=None timeout=5.0 socket_options=None
+2026-03-25 16:32:44,032 - DEBUG - connect_tcp.complete return_value=<httpcore._backends.sync.SyncStream object at 0x0000023077A4CAF0>
+2026-03-25 16:32:44,032 - DEBUG - start_tls.started ssl_context=<ssl.SSLContext object at 0x000002307779D940> server_hostname='api.replicate.com' timeout=5.0
+2026-03-25 16:32:44,074 - DEBUG - start_tls.complete return_value=<httpcore._backends.sync.SyncStream object at 0x0000023077A4CAC0>
+2026-03-25 16:32:44,074 - DEBUG - send_request_headers.started request=<Request [b'POST']>
+2026-03-25 16:32:44,074 - DEBUG - send_request_headers.complete
+2026-03-25 16:32:44,084 - DEBUG - send_request_body.started request=<Request [b'POST']>
+2026-03-25 16:32:44,084 - DEBUG - send_request_body.complete
+2026-03-25 16:32:44,085 - DEBUG - receive_response_headers.started request=<Request [b'POST']>
+2026-03-25 16:32:46,087 - DEBUG - receive_response_headers.complete return_value=(b'HTTP/1.1', 201, b'Created', [(b'Date', b'Wed, 25 Mar 2026 11:02:47 GMT'), (b'Content-Type', b'application/json; charset=utf-8'), (b'Content-Length', b'3862'), (b'Connection', b'keep-alive'), (b'CF-Ray', b'9e1d6cd53d852e2f-BOM'), (b'CF-Cache-Status', b'DYNAMIC'), (b'Server', b'cloudflare'), (b'Strict-Transport-Security', b'max-age=15552000'), (b'Preference-Applied', b'wait=60'), (b'expect-ct', b'max-age=86400, enforce'), (b'ratelimit-remaining', b'599'), (b'ratelimit-reset', b'1'), (b'referrer-policy', b'same-origin'), (b'replicate-prediction-id', b'nxkhj0a2jdrn80cx4jmtbexq9c'), (b'x-content-type-options', b'nosniff'), (b'x-frame-options', b'SAMEORIGIN'), (b'x-xss-protection', b'1; mode=block'), (b'Vary', b'accept-encoding'), (b'Report-To', b'{"group":"cf-nel","max_age":604800,"endpoints":[{"url":"https://a.nel.cloudflare.com/report/v4?s=8eT61g8rxBbPDkn3ZMbcYn6S7TuVRBq12BPZ9Zy5%2FKErbOwPqImM2%2BquxhvzUl4DNMhd2ktzsPS%2F7lmOMVOvG5yLMVgSXfZ2Mj%2BjM9Zq4tSZu34Zber3oZjZ"}]}'), (b'Nel', b'{"report_to":"cf-nel","success_fraction":0.0,"max_age":604800}'), (b'alt-svc', b'h3=":443"; ma=86400')])
+2026-03-25 16:32:46,088 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/meta-llama-3-70b-instruct/predictions "HTTP/1.1 201 Created"
+2026-03-25 16:32:46,089 - DEBUG - receive_response_body.started request=<Request [b'POST']>
+2026-03-25 16:32:46,089 - DEBUG - receive_response_body.complete
+2026-03-25 16:32:46,089 - DEBUG - response_closed.started
+2026-03-25 16:32:46,089 - DEBUG - response_closed.complete
+2026-03-25 16:32:46,091 - DEBUG - send_request_headers.started request=<Request [b'POST']>
+2026-03-25 16:32:46,091 - DEBUG - send_request_headers.complete
+2026-03-25 16:32:46,091 - DEBUG - send_request_body.started request=<Request [b'POST']>
+2026-03-25 16:32:46,092 - DEBUG - send_request_body.complete
+2026-03-25 16:32:46,092 - DEBUG - receive_response_headers.started request=<Request [b'POST']>
+2026-03-25 16:32:54,310 - DEBUG - receive_response_headers.complete return_value=(b'HTTP/1.1', 201, b'Created', [(b'Date', b'Wed, 25 Mar 2026 11:02:55 GMT'), (b'Content-Type', b'application/json; charset=utf-8'), (b'Content-Length', b'5751'), (b'Connection', b'keep-alive'), (b'CF-Ray', b'9e1d6ce1c94c2e2f-BOM'), (b'CF-Cache-Status', b'DYNAMIC'), (b'Server', b'cloudflare'), (b'Strict-Transport-Security', b'max-age=15552000'), (b'Preference-Applied', b'wait=60'), (b'expect-ct', b'max-age=86400, enforce'), (b'ratelimit-remaining', b'599'), (b'ratelimit-reset', b'1'), (b'referrer-policy', b'same-origin'), (b'replicate-prediction-id', b'7vqfsaa9v1rn80cx4jmtfqnxp8'), (b'x-content-type-options', b'nosniff'), (b'x-frame-options', b'SAMEORIGIN'), (b'x-xss-protection', b'1; mode=block'), (b'Vary', b'accept-encoding'), (b'Report-To', b'{"group":"cf-nel","max_age":604800,"endpoints":[{"url":"https://a.nel.cloudflare.com/report/v4?s=o6u57ZO3CJA9mEpLncZrOCPqsobEX9TM1gxEONDDxKbR2oV2nONZx0Ki6uqnLZGbgCS3sX0VQ%2FGdOyH0toLAnm3jBvdigL2LtrldC7HOqNuBTCr1rVLTu6L8"}]}'), (b'Nel', b'{"report_to":"cf-nel","success_fraction":0.0,"max_age":604800}'), (b'alt-svc', b'h3=":443"; ma=86400')])
+2026-03-25 16:32:54,310 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/meta-llama-3-70b-instruct/predictions "HTTP/1.1 201 Created"
+2026-03-25 16:32:54,310 - DEBUG - receive_response_body.started request=<Request [b'POST']>
+2026-03-25 16:32:54,310 - DEBUG - receive_response_body.complete
+2026-03-25 16:32:54,310 - DEBUG - response_closed.started
+2026-03-25 16:32:54,310 - DEBUG - response_closed.complete
+2026-03-25 16:32:54,316 - DEBUG - send_request_headers.started request=<Request [b'POST']>
+2026-03-25 16:32:54,316 - DEBUG - send_request_headers.complete
+2026-03-25 16:32:54,316 - DEBUG - send_request_body.started request=<Request [b'POST']>
+2026-03-25 16:32:54,316 - DEBUG - send_request_body.complete
+2026-03-25 16:32:54,316 - DEBUG - receive_response_headers.started request=<Request [b'POST']>
+2026-03-25 16:32:56,071 - DEBUG - receive_response_headers.complete return_value=(b'HTTP/1.1', 201, b'Created', [(b'Date', b'Wed, 25 Mar 2026 11:02:57 GMT'), (b'Content-Type', b'application/json; charset=utf-8'), (b'Content-Length', b'4718'), (b'Connection', b'keep-alive'), (b'CF-Ray', b'9e1d6d155aa22e2f-BOM'), (b'CF-Cache-Status', b'DYNAMIC'), (b'Server', b'cloudflare'), (b'Strict-Transport-Security', b'max-age=15552000'), (b'Preference-Applied', b'wait=60'), (b'expect-ct', b'max-age=86400, enforce'), (b'ratelimit-remaining', b'599'), (b'ratelimit-reset', b'1'), (b'referrer-policy', b'same-origin'), (b'replicate-prediction-id', b'etgm3tva1xrna0cx4jmt80p91g'), (b'x-content-type-options', b'nosniff'), (b'x-frame-options', b'SAMEORIGIN'), (b'x-xss-protection', b'1; mode=block'), (b'Vary', b'accept-encoding'), (b'Report-To', b'{"group":"cf-nel","max_age":604800,"endpoints":[{"url":"https://a.nel.cloudflare.com/report/v4?s=xq8%2BRvlFgfBvk4Zk0L5GmS%2BazN4yNzYlkDWEqUvfwzXygr2QbwcNWNYgOH%2FjttxR3J1hOqHI6QmqWeUpmWwo3%2FnKffaD2J8DANbSsJiEn4krsOmbIOBUxdqf"}]}'), (b'Nel', b'{"report_to":"cf-nel","success_fraction":0.0,"max_age":604800}'), (b'alt-svc', b'h3=":443"; ma=86400')])
+2026-03-25 16:32:56,072 - INFO - HTTP Request: POST https://api.replicate.com/v1/models/meta/meta-llama-3-70b-instruct/predictions "HTTP/1.1 201 Created"
+2026-03-25 16:32:56,072 - DEBUG - receive_response_body.started request=<Request [b'POST']>
+2026-03-25 16:32:56,072 - DEBUG - receive_response_body.complete
+2026-03-25 16:32:56,072 - DEBUG - response_closed.started
+2026-03-25 16:32:56,072 - DEBUG - response_closed.complete
+2026-03-25 16:39:33,160 - INFO - [LIVE] Attempting to fire Phantom 3250037032664621 for https://www.linkedin.com/in/surabhi-s-suvarna-866b77385/
+2026-03-25 16:39:33,164 - DEBUG - Starting new HTTPS connection (1): api.phantombuster.com:443
+2026-03-25 16:39:34,809 - DEBUG - https://api.phantombuster.com:443 "POST /api/v2/agents/launch HTTP/1.1" 200 34
+2026-03-25 16:39:34,810 - INFO - [LIVE] Successfully launched Phantom 3250037032664621 for https://www.linkedin.com/in/surabhi-s-suvarna-866b77385/. Response: {"containerId":"8441374427833655"}
+2026-03-25 16:39:34,935 - DEBUG - Converted retries value: 3 -> Retry(total=3, connect=None, read=None, redirect=None, status=None)
+2026-03-25 16:39:34,954 - DEBUG - Starting new HTTPS connection (1): oauth2.googleapis.com:443
+2026-03-25 16:39:35,406 - DEBUG - https://oauth2.googleapis.com:443 "POST /token HTTP/1.1" 200 None
+2026-03-25 16:39:35,414 - DEBUG - Starting new HTTPS connection (1): sheets.googleapis.com:443
+2026-03-25 16:39:36,069 - DEBUG - https://sheets.googleapis.com:443 "GET /v4/spreadsheets/1louNQ1-ai2j57wwfsE0_QaxRo6zisfiC6KINstwIGPo?includeGridData=false HTTP/1.1" 200 None
+2026-03-25 16:39:36,726 - DEBUG - https://sheets.googleapis.com:443 "GET /v4/spreadsheets/1louNQ1-ai2j57wwfsE0_QaxRo6zisfiC6KINstwIGPo?includeGridData=false HTTP/1.1" 200 None
+2026-03-25 16:39:36,726 - INFO - Connected to sheet: Sheet1
+2026-03-25 16:39:37,208 - DEBUG - https://sheets.googleapis.com:443 "GET /v4/spreadsheets/1louNQ1-ai2j57wwfsE0_QaxRo6zisfiC6KINstwIGPo/values/%27Sheet1%27%21A1%3A1 HTTP/1.1" 200 None
+2026-03-25 16:39:37,210 - INFO - Updating headers from ['profileUrl', 'firstName', 'connectionNote', 'followupMessage', 'coldMail'] to ['profileUrl', 'firstName', 'connectionNote']
+2026-03-25 16:39:37,686 - DEBUG - https://sheets.googleapis.com:443 "PUT /v4/spreadsheets/1louNQ1-ai2j57wwfsE0_QaxRo6zisfiC6KINstwIGPo/values/%27Sheet1%27%21A1%3AC1?valueInputOption=RAW HTTP/1.1" 200 None
+2026-03-25 16:39:37,691 - INFO - Successfully updated headers in Google Sheets.
+2026-03-25 16:39:38,090 - DEBUG - https://sheets.googleapis.com:443 "GET /v4/spreadsheets/1louNQ1-ai2j57wwfsE0_QaxRo6zisfiC6KINstwIGPo/values/%27Sheet1%27%21A1%3AA?valueRenderOption=FORMATTED_VALUE&majorDimension=COLUMNS HTTP/1.1" 200 None
+2026-03-25 16:39:38,517 - DEBUG - https://sheets.googleapis.com:443 "POST /v4/spreadsheets/1louNQ1-ai2j57wwfsE0_QaxRo6zisfiC6KINstwIGPo/values/%27Sheet1%27:append?valueInputOption=RAW&includeValuesInResponse=False HTTP/1.1" 200 None
+2026-03-25 16:39:38,517 - INFO - Successfully appended lead https://www.linkedin.com/in/surabhi-s-suvarna-866b77385/ with data: ['https://www.linkedin.com/in/surabhi-s-suvarna-866b77385/', 'Surabhi', 'Hi Surabhi, excited to connect with PES University. How can our AI agency support your B2B growth and automation initiatives?']
+2026-03-25 16:40:44,209 - DEBUG - Starting new HTTPS connection (1): api.phantombuster.com:443
+2026-03-25 16:40:45,287 - DEBUG - https://api.phantombuster.com:443 "GET /api/v2/agents/fetch-output?id=1354832949428923 HTTP/1.1" 200 None
+2026-03-25 16:40:45,287 - DEBUG - Starting new HTTPS connection (1): api.phantombuster.com:443
+2026-03-25 16:40:46,367 - DEBUG - https://api.phantombuster.com:443 "GET /api/v2/containers/fetch-result-object?id=7677805942115454 HTTP/1.1" 200 686
+2026-03-25 16:40:46,367 - INFO - [DEBUG] Checking acceptance for https://www.linkedin.com/in/surabhi-s-suvarna-866b77385 (ID: surabhi-s-suvarna-866b77385). Found 2 connections.
+2026-03-25 16:40:46,367 - INFO - [LIVE] Connection NOT yet found for https://www.linkedin.com/in/surabhi-s-suvarna-866b77385/. Checked 2 items.

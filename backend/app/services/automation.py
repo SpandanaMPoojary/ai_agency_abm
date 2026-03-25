@@ -21,6 +21,7 @@ class AutomationService:
         self.api_key = os.getenv("PHANTOMBUSTER_API_KEY")
         self.phantom_id = os.getenv("PHANTOM_AUTO_CONNECT_ID")
         self.connections_phantom_id = os.getenv("PHANTOM_CONNECTIONS_EXPORT_ID")
+        self.message_sender_phantom_id = os.getenv("PHANTOM_MESSAGE_SENDER_ID")
         self.test_email = os.getenv("TEST_EMAIL", "").strip().lower()
         self.live_mode = os.getenv("LIVE_MODE", "false").lower() == "true"
 
@@ -54,15 +55,9 @@ class AutomationService:
                 "X-Phantombuster-Key": self.api_key,
                 "Content-Type": "application/json"
             }
-            # Many LinkedIn Message phantoms use 'spreadsheetUrl' as the primary input key
-            # even when passing a single profile URL.
+            # Trigger the Phantom without overrides so it reads precisely the user's config
             payload = {
-                "id": self.phantom_id,
-                "argument": {
-                    "spreadsheetUrl": profile_url,
-                    "message": message,
-                    "numberOfSendsPerLaunch": 1
-                }
+                "id": self.phantom_id
             }
             
             response = requests.post(url, headers=headers, json=payload)
@@ -166,14 +161,16 @@ class AutomationService:
             return {"status": "error", "message": "Missing Phantombuster configuration for Message Sender"}
             
         try:
-            url = f"https://api.phantombuster.com/api/v2/agents/launch?id={self.message_sender_phantom_id}"
-            headers = {"X-Phantombuster-Key": self.api_key}
+            url = "https://api.phantombuster.com/api/v2/agents/launch"
+            headers = {
+                "X-Phantombuster-Key": self.api_key,
+                "Content-Type": "application/json"
+            }
             
-            # Message Sender expects multiple parameters or simply profile and message.
-            # Using standard phantom argument injection.
+            # Since the user has configured the Phantom to read from the Google Sheet,
+            # we just need to trigger the launch without any overrides.
             payload = {
-                "profileUrl": profile_url,
-                "message": message
+                "id": self.message_sender_phantom_id
             }
             
             response = requests.post(url, headers=headers, json=payload)

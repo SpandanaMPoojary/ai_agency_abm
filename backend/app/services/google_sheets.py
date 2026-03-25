@@ -78,10 +78,7 @@ class GoogleSheetsService:
             logging.error(f"Error appending to Google Sheets: {e}")
             return {"status": "error", "message": str(e)}
 
-    def append_followup(self, profile_url: str, followup_message: str):
-        """
-        Finds the lead by profileUrl and appends the followup message to the 4th column.
-        """
+    def _update_lead_column(self, profile_url: str, col_name: str, col_index: int, value: str):
         if not self._authenticate():
             return {"status": "error"}
 
@@ -92,25 +89,43 @@ class GoogleSheetsService:
                 sheet = self.client.open("Approved_LinkedIn_Outreach").sheet1
                 
             # Ensure Header exists
-            header_row = ["profileUrl", "firstName", "connectionNote", "followupMessage"]
+            import string
             current_headers = sheet.row_values(1)
-            if len(current_headers) < 4 or current_headers[3] != "followupMessage":
-                sheet.update('A1:D1', [header_row[:max(4, len(current_headers))]])
+            
+            # Pad missing headers if necessary
+            headers_to_update = current_headers.copy()
+            while len(headers_to_update) < col_index:
+                headers_to_update.append("")
+                
+            if headers_to_update[col_index - 1] != col_name:
+                headers_to_update[col_index - 1] = col_name
+                col_letter = string.ascii_uppercase[col_index - 1]
+                sheet.update(f'A1:{col_letter}1', [headers_to_update[:col_index]])
 
             # Find row
             urls = sheet.col_values(1)
             try:
-                # col_values is 1-indexed for rows in gspread when doing update_cell
                 row_index = urls.index(profile_url) + 1
-                # Update 4th column
-                sheet.update_cell(row_index, 4, followup_message)
-                logging.info(f"Appended followup to row {row_index} for {profile_url}")
+                sheet.update_cell(row_index, col_index, value)
+                logging.info(f"Updated {col_name} on row {row_index} for {profile_url}")
                 return {"status": "success"}
             except ValueError:
-                logging.warning(f"Profile URL {profile_url} not found in Sheets. Appending as new row.")
-                sheet.append_row([profile_url, "", "", followup_message])
+                logging.warning(f"Profile URL {profile_url} not found. Appending new row.")
+                row_data = [""] * col_index
+                row_data[0] = profile_url
+                row_data[col_index - 1] = value
+                sheet.append_row(row_data)
                 return {"status": "success"}
 
         except Exception as e:
-            logging.error(f"Error appending follow-up to Sheets: {e}")
+            logging.error(f"Error updating column {col_name} in Sheets: {e}")
             return {"status": "error", "message": str(e)}
+
+    def append_linkedin_dm(self, profile_url: str, message: str):
+        """Appends to the 4th column (followupMessage)"""
+        return self._update_lead_column(profile_url, "followupMessage", 4, message)
+
+    def append_cold_email(self, profile_url: str, message: str):
+        """Appends to the 5th column (coldMail)"""
+        return self._update_lead_column(profile_url, "coldMail", 5, message)
+
