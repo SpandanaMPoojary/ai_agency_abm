@@ -129,3 +129,33 @@ class GoogleSheetsService:
         """Appends to the 5th column (coldMail)"""
         return self._update_lead_column(profile_url, "coldMail", 5, message)
 
+    def update_status(self, profile_url: str, status: str):
+        """Updates the 6th column (status)"""
+        return self._update_lead_column(profile_url, "status", 6, status)
+
+    def clear_all_data(self):
+        """
+        Clears the entire sheet and resets the headers.
+        """
+        if not self._authenticate():
+            return {"status": "error", "message": "Google Sheets Authentication failed"}
+        
+        try:
+            if self.spreadsheet_id:
+                sheet = self.client.open_by_key(self.spreadsheet_id).sheet1
+            else:
+                sheet = self.client.open("Approved_LinkedIn_Outreach").sheet1
+            
+            # Clear all contents
+            sheet.clear()
+            
+            # Reset headers
+            header_row = ["profileUrl", "firstName", "connectionNote"]
+            sheet.insert_row(header_row, index=1)
+            
+            logging.info("Successfully cleared Google Sheet and reset headers.")
+            return {"status": "success"}
+        except Exception as e:
+            logging.error(f"Error clearing Google Sheet: {e}")
+            return {"status": "error", "message": str(e)}
+

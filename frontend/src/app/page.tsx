@@ -32,20 +32,24 @@ export default function Dashboard() {
   const [targetUrl, setTargetUrl] = useState('');
   const [ordering, setOrdering] = useState(false);
   const [targeting, setTargeting] = useState(false);
-  
+
   const [loading, setLoading] = useState<string | null>(null);
+  const [fireStatus, setFireStatus] = useState<Record<string, 'success' | 'error' | null>>({});
   const [status, setStatus] = useState<Record<string, string>>({});
   const [leads, setLeads] = useState<Lead[]>([]);
   const [localEdits, setLocalEdits] = useState<Record<string, { step_1?: string, step_2?: string, step_3?: string, notes?: string }>>({});
   const [initialLoading, setInitialLoading] = useState(true);
   const [sortByScore, setSortByScore] = useState(false);
+  const [activeAssetTray, setActiveAssetTray] = useState<{ leadId: string, field: 'step_1' | 'step_2' | 'step_3' } | null>(null);
+  const [trayLink, setTrayLink] = useState('');
+  const [uploading, setUploading] = useState(false);
 
   const sortedLeads = [...leads].sort((a, b) => {
     // Primary sort: lead_score (Descending)
     const scoreA = a.lead_score || 0;
     const scoreB = b.lead_score || 0;
     if (scoreA !== scoreB) return scoreB - scoreA;
-    
+
     // Secondary sort: newest first (using ID)
     return Number(b.id) - Number(a.id);
   });
@@ -134,6 +138,36 @@ export default function Dashboard() {
     }
   };
 
+  const handleDeleteLead = async (accountId: string) => {
+    if (!window.confirm("Are you sure you want to permanently delete this lead?")) return;
+    try {
+      const res = await fetch(`${BACKEND_URL}/api/leads/${accountId}`, { method: 'DELETE' });
+      if (res.ok) {
+        setLeads(prev => prev.filter(l => l.account_id !== accountId));
+      } else {
+        alert("Failed to delete lead from server.");
+      }
+    } catch (err) {
+      console.error(err);
+      alert("Error deleting lead.");
+    }
+  };
+
+  const handleClearAll = async () => {
+    if (!window.confirm("Are you sure you want to WIPE the ENTIRE database? This cannot be undone.")) return;
+    try {
+      const res = await fetch(`${BACKEND_URL}/api/leads/clear`, { method: 'DELETE' });
+      if (res.ok) {
+        setLeads([]);
+      } else {
+        alert("Failed to clear database.");
+      }
+    } catch (err) {
+      console.error(err);
+      alert("Error clearing database.");
+    }
+  };
+
   const handleApprove = async (lead: Lead) => {
     setLoading(lead.id);
     try {
@@ -158,7 +192,7 @@ export default function Dashboard() {
     try {
       const res = await fetch(`${BACKEND_URL}/api/check-acceptance/${id}`, { method: 'POST' });
       const data = await res.json();
-      
+
       if (res.ok) {
         if (data.status === 'pending') {
           alert("Connection not yet found in LinkedIn Connections. Please wait 24h for Phantombuster to sync!");
@@ -174,6 +208,24 @@ export default function Dashboard() {
     setLoading(null);
   };
 
+  const handleStatusChange = async (leadId: string, newStatus: string) => {
+    try {
+      const res = await fetch(`${BACKEND_URL}/api/leads/${leadId}/status`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ status: newStatus })
+      });
+      if (res.ok) {
+        fetchLeads(); // Refresh to see new status and updated score
+      } else {
+        alert("Failed to update status.");
+      }
+    } catch (err) {
+      console.error(err);
+      alert("Error updating status.");
+    }
+  };
+
   const handleGenerateFollowups = async (leadId: string) => {
     setLoading(`followup_${leadId}`);
     try {
@@ -181,7 +233,24 @@ export default function Dashboard() {
         method: "POST"
       });
       if (res.ok) {
-        fetchLeads();
+        const data = await res.json();
+        // Clear local edits for this lead to prioritize the new AI results
+        setLocalEdits(prev => {
+          const next = { ...prev };
+          delete next[leadId];
+          return next;
+        });
+
+        // Directly update the feeds state to avoid waiting for fetchLeads() refresh
+        if (data.followups) {
+          setLeads(prev => prev.map(l => l.id === leadId ? { 
+            ...l, 
+            step_2: data.followups.step_2_linkedin_dm, 
+            step_3: data.followups.step_3_email 
+          } : l));
+        }
+
+        fetchLeads(); // Still refresh full state to ensure consistency
       }
     } catch (err) {
       console.error(err);
@@ -192,17 +261,20 @@ export default function Dashboard() {
 
   const handleFireLinkedInDM = async (leadId: string) => {
     setLoading(`fire_dm_${leadId}`);
+    setFireStatus(prev => ({ ...prev, [`dm_${leadId}`]: null }));
     try {
       const res = await fetch(`${BACKEND_URL}/api/fire-linkedin-dm/${leadId}`, { method: "POST" });
       const data = await res.json();
       if (res.ok) {
-        alert(data.message || "LinkedIn DM Fired!");
+        setFireStatus(prev => ({ ...prev, [`dm_${leadId}`]: 'success' }));
         fetchLeads();
       } else {
+        setFireStatus(prev => ({ ...prev, [`dm_${leadId}`]: 'error' }));
         alert(`Error: ${data.detail}`);
       }
     } catch (err) {
       console.error(err);
+      setFireStatus(prev => ({ ...prev, [`dm_${leadId}`]: 'error' }));
       alert("Failed to fire LinkedIn DM.");
     }
     setLoading(null);
@@ -210,18 +282,38 @@ export default function Dashboard() {
 
   const handleFireColdEmail = async (leadId: string) => {
     setLoading(`fire_email_${leadId}`);
+    setFireStatus(prev => ({ ...prev, [`email_${leadId}`]: null }));
     try {
       const res = await fetch(`${BACKEND_URL}/api/fire-cold-email/${leadId}`, { method: "POST" });
       const data = await res.json();
       if (res.ok) {
-        alert(data.message || "Cold Email Fired!");
+        setFireStatus(prev => ({ ...prev, [`email_${leadId}`]: 'success' }));
         fetchLeads();
       } else {
+        setFireStatus(prev => ({ ...prev, [`email_${leadId}`]: 'error' }));
         alert(`Error: ${data.detail}`);
       }
     } catch (err) {
       console.error(err);
+      setFireStatus(prev => ({ ...prev, [`email_${leadId}`]: 'error' }));
       alert("Failed to fire Cold Email.");
+    }
+    setLoading(null);
+  };
+
+  const handleMarkManuallySent = async (leadId: string) => {
+    setLoading(`manual_send_${leadId}`);
+    try {
+      const res = await fetch(`${BACKEND_URL}/api/mark-manually-sent/${leadId}`, { method: "POST" });
+      if (res.ok) {
+        fetchLeads();
+      } else {
+        const data = await res.json();
+        alert(`Error: ${data.detail || "Failed to mark as manually sent"}`);
+      }
+    } catch (err) {
+      console.error(err);
+      alert("Network error: Failed to mark as manually sent.");
     }
     setLoading(null);
   };
@@ -239,18 +331,16 @@ export default function Dashboard() {
     }
   };
 
-  const handleSimulateClick = async (leadId: string) => {
+  const handleMarkReplied = async (leadId: string) => {
     try {
-      const res = await fetch("http://127.0.0.1:8000/api/webhooks/activity", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ lead_id: Number(leadId), activity: "LINK_CLICKED" })
+      const res = await fetch(`${BACKEND_URL}/api/mark-replied/${leadId}`, {
+        method: "POST"
       });
       if (res.ok) {
         fetchLeads(); // Refresh to see new score
       }
     } catch (err) {
-      console.error("Simulation failed:", err);
+      console.error(err);
     }
   };
 
@@ -304,6 +394,59 @@ export default function Dashboard() {
     }
   };
 
+  const handleAttachLink = (leadId: string, field: 'step_1' | 'step_2' | 'step_3') => {
+    if (!trayLink) return;
+    const trackingUrl = `${BACKEND_URL}/track/link/{{lead_id}}?target=${encodeURIComponent(trayLink)}`;
+    const currentText = localEdits[leadId]?.[field] ?? (leads.find(l => l.id === leadId)?.[field] || '');
+    const newText = `${currentText}\n\n${trackingUrl}`.trim();
+    
+    setLocalEdits(prev => ({
+      ...prev,
+      [leadId]: { ...prev[leadId], [field]: newText }
+    }));
+    
+    // Auto-save
+    const stepIdx = field === 'step_1' ? 0 : field === 'step_2' ? 1 : 2;
+    handleUpdateSequence(leadId, stepIdx, newText);
+    
+    setTrayLink('');
+    setActiveAssetTray(null);
+  };
+
+  const handleFileUpload = async (leadId: string, field: 'step_1' | 'step_2' | 'step_3', file: File) => {
+    setUploading(true);
+    const formData = new FormData();
+    formData.append('file', file);
+    
+    try {
+      const res = await fetch(`${BACKEND_URL}/api/upload-asset`, {
+        method: 'POST',
+        body: formData
+      });
+      if (res.ok) {
+        const data = await res.json();
+        const trackingUrl = `${BACKEND_URL}/track/file/{{lead_id}}?name=${encodeURIComponent(data.filename)}`;
+        const currentText = localEdits[leadId]?.[field] ?? (leads.find(l => l.id === leadId)?.[field] || '');
+        const newText = `${currentText}\n\n${trackingUrl}`.trim();
+
+        setLocalEdits(prev => ({
+          ...prev,
+          [leadId]: { ...prev[leadId], [field]: newText }
+        }));
+        
+        const stepIdx = field === 'step_1' ? 0 : field === 'step_2' ? 1 : 2;
+        handleUpdateSequence(leadId, stepIdx, newText);
+      } else {
+        alert("Upload failed.");
+      }
+    } catch (err) {
+      console.error(err);
+      alert("Error uploading file.");
+    } finally {
+      setUploading(false);
+      setActiveAssetTray(null);
+    }
+  };
   if (!isAuthenticated) return (
     <div className="min-h-screen flex items-center justify-center bg-brand-white">
       <p className="font-bold uppercase tracking-widest text-brand-darkgrey">Authenticating...</p>
@@ -318,32 +461,32 @@ export default function Dashboard() {
           <p className="text-brand-darkgrey mt-2 text-lg">Order specialized agents and approve generated campaigns.</p>
         </div>
         <div className="flex items-center space-x-6">
-          <Link 
+          <Link
             href="/lead-scores"
             className="text-sm font-semibold uppercase text-brand-brown hover:text-brand-black transition-colors border-b-2 border-brand-brown"
           >
             📊 Lead Scores
           </Link>
-          <button 
+          <button
             onClick={() => setSortByScore(!sortByScore)}
             className={`text-sm font-semibold uppercase transition-colors ${sortByScore ? 'text-brand-brown' : 'text-brand-darkgrey'}`}
           >
             {sortByScore ? "★ Sorted by Score" : "☆ Sort by Score"}
           </button>
-          <button 
+          <button
             onClick={handleClearLeads}
-            className="text-sm font-semibold uppercase text-red-600 hover:text-red-800 transition-colors"
+            className="text-sm font-semibold uppercase text-red-700 hover:text-red-900 transition-colors"
           >
             Clear All Data
           </button>
-          <button 
+          <button
             onClick={fetchLeads}
             disabled={initialLoading}
             className="text-sm font-semibold uppercase text-brand-brown hover:text-brand-black transition-colors flex items-center"
           >
             {initialLoading ? "Refreshing..." : "↻ Refresh Leads"}
           </button>
-          <button 
+          <button
             onClick={() => { sessionStorage.removeItem('isAdmin'); router.push('/login'); }}
             className="text-sm font-semibold uppercase text-brand-darkgrey hover:text-brand-black transition-colors"
           >
@@ -424,14 +567,21 @@ export default function Dashboard() {
 
       {/* Leads List */}
       <section className="space-y-8">
-        {leads.length > 0 && <h2 className="text-xl font-bold tracking-wide uppercase text-brand-black border-b border-brand-grey pb-2">Generated Campaigns</h2>}
-        
+        {leads.length > 0 && (
+          <div className="flex items-center justify-between border-b border-brand-grey pb-2">
+            <h2 className="text-xl font-bold tracking-wide uppercase text-brand-black">Generated Campaigns</h2>
+            <button onClick={handleClearAll} className="bg-red-700 hover:bg-red-900 text-white px-4 py-1.5 uppercase tracking-wide text-xs font-bold transition-colors shadow-sm">
+              Delete All Leads
+            </button>
+          </div>
+        )}
+
         {sortedLeads.map((lead) => (
-          <article 
-            key={lead.id} 
+          <article
+            key={lead.id}
             className={`bg-white border border-brand-grey shadow-sm overflow-hidden ${lead.status === 'REJECTED' ? 'opacity-50 grayscale' : ''}`}
           >
-            <div className={`p-4 text-white flex justify-between items-center transition-colors duration-500 ${ (lead.status === 'SENT' || lead.status === 'Active' || lead.status === 'CONNECTION_SENT' || status[lead.id]?.includes("Sent")) ? 'bg-brand-brown' : (lead.status === 'REJECTED' ? 'bg-brand-grey' : 'bg-brand-black')}`}>
+            <div className={`p-4 text-white flex justify-between items-center transition-colors duration-500 ${(lead.status === 'SENT' || lead.status === 'Active' || lead.status === 'CONNECTION_SENT' || status[lead.id]?.includes("Sent")) ? 'bg-brand-brown' : (lead.status === 'REJECTED' ? 'bg-brand-grey' : 'bg-brand-black')}`}>
               <div>
                 <p className="text-[10px] font-bold uppercase tracking-widest text-white/60 mb-1">
                   Attn: {lead.first_name || 'Decision Maker'}
@@ -444,42 +594,83 @@ export default function Dashboard() {
                 </div>
                 <p className="text-brand-grey text-sm">{lead.company}</p>
               </div>
-              <span className={`px-3 py-1 text-xs uppercase tracking-wider text-white border border-white/20 ${(lead.status === 'CLICKED' || lead.status === 'INTERESTED' || lead.status === 'ACCEPTED' || lead.status === 'CONNECTED') ? 'bg-green-600' : (lead.status === 'CONNECTION_SENT' || lead.status === 'Active' ? 'bg-brand-brown' : 'bg-brand-black/50')}`}>
-                {(status[lead.id] || lead.status || 'Pending Review').replace('_', ' ')}
-              </span>
+              <div className="flex items-center gap-3">
+                <select
+                  value={lead.status || 'draft'}
+                  onChange={(e) => handleStatusChange(lead.id, e.target.value)}
+                  className={`px-2 py-1 text-xs uppercase tracking-wider text-white border border-white/20 outline-none cursor-pointer ${(lead.status === 'CLICKED' || lead.status === 'INTERESTED' || lead.status === 'ACCEPTED' || lead.status === 'CONNECTED' || lead.status === 'REPLIED') ? 'bg-green-600' : (lead.status === 'CONNECTION_SENT' || lead.status === 'Active' ? 'bg-brand-brown' : 'bg-brand-black/50')}`}
+                >
+                  <option value="draft">Pending Review</option>
+                  <option value="REJECTED">Rejected</option>
+                  <option value="CONNECTION_SENT">Connection Sent</option>
+                  <option value="CONNECTED">Connected</option>
+                  <option value="REPLIED">Replied</option>
+                  <option value="CLICKED">Clicked</option>
+                  <option value="INTERESTED">Interested</option>
+                </select>
+                <button
+                  onClick={() => handleDeleteLead(lead.account_id)}
+                  className="bg-red-700 hover:bg-red-900 text-white p-1 px-2 rounded-sm shadow-sm transition-colors cursor-pointer border border-white/10"
+                  title="Delete Lead"
+                >
+                  🗑️
+                </button>
+              </div>
             </div>
-            
+
             <div className="p-6">
-              <div className="flex items-center justify-between mb-4 border-b border-brand-grey pb-2">
-                <h3 className="text-sm font-semibold text-brand-darkgrey uppercase tracking-wider">LinkedIn Connection Note</h3>
-              </div>
-
-              <div className="bg-brand-white p-5 border border-brand-grey text-brand-black mb-6 italic min-h-[120px] whitespace-pre-wrap relative group">
-                <textarea
-                  className="w-full bg-transparent border-none outline-none italic resize-none overflow-y-auto"
-                  rows={6}
-                  value={
-                    localEdits[lead.id]?.step_1 ?? (lead.step_1 || lead.message)
-                  }
-                  onChange={(e) => {
-                    setLocalEdits(prev => ({
-                      ...prev,
-                      [lead.id]: { ...prev[lead.id], step_1: e.target.value }
-                    }));
-                  }}
-                  onBlur={(e) => {
-                    handleUpdateSequence(lead.id, 0, e.target.value);
-                  }}
-                />
-                <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
-                  <span className="text-[9px] font-bold uppercase bg-brand-black text-white px-2 py-0.5 shadow-sm">Editable</span>
+              {/* Step 1: LinkedIn Connection Note */}
+              <div className="mb-6">
+                <h3 className="text-sm font-semibold text-brand-darkgrey uppercase tracking-wider mb-4 border-b border-brand-grey pb-2">LinkedIn Connection Note</h3>
+                <div className="bg-brand-white p-5 border border-brand-grey text-brand-black mb-2 italic min-h-[120px] whitespace-pre-wrap relative group">
+                  <textarea
+                    className="w-full bg-transparent border-none outline-none italic resize-none overflow-y-auto"
+                    rows={6}
+                    value={localEdits[lead.id]?.step_1 ?? (lead.step_1 || lead.message)}
+                    onChange={(e) => {
+                      setLocalEdits(prev => ({
+                        ...prev,
+                        [lead.id]: { ...prev[lead.id], step_1: e.target.value }
+                      }));
+                    }}
+                    onBlur={(e) => handleUpdateSequence(lead.id, 0, e.target.value)}
+                  />
+                  <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
+                    <span className="text-[9px] font-bold uppercase bg-brand-black text-white px-2 py-0.5 shadow-sm">Editable</span>
+                  </div>
                 </div>
+                <div className="flex justify-end">
+                  <button 
+                    onClick={() => setActiveAssetTray(activeAssetTray?.leadId === lead.id && activeAssetTray?.field === 'step_1' ? null : { leadId: lead.id, field: 'step_1' })}
+                    className="text-[10px] font-bold uppercase tracking-widest border border-brand-grey px-3 py-1 hover:bg-brand-black hover:text-white transition-colors flex items-center gap-2"
+                  >
+                    📎 Attach Asset
+                  </button>
+                </div>
+                {activeAssetTray?.leadId === lead.id && activeAssetTray?.field === 'step_1' && (
+                  <div className="mt-4 p-4 border border-dashed border-brand-brown bg-brand-brown/5 animate-in fade-in slide-in-from-top-1">
+                    <p className="text-[10px] font-bold uppercase text-brand-brown mb-3">Admin Attachment Tray</p>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div className="space-y-2">
+                        <label className="text-[9px] font-bold uppercase text-brand-darkgrey">Paste Link</label>
+                        <div className="flex gap-2">
+                          <input type="text" placeholder="https://..." className="flex-1 text-xs border border-brand-grey p-2 outline-none focus:border-brand-brown" value={trayLink} onChange={e => setTrayLink(e.target.value)} />
+                          <button onClick={() => handleAttachLink(lead.id, 'step_1')} className="bg-brand-black text-white px-3 py-1 text-xs uppercase font-bold">Add</button>
+                        </div>
+                      </div>
+                      <div className="space-y-2">
+                        <label className="text-[9px] font-bold uppercase text-brand-darkgrey">Upload File</label>
+                        <input type="file" className="w-full text-[10px]" onChange={e => e.target.files?.[0] && handleFileUpload(lead.id, 'step_1', e.target.files[0])} disabled={uploading} />
+                      </div>
+                    </div>
+                  </div>
+                )}
               </div>
 
-              {/* Human Notes Section */}
+              {/* Strategy / Notes */}
               <div className="mb-6">
                 <label className="text-[10px] font-bold text-brand-darkgrey uppercase tracking-widest mb-1 block">Account Strategy / Notes</label>
-                <input 
+                <input
                   type="text"
                   placeholder="Draft internal strategy or notes for this lead..."
                   className="w-full border-b border-brand-grey py-1 text-sm outline-none focus:border-brand-brown transition-colors bg-transparent italic text-brand-black"
@@ -493,165 +684,137 @@ export default function Dashboard() {
                   onBlur={(e) => handleUpdateNotes(lead.id, lead.account_id, e.target.value)}
                 />
               </div>
-              
-              <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+
+              {/* Quick Actions Bar */}
+              <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 border-t border-brand-grey pt-6 mt-6">
                 <div className="flex items-center space-x-6">
-                  <a 
-                    href={lead.profile_url} 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className={`text-brand-brown hover:text-brand-black font-semibold text-sm transition-colors uppercase tracking-wide border-b border-transparent hover:border-brand-black ${lead.status === 'SENT' || lead.status === 'Active' ? 'opacity-50' : ''}`}
-                  >
-                    View Profile &rarr;
-                  </a>
-                  <button 
-                    onClick={() => handleSimulateClick(lead.id)}
-                    className="text-[10px] font-bold uppercase tracking-tighter bg-brand-white border border-brand-grey px-2 py-1 hover:bg-brand-grey transition-colors text-brand-darkgrey"
-                  >
-                    Simulate Engagement (+20 Pts)
-                  </button>
+                  <a href={lead.profile_url} target="_blank" rel="noopener noreferrer" className="text-brand-brown hover:text-brand-black font-semibold text-sm transition-colors uppercase tracking-wide border-b border-transparent hover:border-brand-black">View Profile &rarr;</a>
+                  <button onClick={() => handleMarkReplied(lead.id)} className="text-[10px] font-bold uppercase tracking-tighter bg-brand-white border border-brand-grey px-2 py-1 hover:bg-brand-brown hover:text-white transition-colors text-brand-darkgrey">Mark Replied (+5 Pts)</button>
                 </div>
                 <div className="flex items-center space-x-4 w-full md:w-auto justify-end">
-                  {/* Phase 1: Connection */}
+                  {/* Phase 1 Main Actions */}
                   {(lead.status === 'draft' || !lead.status || lead.status === 'PENDING') && (
                     <div className="flex gap-2">
-                       <button
-                        onClick={() => handleReject(lead.id)}
-                        className="bg-brand-grey hover:bg-brand-black text-brand-black hover:text-white px-4 py-2 uppercase tracking-wide font-bold transition-colors"
-                      >
-                        Reject
-                      </button>
-                      <button
-                        onClick={() => handleApprove(lead)}
-                        disabled={loading === lead.id}
-                        className="bg-brand-black hover:bg-brand-brown text-white px-6 py-2 uppercase tracking-wide font-bold transition-colors"
-                      >
-                        {loading === lead.id ? 'Firing...' : 'Approve & Fire'}
-                      </button>
+                      <button onClick={() => handleReject(lead.id)} className="bg-brand-grey hover:bg-brand-black text-brand-black hover:text-white px-4 py-2 uppercase tracking-wide font-bold transition-colors">Reject</button>
+                      <button onClick={() => handleApprove(lead)} disabled={loading === lead.id} className="bg-brand-black hover:bg-brand-brown text-white px-6 py-2 uppercase tracking-wide font-bold transition-colors">{loading === lead.id ? 'Firing...' : 'Approve & Fire'}</button>
+                      <button onClick={() => handleMarkManuallySent(lead.id)} disabled={loading === `manual_send_${lead.id}`} className="bg-brand-white border border-brand-black hover:bg-brand-black hover:text-white px-4 py-2 uppercase tracking-wide font-bold transition-colors">{loading === `manual_send_${lead.id}` ? 'Saving...' : 'Mark Manually Sent'}</button>
                     </div>
                   )}
-
-                  {/* Stage Status Indication & Acceptance Check */}
-                  {lead.status === 'CONNECTION_SENT' && (
+                  {(lead.status === 'CONNECTION_SENT' || lead.status === 'SENT_MANUAL') && (
                     <div className="flex flex-col items-end gap-2">
-                       <button className="bg-green-600 text-white px-6 py-2 uppercase tracking-wide font-bold cursor-default opacity-90 transition-all duration-500 whitespace-nowrap">
-                        ✓ Connection Sent
-                      </button>
-                      <button 
-                        onClick={() => handleCheckAcceptance(lead.id)}
-                        disabled={loading === `check_${lead.id}`}
-                        className="text-[10px] font-bold uppercase tracking-widest text-brand-darkgrey hover:text-brand-brown transition-colors"
-                      >
-                        {loading === `check_${lead.id}` ? "Checking..." : "Check Status (Wait 24h) ↻"}
-                      </button>
+                      <button className="bg-green-600 text-white px-6 py-2 uppercase tracking-wide font-bold cursor-default opacity-90">✓ Connection Sent</button>
+                      <button onClick={() => handleCheckAcceptance(lead.id)} disabled={loading === `check_${lead.id}`} className="text-[10px] font-bold uppercase tracking-widest text-brand-darkgrey hover:text-brand-brown transition-colors">{loading === `check_${lead.id}` ? "Checking..." : "Check Status (Wait 24h) ↻"}</button>
                     </div>
                   )}
-
-                  {lead.status === 'REJECTED' && (
-                    <span className="text-brand-darkgrey font-bold uppercase tracking-wider italic">
-                      Lead Rejected
-                    </span>
+                  {lead.status === 'CLICKED' && (
+                    <button className="bg-blue-600 text-white px-6 py-2 uppercase tracking-wide font-bold cursor-default opacity-90">✓ Link Clicked</button>
                   )}
+                  {lead.status === 'REJECTED' && <span className="text-brand-darkgrey font-bold uppercase tracking-wider italic">Lead Rejected</span>}
+                </div>
+              </div>
 
-                  {/* Phase 2: Follow-ups */}
-                  {(lead.status === 'CONNECTED' || lead.status === 'ACCEPTED' || lead.status === 'CLICKED') && (
-                    <div className="mt-8 pt-6 border-t border-brand-grey w-full">
-                      <div className="flex items-center justify-between xl:justify-start xl:gap-6 mb-4">
-                        <h3 className="text-sm font-semibold text-brand-darkgrey uppercase tracking-wider">Phase 2: Follow-ups</h3>
-                        {!lead.step_2 && (
-                           <button
-                            onClick={() => handleGenerateFollowups(lead.id)}
-                            disabled={loading === `followup_${lead.id}`}
-                            className="bg-brand-brown hover:bg-brand-black text-white px-4 py-1.5 uppercase tracking-wide text-xs font-bold transition-colors shadow-sm"
-                          >
-                            {loading === `followup_${lead.id}` ? 'Drafting AI Message...' : 'Generate Follow-ups'}
-                          </button>
-                        )}
-                      </div>
+              {/* Phase 2: Follow-ups (Shown for connected/accepted/clicked leads) */}
+              {(lead.status === 'CONNECTED' || lead.status === 'ACCEPTED' || lead.status === 'CLICKED' || lead.status === 'REPLIED' || lead.status === 'INTERESTED') && (
+                <div className="mt-12 pt-8 border-t-2 border-brand-black w-full">
+                  <div className="flex items-center justify-between mb-8">
+                    <h3 className="text-lg font-bold text-brand-black uppercase tracking-widest">Phase 2: Progressive Outreach</h3>
+                    <button onClick={() => handleGenerateFollowups(lead.id)} disabled={loading === `followup_${lead.id}`} className="bg-brand-brown hover:bg-brand-black text-white px-6 py-2 uppercase tracking-wide text-xs font-bold transition-colors shadow-md">
+                      {loading === `followup_${lead.id}` ? 'Drafting AI Sequences...' : (lead.step_2 ? '↻ Retry AI Rewrite' : 'Generate AI Follow-ups')}
+                    </button>
+                  </div>
 
-                      {lead.step_2 && (
-                        <div className="space-y-6 w-full">
-                          {/* LinkedIn Follow-up */}
-                          <div>
-                            <div className="flex items-center justify-between mb-2">
-                              <label className="text-[10px] font-bold text-brand-darkgrey uppercase tracking-widest block">LinkedIn DM</label>
-                              <button
-                                onClick={() => handleFireLinkedInDM(lead.id)}
-                                disabled={loading === `fire_dm_${lead.id}`}
-                                className="text-[10px] font-bold uppercase tracking-widest bg-brand-black hover:bg-brand-brown text-white px-3 py-1 transition-colors"
-                              >
-                                {loading === `fire_dm_${lead.id}` ? 'Firing...' : 'Fire LinkedIn DM'}
-                              </button>
-                            </div>
-                            <div className="bg-brand-white p-4 border border-brand-grey text-brand-black italic min-h-[100px] whitespace-pre-wrap relative group">
-                              <textarea
-                                className="w-full bg-transparent border-none outline-none italic resize-none overflow-y-auto"
-                                rows={5}
-                                value={localEdits[lead.id]?.step_2 ?? (lead.step_2 || '')}
-                                onChange={(e) => {
-                                  setLocalEdits(prev => ({
-                                    ...prev,
-                                    [lead.id]: { ...prev[lead.id], step_2: e.target.value }
-                                  }));
-                                }}
-                                onBlur={(e) => handleUpdateSequence(lead.id, 1, e.target.value)}
-                              />
-                            </div>
-                          </div>
-
-                          {/* Cold Email */}
-                          <div>
-                            <div className="flex items-center justify-between mb-2">
-                              <label className="text-[10px] font-bold text-brand-darkgrey uppercase tracking-widest block">Cold Email</label>
-                              <button
-                                onClick={() => handleFireColdEmail(lead.id)}
-                                disabled={loading === `fire_email_${lead.id}`}
-                                className="text-[10px] font-bold uppercase tracking-widest bg-brand-black hover:bg-brand-brown text-white px-3 py-1 transition-colors"
-                              >
-                                {loading === `fire_email_${lead.id}` ? 'Firing...' : 'Fire Cold Email'}
-                              </button>
-                            </div>
-                            <div className="bg-brand-white p-4 border border-brand-grey text-brand-black italic min-h-[100px] whitespace-pre-wrap relative group">
-                              <textarea
-                                className="w-full bg-transparent border-none outline-none italic resize-none overflow-y-auto"
-                                rows={5}
-                                value={localEdits[lead.id]?.step_3 ?? (lead.step_3 || '')}
-                                onChange={(e) => {
-                                  setLocalEdits(prev => ({
-                                    ...prev,
-                                    [lead.id]: { ...prev[lead.id], step_3: e.target.value }
-                                  }));
-                                }}
-                                onBlur={(e) => handleUpdateSequence(lead.id, 2, e.target.value)}
-                              />
-                            </div>
+                  <div className="grid grid-cols-1 gap-12">
+                    {/* LinkedIn Follow-up */}
+                    {lead.step_2 && (
+                      <div className="bg-brand-white/50 p-6 border border-brand-grey border-l-4 border-l-brand-brown relative">
+                        <div className="flex items-center justify-between mb-4">
+                          <label className="text-[11px] font-black text-brand-black uppercase tracking-[0.2em]">Step 2: LinkedIn DM</label>
+                          <div className="flex gap-3">
+                            <button onClick={() => handleMarkManuallySent(lead.id)} disabled={loading === `manual_send_${lead.id}`} className="px-4 py-2 text-[10px] font-bold uppercase tracking-widest border border-brand-black bg-white hover:bg-brand-black hover:text-white transition-all">
+                              {loading === `manual_send_${lead.id}` ? 'SAVING...' : 'Mark Manually Sent'}
+                            </button>
+                            <button onClick={() => handleFireLinkedInDM(lead.id)} disabled={loading === `fire_dm_${lead.id}`} className={`px-4 py-2 text-[10px] font-bold uppercase tracking-widest border transition-all ${fireStatus[`dm_${lead.id}`] === 'success' ? 'bg-green-600 text-white border-green-600' : 'bg-brand-black text-white border-brand-black hover:bg-brand-brown'}`}>
+                              {loading === `fire_dm_${lead.id}` ? 'PROCESSING...' : fireStatus[`dm_${lead.id}`] === 'success' ? '✓ SENT' : 'Approve & Fire DM'}
+                            </button>
                           </div>
                         </div>
-                      )}
-                    </div>
-                  )}
+                        <div className="bg-white p-4 border border-brand-grey mb-4 italic min-h-[100px] whitespace-pre-wrap relative group">
+                          <textarea className="w-full bg-transparent border-none outline-none resize-none" rows={5} value={localEdits[lead.id]?.step_2 ?? lead.step_2} onChange={(e) => setLocalEdits(prev => ({ ...prev, [lead.id]: { ...prev[lead.id], step_2: e.target.value } }))} onBlur={(e) => handleUpdateSequence(lead.id, 1, e.target.value)} />
+                        </div>
+                        <div className="flex justify-end">
+                          <button onClick={() => setActiveAssetTray(activeAssetTray?.leadId === lead.id && activeAssetTray?.field === 'step_2' ? null : { leadId: lead.id, field: 'step_2' })} className="text-[10px] font-bold uppercase tracking-widest border border-brand-grey px-3 py-1 hover:bg-brand-black hover:text-white transition-colors">📎 Attach Resource</button>
+                        </div>
+                        {activeAssetTray?.leadId === lead.id && activeAssetTray?.field === 'step_2' && (
+                          <div className="mt-4 p-4 border border-dashed border-brand-brown bg-brand-brown/5">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                              <div className="space-y-2">
+                                <label className="text-[9px] font-bold uppercase text-brand-darkgrey">Paste Resource Link</label>
+                                <div className="flex gap-2">
+                                  <input type="text" placeholder="https://..." className="flex-1 text-xs border border-brand-grey p-2" value={trayLink} onChange={e => setTrayLink(e.target.value)} />
+                                  <button onClick={() => handleAttachLink(lead.id, 'step_2')} className="bg-brand-black text-white px-3 py-1 text-xs font-bold">Add</button>
+                                </div>
+                              </div>
+                              <div className="space-y-2">
+                                <label className="text-[9px] font-bold uppercase text-brand-darkgrey">Upload Asset</label>
+                                <input type="file" className="w-full text-[10px]" onChange={e => e.target.files?.[0] && handleFileUpload(lead.id, 'step_2', e.target.files[0])} disabled={uploading} />
+                              </div>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    )}
 
-                  {lead.status === 'CLICKED' && (
-                    <div className="flex gap-2 justify-end">
-                      <span className="bg-red-600 text-white font-bold uppercase tracking-widest px-6 py-2 shadow-sm flex items-center gap-2">
-                        🔥 HOT LEAD - GO TO CRM
-                      </span>
-                    </div>
-                  )}
-
-                  {lead.status === 'INTERESTED' && (
-                    <span className="bg-green-100 text-green-800 px-4 py-2 font-bold uppercase border border-green-800">
-                      🔥 High Interest - Needs Manual Reply
-                    </span>
-                  )}
+                    {/* Cold Email Follow-up */}
+                    {lead.step_3 && (
+                      <div className="bg-brand-white/50 p-6 border border-brand-grey border-l-4 border-l-brand-black relative">
+                        <div className="flex items-center justify-between mb-4">
+                          <label className="text-[11px] font-black text-brand-black uppercase tracking-[0.2em]">Step 3: Cold Email</label>
+                          <button onClick={() => handleFireColdEmail(lead.id)} disabled={loading === `fire_email_${lead.id}`} className={`px-4 py-2 text-[10px] font-bold uppercase tracking-widest border transition-all ${fireStatus[`email_${lead.id}`] === 'success' ? 'bg-green-600 text-white border-green-600' : 'bg-brand-black text-white border-brand-black hover:bg-brand-brown'}`}>
+                            {loading === `fire_email_${lead.id}` ? 'SNDIN...' : fireStatus[`email_${lead.id}`] === 'success' ? '✓ SENT' : 'Fire Professional Email'}
+                          </button>
+                        </div>
+                        <div className="bg-white p-4 border border-brand-grey mb-4 italic min-h-[100px] whitespace-pre-wrap relative group">
+                          <textarea className="w-full bg-transparent border-none outline-none resize-none" rows={10} value={localEdits[lead.id]?.step_3 ?? lead.step_3} onChange={(e) => setLocalEdits(prev => ({ ...prev, [lead.id]: { ...prev[lead.id], step_3: e.target.value } }))} onBlur={(e) => handleUpdateSequence(lead.id, 2, e.target.value)} />
+                        </div>
+                        <div className="flex justify-end">
+                          <button onClick={() => setActiveAssetTray(activeAssetTray?.leadId === lead.id && activeAssetTray?.field === 'step_3' ? null : { leadId: lead.id, field: 'step_3' })} className="text-[10px] font-bold uppercase tracking-widest border border-brand-grey px-3 py-1 hover:bg-brand-black hover:text-white transition-colors">📎 Attach Resource</button>
+                        </div>
+                        {activeAssetTray?.leadId === lead.id && activeAssetTray?.field === 'step_3' && (
+                          <div className="mt-4 p-4 border border-dashed border-brand-brown bg-brand-brown/5">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                              <div className="space-y-2">
+                                <label className="text-[9px] font-bold uppercase text-brand-darkgrey">Paste Resource Link</label>
+                                <div className="flex gap-2">
+                                  <input type="text" placeholder="https://..." className="flex-1 text-xs border border-brand-grey p-2" value={trayLink} onChange={e => setTrayLink(e.target.value)} />
+                                  <button onClick={() => handleAttachLink(lead.id, 'step_3')} className="bg-brand-black text-white px-3 py-1 text-xs font-bold">Add</button>
+                                </div>
+                              </div>
+                              <div className="space-y-2">
+                                <label className="text-[9px] font-bold uppercase text-brand-darkgrey">Upload Asset</label>
+                                <input type="file" className="w-full text-[10px]" onChange={e => e.target.files?.[0] && handleFileUpload(lead.id, 'step_3', e.target.files[0])} disabled={uploading} />
+                              </div>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    )}
+                  </div>
                 </div>
+              )}
+
+              {/* Final Status Badges */}
+              <div className="mt-8 flex justify-end gap-3">
+                {lead.status === 'CLICKED' && <span className="bg-red-600 text-white font-black uppercase tracking-[0.2em] px-8 py-3 shadow-xl animate-bounce">🔥 HOT LEAD: CLICKED RESOURCE</span>}
+                {lead.status === 'REPLIED' && <span className="bg-green-600 text-white font-black uppercase tracking-[0.2em] px-8 py-3 shadow-xl">✓ PROSPECT REPLIED</span>}
+                {lead.status === 'INTERESTED' && <span className="bg-brand-brown text-white font-black uppercase tracking-[0.2em] px-8 py-3 shadow-xl">🔥 MANUAL FOLLOW-UP NEEDED</span>}
               </div>
             </div>
           </article>
         ))}
+        
         {ordering && leads.length === 0 && (
           <div className="p-12 text-center text-brand-darkgrey italic text-lg border border-brand-grey border-dashed">
-            Agents are currently browsing {platform} and generating content...
+            Dispatching agents to {platform}... Scanning target context.
           </div>
         )}
       </section>

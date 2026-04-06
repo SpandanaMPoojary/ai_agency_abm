@@ -20,13 +20,15 @@ class ABMAgent:
             list: A list of JSON objects containing channel, message, cta, and status
         """
         prompt = f"""
-        System Role: You are an expert ABM Strategist for a B2B AI Agency. 
-        Your goal is to generate a highly personalized LinkedIn Connection Note for a target lead.
+        System Role: You are a networking assistant. Write a LinkedIn connection message that is under 200 characters.
+        The message should sound like a human peer in the same industry.
 
-        Strict Constraints:
-        1. CONTENT: Only generate a Connection Note. No follow-ups or emails.
-        2. LENGTH: The note must be STRICTLY under 180 characters total. Be extremely concise.
-        3. NO LINKS: Do NOT include any URLs or the [[TRACKING_LINK]] placeholder in this Connection Note. Focus on a warm, professional connection.
+        CRITICAL RULES:
+        1. NO 'I would like to add you to my professional network.'
+        2. NO 'I am a [Job Title] looking to...'
+        3. FORMAT: Start with a specific observation about their profile. End with a light, non-sales question.
+        4. LENGTH: Must be STRICTLY under 200 characters.
+        5. NO LINKS: Do NOT include any URLs or placeholders in this initial note.
 
         Target Context:
         Lead/Account: {account_data}
@@ -59,28 +61,47 @@ class ABMAgent:
                 "raw_response": response_raw
             }
 
-    def generate_followups(self, account_data, icp, value_prop):
+    def generate_followups(self, account_data, icp, value_prop, connection_note=None):
         """
-        Generate follow-up messages (LinkedIn DM and Email) after connection
+        Generate follow-up messages (LinkedIn DM and Email) after connection.
+        Follows strict ANTI-SPAM rules and casual founder persona.
         """
         prompt = f"""
-        System Role: You are an expert ABM Strategist for a B2B AI Agency. 
-        Your goal is to generate conditional follow-up messages for a lead who has just ACCEPTED your connection request.
+         System Role: You are a developer/founder sending a casual, 1-to-1 LinkedIn DM to a new connection.
+        Tone: Casual, lowercase-leaning, "Text/Phone grammar". Avoid capital letters at the start of every sentence to feel more like a quick message.
+        
+        ANTI-SPAM & HUMANE RULES:
+        1. NO "Thanks for connecting", "Happy to be in your network", or bot-like filler.
+        2. FORBIDDEN PHRASES: "curious if it helps or if I'm overthinking it?", "let me know your thoughts", "open to a call".
+        3. NO CORPORATE JARGON: Avoid "Streamline", "Efficiency", "Expertise", "Benefit", "Organization".
+        4. NO ASKING FOR A CALL: Just drop the link as a resource they can check if/when they're bored.
+
+        CRITICAL LINK RULES:
+        1. MANDATORY PLACEHOLDER: You MUST include the exact placeholder string {{{{tracking_link}}}} in BOTH the LinkedIn DM and the Email body. 
+        2. NO SAMPLE LINKS: Do NOT use any URLs like "example.com". ONLY use the placeholder {{{{tracking_link}}}}.
+
+        Message Structure (LinkedIn DM):
+        - STRICTLY 1-2 short sentences.
+        - Style: Should look like a message from a dev who just thought of something relevant to the receiver's role.
+        - Sentence 1: A casual mention matching their industry or role.
+        - Sentence 2: Drop the {{{{tracking_link}}}} placeholder as a "here's that thing" or "made this for [industry]" reference.
+        
+        Message Structure (Email):
+        - MUST include a "Subject:" line at the very top.
+        - Subject should be lowercase and casual (e.g., "re: [industry] stuff" or "dashboard for [company]").
+        - Body: Short, punchy, and lowercase-leaning.
+        - Weave the {{{{tracking_link}}}} placeholder naturally into the body.
+
 
         Target Context:
         Lead/Account: {account_data}
         Target ICP: {icp}
         Agency Value Prop: {value_prop}
 
-        Output Requirements:
-        1. step_2_linkedin_dm: A personalized LinkedIn message sent immediately after connection. 
-           Mention our specific value prop for their business.
-        2. step_3_email: A professional follow-up email sent 2 days later if no reply.
-        3. TRACKING: Both messages MUST include the placeholder "[[TRACKING_LINK]]".
-
         Response Format:
         Return ONLY a raw JSON object with these keys: "step_2_linkedin_dm", "step_3_email".
-        No preamble, no markdown.
+        CRITICAL: The values for both keys MUST be plain strings. Do NOT return nested JSON objects or extra keys for Subject/Body.
+        No preamble, no markdown formatting.
         """
         
         response_obj = self.llm_client.generate(prompt)
@@ -97,6 +118,7 @@ class ABMAgent:
             return json.loads(cleaned_raw)
         except Exception as e:
             return {"error": "Failed to parse followups", "raw": response_raw}
+
 
 if __name__ == "__main__":
     # Example usage for testing
